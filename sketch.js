@@ -7,12 +7,14 @@ let spriteShip, spriteFire, spriteStar1, spriteStar2;
 var charID = 0;   // Which character the player has selected
 const characterStats = 
   [
-    {maxSpeed:350, acceleration:300, deceleration:80, maxRotSpeed:300, rotAcceleration:500}
+    {maxSpeed:350, acceleration:300, deceleration:80, maxRotSpeed:300, rotAcceleration:800, forwardsFriction:0.2, sidewaysFriction:0.3}
   ];
 
 // Utilities
 var gameWidth = 1600;
 var gameHeight = 900;
+var cameraAgility = 1;
+var cameraPos, cameraVel;
 
 // Game state
 var playerShip;
@@ -29,6 +31,7 @@ function preload() {
 
 
 function setup() {
+  frameRate(60);
   createCanvas(windowWidth, windowHeight);
   calculateScale();
 
@@ -36,7 +39,8 @@ function setup() {
   angleMode(DEGREES);
   imageMode(CENTER)
   playerShip = { character: 0, pos: createVector(800, 800), rot: 0, rotVel: 0, vel: createVector(0, 0), sprite: spriteShip, controlAccel: 0, controlRot: 0 };
-
+  cameraPos = playerShip.pos.copy();
+  cameraVel = playerShip.vel.copy();
 }
 
 
@@ -51,21 +55,30 @@ function draw() {
   scale(scaleFactor);
   translate(-gameWidth / 2, 0);
 
-  // Draw the background (temp)
+  // Draw the background, will not move with the player
   strokeWeight(0);
   fill(10, 0, 20);
   rect(0, 0, gameWidth, gameHeight, 20);
 
-  drawStarfield();
+  //drawStarfield();
 
 
   // Do the timestep
   doTimeStep();
 
+
+  // Move the camera
+  push();
+  translate(-cameraPos.x + gameWidth/2, -cameraPos.y + gameHeight/2);
+  moveCameraDamped();
+
+  drawStarfield();
+
   // Draw player (temp)
   drawPlayerShip(playerShip);
 
 
+  pop();
 
   drawBlinders();
 
@@ -136,14 +149,33 @@ function moveShip(ship) {
   // Apply friction to motion
   var sidewaysComponent = createVector(cos(ship.rot), -sin(ship.rot));
   var sidewaysVelocity = ship.vel.dot(sidewaysComponent);
-  var frictionForce = sidewaysComponent.mult(sidewaysVelocity * deltaTime * 0.001 * 0.8); // sideways friction multiplier 0.8
+  var frictionForce = sidewaysComponent.mult(sidewaysVelocity * deltaTime * 0.001 * characterStats[charID].sidewaysFriction);
   ship.vel.sub(frictionForce);
-  ship.vel.mult(1 - (deltaTime * 0.001 * 0.5));   // Forwards friction multiplier 0.5
+  ship.vel.mult(1 - (deltaTime * 0.001 * characterStats[charID].forwardsFriction));   // Forwards friction multiplier 0.5
 
   if (ship.vel.mag() > characterStats[charID].maxSpeed){
-    ship.vel.mult(0.9);
+    ship.vel.mult(0.99);
   }
 
+}
+
+
+
+function moveCameraDamped() {
+  let dampeningFactor = 0.5;
+  cameraVel.lerp(playerShip.vel, 1 - dampeningFactor);
+  
+  let offset = createVector(cameraVel.x * 0.5, -cameraVel.y * 0.5);
+  let targetPoint = p5.Vector.add(playerShip.pos, offset);
+
+  //fill(255, 0, 0);
+  //rect(targetPoint.x, targetPoint.y, 5, 5);
+
+  // 2. Easing
+  let ease = (t) => t * t * (3 - 2 * t);  // Simple easeInOut function. You can replace with other easing functions.
+  let easedAgility = ease(cameraAgility * deltaTime * 0.01);
+  cameraPos.lerp(targetPoint, easedAgility);
+  //cameraPos = playerShip.pos.copy();
 }
 
 
