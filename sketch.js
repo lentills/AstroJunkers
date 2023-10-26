@@ -14,7 +14,7 @@ const characterStats =
 var gameWidth = 1600;
 var gameHeight = 900;
 var cameraAgility = 1;
-var cameraPos, cameraVel;
+var cameraPos, cameraVel, cameraZoom, cameraZoomSpeed;
 
 // Game state
 var playerShip;
@@ -41,6 +41,8 @@ function setup() {
   playerShip = { character: 0, pos: createVector(800, 800), rot: 0, rotVel: 0, vel: createVector(0, 0), sprite: spriteShip, controlAccel: 0, controlRot: 0 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
+  cameraZoom = 3;
+  cameraZoomSpeed = 1;
 }
 
 
@@ -49,6 +51,7 @@ function draw() {
   background(0);
 
   push();
+  
 
   // Do scaling to account for screen size
   translate(windowWidth / 2, 0);
@@ -60,7 +63,7 @@ function draw() {
   fill(10, 0, 20);
   rect(0, 0, gameWidth, gameHeight, 20);
 
-  //drawStarfield();
+  drawStarfield(2);
 
 
   // Do the timestep
@@ -69,10 +72,17 @@ function draw() {
 
   // Move the camera
   push();
-  translate(-cameraPos.x + gameWidth/2, -cameraPos.y + gameHeight/2);
+  
+  // Translate to the center
+  translate(gameWidth / 2, gameHeight / 2);
+  // Apply the camera zoom here
+  scale(cameraZoom);
+  // Translate by the negative camera position after scaling
+  translate(-cameraPos.x, -cameraPos.y);
+  
   moveCameraDamped();
 
-  drawStarfield();
+  drawStarfield(5);
 
   // Draw player (temp)
   drawPlayerShip(playerShip);
@@ -160,9 +170,11 @@ function moveShip(ship) {
 }
 
 
-
+// Moves the camera to follow the ship.
+// Follows the point slightly ahead of the vector the ship is travelling in
+// Introduces a bit of dampening to make the ship feel faster
 function moveCameraDamped() {
-  let dampeningFactor = 0.5;
+  let dampeningFactor = 0.95;
   cameraVel.lerp(playerShip.vel, 1 - dampeningFactor);
   
   let offset = createVector(cameraVel.x * 0.5, -cameraVel.y * 0.5);
@@ -171,11 +183,18 @@ function moveCameraDamped() {
   //fill(255, 0, 0);
   //rect(targetPoint.x, targetPoint.y, 5, 5);
 
-  // 2. Easing
   let ease = (t) => t * t * (3 - 2 * t);  // Simple easeInOut function. You can replace with other easing functions.
   let easedAgility = ease(cameraAgility * deltaTime * 0.01);
   cameraPos.lerp(targetPoint, easedAgility);
   //cameraPos = playerShip.pos.copy();
+
+  if (p5.Vector.sub(cameraPos, targetPoint).mag() > 300){ // If the camera gets super far away (sometimes happens when tabbing out) move it back
+    cameraPos = targetPoint.copy();
+  }
+
+  // Control camera zoom based on speed
+  cameraZoomSpeed = cameraZoom - map(playerShip.vel.mag() / characterStats[charID].maxSpeed, 0, 1, 2, 0.8);
+  cameraZoom -= cameraZoomSpeed * deltaTime * 0.0003;
 }
 
 
@@ -213,9 +232,9 @@ function drawPlayerShip(ship) {
 
 
 // TODO: fix this
-function drawStarfield() {
+function drawStarfield(size) {
   // Set a fixed seed so that random numbers are consistent
-  randomSeed(99);
+  randomSeed(size);
 
   for (let i = 0; i < 250; i++) {
     let x = random(gameWidth - 10);
@@ -223,9 +242,9 @@ function drawStarfield() {
     let choice = floor(random(2));  // Choose either spriteStar1 or spriteStar2
 
     if (choice === 0) {
-      image(spriteStar1, x, y, 5, 5);
+      image(spriteStar1, x, y, size, size);
     } else {
-      image(spriteStar2, x, y, 7, 7);
+      image(spriteStar2, x, y, size+2, size+2);
     }
   }
 
@@ -233,7 +252,7 @@ function drawStarfield() {
 
 // Draws rects around the edges of the game area so we can't see stuff rendered off there
 function drawBlinders(){
-  fill (0);
+  fill (30, 10, 10);
   rect(-10000, -10000, 20000, 10000);
   rect(-10000, -10000, 10000, 20000);
   rect(gameWidth, -10000, 20000, 20000);
