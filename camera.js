@@ -1,4 +1,6 @@
 
+var cameraAgility = 1;  // How quickly should the camera move to chase the player ship? around 1.0 seems to be good
+var cameraPos, cameraVel, cameraZoom, cameraZoomSpeed;
 
 // Moves the camera to follow the ship.
 // Follows the point slightly ahead of the vector the ship is travelling in
@@ -11,7 +13,7 @@ function moveCameraDamped() {
     let targetPoint = p5.Vector.add(playerShip.pos, offset);
   
     //fill(255, 0, 0);
-    //rect(targetPoint.x, targetPoint.y, 5, 5);
+    //rect(targetPoint.x, targetPoint.y, 5, 5);     // Used to view the position of the target point. Comment this out for production
   
     let ease = (t) => t * t * (3 - 2 * t);  // Simple easeInOut function. You can replace with other easing functions.
     let easedAgility = ease(cameraAgility * deltaTime * 0.01);
@@ -26,8 +28,8 @@ function moveCameraDamped() {
     cameraZoomSpeed = cameraZoom - map(playerShip.vel.mag() / characterStats[charID].maxSpeed, 0, 1, 2, 0.8);
     cameraZoom -= cameraZoomSpeed * deltaTime * 0.0003;
   
+    // Limit the camera position between these two bounds
     if (cameraZoom > 3){cameraZoom = 3;}
     if (cameraZoom < 0.5){cameraZoom = 0.5;}
   }
 
-  

@@ -1,5 +1,10 @@
 
-const MAX_OBSTACLES = 100;
+// We are using another object pool for obstacles in the game
+// These can include asteroids, debris etc.
+// TODO: Can also be enemies, with the isEnemy flag. Enables movement, AI and fighting
+// TODO: rotation and basic physics
+
+const MAX_OBSTACLES = 100;  // Max number of obstacles. More obstacles takes longer to resolve collisions
 let obstacles = [];
 
 
@@ -41,7 +46,7 @@ class Obstacle {
       this.active = false;
     }
   }
-  
+
   
   // Find an inactive bullet and fire it
   function createObstacle(pos, direction, size, health, sprite) {

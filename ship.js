@@ -8,7 +8,7 @@ function getControls() {
     playerShip.controlRot = 0;
   
     if (keyIsDown(UP_ARROW) && !keyIsDown(DOWN_ARROW) || keyIsDown(87) && !keyIsDown(83)) {
-      playerShip.controlAccel = characterStats[charID].acceleration;  // TODO: update these values to the individual ships stats
+      playerShip.controlAccel = characterStats[charID].acceleration;
     }
   
     if (keyIsDown(DOWN_ARROW) && !keyIsDown(UP_ARROW) || keyIsDown(83) && !keyIsDown(87)) {
@@ -23,6 +23,7 @@ function getControls() {
       playerShip.controlRot = characterStats[charID].rotAcceleration;
     }
   
+    // Spacebar for firing guns
     if (keyIsDown(32)){
       playerShip.controlFire = true;
     }else{
@@ -65,7 +66,7 @@ function getControls() {
       ship.vel.mult(0.99);
     }
   
-    // Fire bullets
+    // Fire bullets (TODO: bullet cooldown)
     if (ship.controlFire && frameCount%characterStats[charID].bulletRate == 0){
       fireBullet(  p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20 )), p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[charID].bulletSpeed ) );
     }
@@ -88,10 +89,13 @@ function drawPlayerShip(ship) {
     rotate(ship.rot);
   
     image(ship.sprite, 0, 0, 30, 30);
+
+    // Draw the rocket engine firing
     if (ship.controlAccel > 0.1) {
       image(spriteFire, 0, 25);
     }
 
+    // Draw muzzle flash (TODO: different muzzle flash for each character?)
     if (ship.controlFire && frameCount%characterStats[charID].bulletRate == 0  ){
         image(spriteMuzzleFlash, 0, -15, 40, 40);
     }

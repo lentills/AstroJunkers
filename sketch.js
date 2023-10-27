@@ -24,6 +24,7 @@
 // Assets
 let spriteShip, spriteFire, spriteStar1, spriteStar2, spriteBullet, spriteMuzzleFlash;
 
+
 // Character stats
 var charID = 0;   // Which character the player has selected
 const characterStats = 
@@ -31,11 +32,11 @@ const characterStats =
     {maxSpeed:350, acceleration:300, deceleration:80, maxRotSpeed:300, rotAcceleration:800, forwardsFriction:0.2, sidewaysFriction:0.3, bulletSpeed:20, bulletRate:5  }
   ];
 
+
+
 // Utilities
 var gameWidth = 1600;
 var gameHeight = 900;
-var cameraAgility = 1;
-var cameraPos, cameraVel, cameraZoom, cameraZoomSpeed;
 
 // Game state
 var playerShip;
@@ -82,9 +83,6 @@ function setup() {
 function draw() {
   background(0);
 
-  push();
-  
-
   // Do scaling to account for screen size
   translate(windowWidth / 2, 0);
   scale(scaleFactor);
@@ -120,14 +118,13 @@ function draw() {
   pop();
 
   drawBlinders();
-
-  pop();
 }
 
 
 
 
-
+// Computes everything in the game logic for one time step
+// Player movement, enemies, obstacles etc
 function doTimeStep() {
 
   getControls();
@@ -139,7 +136,7 @@ function doTimeStep() {
 
 
 
-// Time step for all objects in the scene
+// Time step for all objects in the scene (non-player)
 function updateObjects(){
 
   // Update bullet positions
