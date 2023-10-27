@@ -28,21 +28,19 @@ function drawBackground(offset) {
 }
 
 
+// Draws the map's tiles into the world
+function drawMapTiles(mapID){
 
-// TODO: fix this
-function drawStarfield(size) {
-    // Set a fixed seed so that random numbers are consistent
-    randomSeed(size);
+    for (var x=0;x<mapWidth;x++){
+        for (var y=0;y<mapHeight;y++){
 
-    for (let i = 0; i < 250; i++) {
-        let x = random(gameWidth - 10);
-        let y = random(gameHeight - 10);
-        let choice = floor(random(2));  // Choose either spriteStar1 or spriteStar2
+            let spriteID = mapTiles[mapID][y*mapWidth + x] - 1;
+            if (spriteID != -1){
+                imageMode(CORNER);
+                image(tileSprites[spriteID], x*tileSize, -y*tileSize-tileSize, tileSize, tileSize);
+                imageMode(CENTER);
+            }
 
-        if (choice === 0) {
-            image(spriteStar1, x, y, size, size);
-        } else {
-            image(spriteStar2, x, y, size + 2, size + 2);
         }
     }
 

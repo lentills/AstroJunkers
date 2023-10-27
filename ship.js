@@ -81,8 +81,9 @@ function moveShip(ship) {
 }
 
 
-// Check this player's collisions against any obstacles (asteroids, enemies etc)
+// Check this player's collisions against any obstacles (asteroids, enemies, track etc)
 function checkPlayerCollisions(ship){
+
     for (let obstacle of obstacles) {
         if (obstacle.active) {
 
@@ -91,12 +92,18 @@ function checkPlayerCollisions(ship){
                 // Crash!
                 ship.health -= obstacle.weight;
                 ship.vel.mult(0.3);
-                ship.isCrashing = 1000;
+                ship.isCrashing = obstacle.weight*15;
 
                 obstacle.destroy();
 
             }
         }
+    }
+
+    // Make sure the player is still on track, and if not apply a speed penalty
+    if (checkMapCollision(0, ship.pos.x, ship.pos.y) == 0){
+        ship.vel.mult(1 - (deltaTime * 0.001 * 4.0 ));
+        //console.log("WHAT KIND OF A COLLISION");
     }
 }
 

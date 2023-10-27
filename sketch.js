@@ -28,9 +28,9 @@ let spriteShip, spriteFire, spriteStar1, spriteStar2, spriteBullet, spriteMuzzle
 
 // Character stats
 var charID = 0;   // Which character the player has selected
-const characterStats = 
+const characterStats =
   [
-    {maxSpeed:350, acceleration:300, deceleration:80, maxRotSpeed:300, rotAcceleration:800, forwardsFriction:0.2, sidewaysFriction:0.3, bulletSpeed:20, bulletRate:8 }
+    { maxSpeed: 350, acceleration: 300, deceleration: 80, maxRotSpeed: 300, rotAcceleration: 800, forwardsFriction: 0.2, sidewaysFriction: 0.3, bulletSpeed: 20, bulletRate: 8 }
   ];
 
 
@@ -53,6 +53,7 @@ function preload() {
   spriteMuzzleFlash = loadImage('assets/temp/muzzleFlash.png');
 
   loadObstacleSprites();
+  loadTileSprites();
 }
 
 
@@ -67,7 +68,7 @@ function setup() {
 
 
   // Setup player
-  playerShip = { playerID: 1, character: 0, pos: createVector(800, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), health:100, sprite: spriteShip, controlAccel:0, controlRot:0, controlFire:false, isCrashing:-1};
+  playerShip = { playerID: 1, character: 0, pos: createVector(2250, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 100, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
@@ -77,7 +78,7 @@ function setup() {
   for (let i = 0; i < MAX_BULLETS; i++) {
     bullets.push(new Bullet());
   }
-  
+
   // Initialise obstacle object pool
   for (let i = 0; i < MAX_OBSTACLES; i++) {
     obstacles.push(new Obstacle());
@@ -85,7 +86,7 @@ function setup() {
 
 
   // TEMP
-  createObstacle(createVector(500, -300), createVector(0.5, -1), 100, 100, 100, 0);
+  createObstacle(createVector(500, -300), createVector(0.5, -1), 150, 100, 100, 0);
 
 }
 
@@ -104,7 +105,7 @@ function draw() {
   fill(10, 0, 20);
   rect(0, 0, gameWidth, gameHeight, 20);
 
-  drawBackground((-playerShip.pos.y)/30000);  // TODO: Update this number to length of map in pixels
+  drawBackground((-playerShip.pos.y) / 30000);  // TODO: Update this number to length of map in pixels
   fill(10, 0, 20, 100);
   rect(0, 0, gameWidth, gameHeight, 20);
 
@@ -113,13 +114,25 @@ function draw() {
   translate(gameWidth / 2, gameHeight / 2);
   scale(cameraZoom);
   translate(-cameraPos.x, -cameraPos.y);
-  
+
   moveCameraDamped();
 
-  drawStarfield(5);
 
   // Do the timestep
-   doTimeStep();
+  doTimeStep();
+
+  // Draw the scenery
+  drawMapTiles(0);
+
+  // TEMP - debug map collisions
+  /*for (var x = 0; x < 10 * 500; x += 10) {
+    for (var y = 0; y < 30 * 500; y += 10) {
+      if (checkMapCollision(0, x, -y) == 1) {
+        fill(255, 0, 0);
+        rect(x, -y, 5, 5);
+      }
+    }
+  }*/
 
   // Draw player (temp)
   drawPlayerShip(playerShip);
@@ -144,6 +157,7 @@ function doTimeStep() {
   updateObjects();
 
   checkPlayerCollisions(playerShip);
+  checkBulletCollisions(playerShip);
 
 }
 
@@ -151,7 +165,7 @@ function doTimeStep() {
 
 
 // Time step for all objects in the scene (non-player)
-function updateObjects(){
+function updateObjects() {
 
   // Update bullet positions
   for (let bullet of bullets) {
@@ -160,12 +174,12 @@ function updateObjects(){
     }
   }
 
-    // Update obstace positions
-    for (let obstacle of obstacles) {
-      if (obstacle.active) {
-        obstacle.update();
-      }
+  // Update obstace positions
+  for (let obstacle of obstacles) {
+    if (obstacle.active) {
+      obstacle.update();
     }
+  }
 
 
 }
