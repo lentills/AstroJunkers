@@ -4,69 +4,91 @@
 // TODO: Can also be enemies, with the isEnemy flag. Enables movement, AI and fighting
 // TODO: rotation and basic physics
 
-const MAX_OBSTACLES = 100;  // Max number of obstacles. More obstacles takes longer to resolve collisions
+const MAX_OBSTACLES = 50;  // Max number of obstacles. More obstacles takes longer to resolve collisions
 let obstacles = [];
 
+let obstacleSprites = [];
 
 class Obstacle {
 
     constructor() {
-      this.active = false;
-      this.position = createVector(0, 0);
-      this.velocity = createVector(0, 0);
-      this.age = 0;
-      this.health = 100;
-      this.size = 1;
-      this.sprite = null;
+        this.id = -1;   // ID of the obstacle, allows us to communicate information about each obstacle between players
+        this.active = false;
+        this.position = createVector(0, 0);
+        this.velocity = createVector(0, 0);
+        this.age = 0;
+        this.health = 100;
+        this.weight = 100;      // Weight of the object, determines how much damage a collision causes
+        this.radius = 100;      // Radius of hitbox
+        this.sprite = null;
+        this.isEnemy = false;   // Activates the AI
     }
-  
+
     update() {
-      if (this.active) {
-        this.position.add(this.velocity);
-        this.age += deltaTime;
+        if (this.active) {
+            this.position.add(this.velocity);
+            this.age += deltaTime;
 
-        if (this.health < 0){
-          this.deactivate();
+            if (this.health < 0) {
+                this.deactivate();
+            }
+
         }
+    }
 
-      }
+    create(pos, vel, weight, radius, health, sprite, isEnemy) {
+        this.active = true;
+        this.position = pos.copy();
+        this.velocity = vel.copy();
+        this.age = 0;
+        this.health = health;
+        this.weight = weight;
+        this.radius = radius;
+        this.sprite = sprite;
+        this.isEnemy = isEnemy;
     }
-  
-    create(pos, vel, size, health, sprite) {
-      this.active = true;
-      this.position = pos.copy();
-      this.velocity = vel.copy();
-      this.age = 0;
-      this.health = health;
-      this.size = size;
-      this.sprite = sprite;
-    }
-  
+
     deactivate() {
-      this.active = false;
+        this.active = false;
     }
-  }
 
-  
-  // Find an inactive bullet and fire it
-  function createObstacle(pos, direction, size, health, sprite) {
+    // Deactivates the obstacle/enemy but makes them explode!
+    destroy() {
+        // TODO:
+        this.deactivate();
+    }
+}
+
+
+// Find an inactive bullet and fire it
+function createObstacle(pos, direction, weight, radius, health, sprite) {
     for (let obstacle of obstacles) {
-      if (!obstacle.active) {
-        obstacle.create(pos, direction, size, health, sprite);
-        break;
-      }
+        if (!obstacle.active) {
+            obstacle.create(pos, direction, weight, radius, health, sprite);
+            break;
+        }
     }
-  }
+}
 
-  
 
-  function drawObstacle(obstacle){
-    push();
-    translate(obstacle.position.x, obstacle.position.y);
-    //rotate(obstacle.velocity.heading()+90 );
-    image(obstacle.sprite, 0, 0, 4, 10);
-    pop();
-  }
+
+function drawObstacles(obstacle) {
+    for (let obstacle of obstacles) {
+        if (obstacle.active) {
+            push();
+            translate(obstacle.position.x, obstacle.position.y);
+            //rotate(obstacle.velocity.heading()+90 );
+            image(obstacleSprites[obstacle.sprite], 0, 0, obstacle.radius, obstacle.radius);
+            pop();
+        }
+    }
+}
+
+
+function loadObstacleSprites(){
+    obstacleSprites.push(loadImage('assets/temp/meteorBrown_big1.png'));
+    obstacleSprites.push(loadImage('assets/temp/meteorBrown_med3.png'));
+}
 
 
 

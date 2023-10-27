@@ -24,7 +24,7 @@ function getControls() {
     }
   
     // Spacebar for firing guns
-    if (keyIsDown(32)){
+    if (keyIsDown(32) || mouseIsPressed){
       playerShip.controlFire = true;
     }else{
       playerShip.controlFire = false;
@@ -68,7 +68,7 @@ function getControls() {
   
     // Fire bullets (TODO: bullet cooldown)
     if (ship.controlFire && frameCount%characterStats[charID].bulletRate == 0){
-      fireBullet(  p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20 )), p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[charID].bulletSpeed ) );
+      fireBullet(  p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20 )), p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[charID].bulletSpeed ), 1 );
     }
   
   }

@@ -1,6 +1,6 @@
 ///////////////////////
 //       TODO:
-// - Render continuous background
+// + Render continuous background
 // + Add gun
 // - Add enemies
 // - Add asteroids
@@ -29,7 +29,7 @@ let spriteShip, spriteFire, spriteStar1, spriteStar2, spriteBullet, spriteMuzzle
 var charID = 0;   // Which character the player has selected
 const characterStats = 
   [
-    {maxSpeed:350, acceleration:300, deceleration:80, maxRotSpeed:300, rotAcceleration:800, forwardsFriction:0.2, sidewaysFriction:0.3, bulletSpeed:20, bulletRate:5  }
+    {maxSpeed:350, acceleration:300, deceleration:80, maxRotSpeed:300, rotAcceleration:800, forwardsFriction:0.2, sidewaysFriction:0.3, bulletSpeed:20, bulletRate:8 }
   ];
 
 
@@ -50,19 +50,23 @@ function preload() {
   spriteStar2 = loadImage('assets/temp/star2.png');
   spriteBullet = loadImage('assets/temp/laserBlue05.png');
   spriteMuzzleFlash = loadImage('assets/temp/muzzleFlash.png');
+
+  loadObstacleSprites();
 }
 
 
 
 function setup() {
+
   frameRate(60);
   createCanvas(windowWidth, windowHeight);
   calculateScale();
-
-  // Setup player
   angleMode(DEGREES);
   imageMode(CENTER)
-  playerShip = { character: 0, pos: createVector(800, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), sprite: spriteShip, controlAccel:0, controlRot:0, controlFire:false };
+
+
+  // Setup player
+  playerShip = { playerID: 1, character: 0, pos: createVector(800, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), health:100, sprite: spriteShip, controlAccel:0, controlRot:0, controlFire:false };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
@@ -74,7 +78,13 @@ function setup() {
   }
   
   // Initialise obstacle object pool
+  for (let i = 0; i < MAX_OBSTACLES; i++) {
+    obstacles.push(new Obstacle());
+  }
 
+
+  // TEMP
+  createObstacle(createVector(500, -300), createVector(1, 0), 100, 100, 100, 0);
 
 }
 
@@ -113,11 +123,12 @@ function draw() {
   // Draw player (temp)
   drawPlayerShip(playerShip);
   drawBullets();
+  drawObstacles();
 
 
   pop();
 
-  //drawBlinders();
+  drawBlinders();
 }
 
 
@@ -145,6 +156,13 @@ function updateObjects(){
       bullet.update();
     }
   }
+
+    // Update obstace positions
+    for (let obstacle of obstacles) {
+      if (obstacle.active) {
+        obstacle.update();
+      }
+    }
 
 
 }

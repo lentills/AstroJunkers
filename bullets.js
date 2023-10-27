@@ -13,6 +13,7 @@ class Bullet {
       this.position = createVector(0, 0);
       this.velocity = createVector(0, 0);
       this.age = 0;
+      this.owner = 0;       // 0 - enemy bullet     1 - player bullet
     }
   
     update() {
@@ -27,11 +28,12 @@ class Bullet {
       }
     }
   
-    fire(pos, vel) {
+    fire(pos, vel, owner) {
       this.active = true;
       this.position = pos.copy();
       this.velocity = vel.copy();
       this.age = 0;
+      this.owner = owner;
     }
   
     deactivate() {
@@ -40,10 +42,10 @@ class Bullet {
   }
   
   // Find an inactive bullet and fire it
-  function fireBullet(pos, direction) {
+  function fireBullet(pos, direction, owner) {
     for (let bullet of bullets) {
       if (!bullet.active) {
-        bullet.fire(pos, direction);
+        bullet.fire(pos, direction, owner);
         break;
       }
     }

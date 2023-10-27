@@ -15,7 +15,7 @@ function drawBackground(offset) {
         let x = random(gameWidth - 10);
         let y = random(-BACKGROUND_LENGTH, gameHeight);
 
-        if (y < -offset*BACKGROUND_LENGTH + gameHeight){    // don't bother drawing stars off the screen
+        if (y < -offset*BACKGROUND_LENGTH + gameHeight && y > -offset*BACKGROUND_LENGTH){    // don't bother drawing stars off the screen
             if (floor(y)%2 === 0) {   // Choose one of two star sprites
                 image(spriteStar1, x, y + offset*BACKGROUND_LENGTH, 4, 4);
             } else {
