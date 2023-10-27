@@ -29,7 +29,7 @@ class Obstacle {
             this.position.add(this.velocity);
             this.age += deltaTime;
 
-            if (this.health < 0) {
+            if (this.health <= 0) {
                 this.deactivate();
             }
 
@@ -54,8 +54,17 @@ class Obstacle {
 
     // Deactivates the obstacle/enemy but makes them explode!
     destroy() {
-        // TODO:
+
         this.deactivate();
+
+        // TODO: explosion effect
+
+        // If this is a big asteroid, split it into little ones
+        if (this.weight > 50 && !this.isEnemy){
+            createObstacle(this.position.copy(), p5.Vector.add(this.velocity, createVector(-0.4, 0.7)), 20, 30, 20, 1);
+            createObstacle(this.position.copy(), p5.Vector.add(this.velocity, createVector(0.2, -0.5)), 20, 20, 20, 1);
+        }
+
     }
 }
 

@@ -3,8 +3,9 @@
 // + Render continuous background
 // + Add gun
 // - Add enemies
-// - Add asteroids
+// + Add asteroids
 // - Add boss fight
+// - Add collisions
 // - Build map (procedurally generated??)
 // - Menu and character select screens
 // - Build characters abilities
@@ -66,7 +67,7 @@ function setup() {
 
 
   // Setup player
-  playerShip = { playerID: 1, character: 0, pos: createVector(800, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), health:100, sprite: spriteShip, controlAccel:0, controlRot:0, controlFire:false };
+  playerShip = { playerID: 1, character: 0, pos: createVector(800, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), health:100, sprite: spriteShip, controlAccel:0, controlRot:0, controlFire:false, isCrashing:-1};
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
@@ -84,7 +85,7 @@ function setup() {
 
 
   // TEMP
-  createObstacle(createVector(500, -300), createVector(1, 0), 100, 100, 100, 0);
+  createObstacle(createVector(500, -300), createVector(0.5, -1), 100, 100, 100, 0);
 
 }
 
@@ -141,6 +142,8 @@ function doTimeStep() {
   getControls();
   moveShip(playerShip);
   updateObjects();
+
+  checkPlayerCollisions(playerShip);
 
 }
 
