@@ -25,11 +25,11 @@ function moveCameraDamped() {
     }
   
     // Control camera zoom based on speed
-    cameraZoomSpeed = cameraZoom - map(playerShip.vel.mag() / characterStats[charID].maxSpeed, 0, 1, 2, 0.8);
+    cameraZoomSpeed = cameraZoom - map(playerShip.vel.mag() / characterStats[charID].maxSpeed, 0, 1, 2, 1.5);
     cameraZoom -= cameraZoomSpeed * deltaTime * 0.0003;
   
     // Limit the camera position between these two bounds
     if (cameraZoom > 3){cameraZoom = 3;}
-    if (cameraZoom < 0.5){cameraZoom = 0.5;}
+    if (cameraZoom < 1){cameraZoom = 1;}
   }
 

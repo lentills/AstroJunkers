@@ -9,6 +9,8 @@ let obstacles = [];
 
 let obstacleSprites = [];
 
+var lastObstacleID = 0;
+
 class Obstacle {
 
     constructor() {
@@ -46,6 +48,8 @@ class Obstacle {
         this.radius = radius;
         this.sprite = sprite;
         this.isEnemy = isEnemy;
+        lastObstacleID ++;
+        this.id = lastObstacleID;
     }
 
     deactivate() {

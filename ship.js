@@ -102,7 +102,7 @@ function checkPlayerCollisions(ship){
 
     // Make sure the player is still on track, and if not apply a speed penalty
     if (checkMapCollision(0, ship.pos.x, ship.pos.y) == 0){
-        ship.vel.mult(1 - (deltaTime * 0.001 * 4.0 ));
+        ship.vel.mult(1 - (deltaTime * 0.001 * 5.0 ));
         //console.log("WHAT KIND OF A COLLISION");
     }
 }
