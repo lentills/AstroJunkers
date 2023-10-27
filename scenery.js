@@ -49,7 +49,7 @@ function drawMapTiles(mapID){
 
 // Draws rects around the edges of the game area so we can't see stuff rendered off there
 function drawBlinders() {
-    fill(30, 10, 10);
+    fill(0);
     rect(-10000, -10000, 20000, 10000);
     rect(-10000, -10000, 10000, 20000);
     rect(gameWidth, -10000, 20000, 20000);

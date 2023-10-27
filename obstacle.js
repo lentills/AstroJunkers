@@ -23,16 +23,53 @@ class Obstacle {
         this.weight = 100;      // Weight of the object, determines how much damage a collision causes
         this.radius = 100;      // Radius of hitbox
         this.sprite = null;
+
         this.isEnemy = false;   // Activates the AI
+        this.shotCooldown = 0;  // Cooldown on each burst
+        this.shotCount = 0;
+        this.fireRate = 250;
     }
 
     update() {
         if (this.active) {
-            this.position.add(this.velocity);
+            this.position.add(p5.Vector.mult(this.velocity, deltaTime * 0.001));
             this.age += deltaTime;
 
             if (this.health <= 0) {
                 this.destroy();
+            }
+
+            if (this.isEnemy) {
+
+                // TODO: Better AI
+
+                // Move toward the player
+                var vecToPlayer = p5.Vector.sub(playerShip.pos, this.position);
+                if (this.position.dist(playerShip.pos) < 300 && this.position.dist(playerShip.pos) > 150) {
+                    vecToPlayer.setMag(40);
+                    this.velocity = vecToPlayer.copy();
+                } else {
+                    this.velocity.mult(1 - deltaTime * 0.001);
+                }
+
+                // Fire at the player
+                if (this.position.dist(playerShip.pos) < 300) {
+                    this.shotCooldown += deltaTime;
+                    if (this.shotCooldown > this.fireRate) {
+                        if (this.shotCount < 3) {
+                            this.shotCount++;
+                            this.shotCooldown = 0;
+                            if (this.shotCount > 0) {
+                                vecToPlayer.setMag(500);
+                                fireBullet(this.position.copy(), vecToPlayer, 0);
+                            }
+                        } else {
+                            this.shotCount = -3;
+                            this.shotCooldown = 0;
+                        }
+                    }
+                }
+
             }
 
         }
@@ -48,7 +85,7 @@ class Obstacle {
         this.radius = radius;
         this.sprite = sprite;
         this.isEnemy = isEnemy;
-        lastObstacleID ++;
+        lastObstacleID++;
         this.id = lastObstacleID;
     }
 
@@ -64,9 +101,10 @@ class Obstacle {
         // TODO: explosion effect
 
         // If this is a big asteroid, split it into little ones
-        if (this.weight > 60 && !this.isEnemy){
-            createObstacle(this.position.copy(), p5.Vector.add(this.velocity, createVector(-0.4, 0.7)), 30, 30, 20, 1);
-            createObstacle(this.position.copy(), p5.Vector.add(this.velocity, createVector(0.2, -0.5)), 30, 20, 30, 1);
+        if (this.weight > 60 && !this.isEnemy) {
+            randomSeed(this.position.y);
+            createObstacle(this.position.copy(), p5.Vector.add(this.velocity, createVector(random(-50, 0), random(-50, 80))), 30, 30, 20, 1, false);
+            createObstacle(this.position.copy(), p5.Vector.add(this.velocity, createVector(random(-30, 30), random(-50, 50))), 30, 20, 30, 1, false);
         }
 
     }
@@ -74,10 +112,10 @@ class Obstacle {
 
 
 // Find an inactive bullet and fire it
-function createObstacle(pos, direction, weight, radius, health, sprite) {
+function createObstacle(pos, direction, weight, radius, health, sprite, isEnemy) {
     for (let obstacle of obstacles) {
         if (!obstacle.active) {
-            obstacle.create(pos, direction, weight, radius, health, sprite);
+            obstacle.create(pos, direction, weight, radius, health, sprite, isEnemy);
             break;
         }
     }
@@ -98,9 +136,10 @@ function drawObstacles(obstacle) {
 }
 
 
-function loadObstacleSprites(){
+function loadObstacleSprites() {
     obstacleSprites.push(loadImage('assets/temp/meteorBrown_big1.png'));
     obstacleSprites.push(loadImage('assets/temp/meteorBrown_med3.png'));
+    obstacleSprites.push(loadImage('assets/temp/ufoRed.png'));
 }
 
 

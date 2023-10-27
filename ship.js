@@ -1,5 +1,5 @@
 
-
+var shotCooldown = 0;
 
 // Gets the player controls and applies them to the player ship
 function getControls() {
@@ -74,7 +74,9 @@ function moveShip(ship) {
     }
 
     // Fire bullets (TODO: bullet cooldown)
-    if (ship.controlFire && frameCount % characterStats[charID].bulletRate == 0) {
+    shotCooldown += deltaTime;
+    if (ship.controlFire && shotCooldown > characterStats[charID].bulletRate) {
+        //  shotCooldown = 0; // Shot cooldown set to zero in the draw function, so we can draw muzzle flash
         fireBullet(p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20)), p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[charID].bulletSpeed), ship.playerID);
     }
 
@@ -103,7 +105,7 @@ function checkPlayerCollisions(ship){
     // Make sure the player is still on track, and if not apply a speed penalty
     if (checkMapCollision(0, ship.pos.x, ship.pos.y) == 0){
         ship.vel.mult(1 - (deltaTime * 0.001 * 5.0 ));
-        //console.log("WHAT KIND OF A COLLISION");
+        //console.log("WHAT KIND OF A COLLISION?");
     }
 }
 
@@ -127,8 +129,9 @@ function drawPlayerShip(ship) {
     }
 
     // Draw muzzle flash (TODO: different muzzle flash for each character?)
-    if (ship.controlFire && frameCount % characterStats[charID].bulletRate == 0) {
+    if (ship.controlFire && shotCooldown > characterStats[charID].bulletRate ) {
         image(spriteMuzzleFlash, 0, -15, 40, 40);
+        shotCooldown = 0;
     }
 
     pop();

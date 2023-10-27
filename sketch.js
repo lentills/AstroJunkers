@@ -5,8 +5,8 @@
 // - Add enemies
 // + Add asteroids
 // - Add boss fight
-// - Add collisions
-// - Build map (procedurally generated??)
+// + Add collisions
+// + Build map
 // - Menu and character select screens
 // - Build characters abilities
 // - Extra animations and sparkles
@@ -30,13 +30,13 @@ let spriteShip, spriteFire, spriteStar1, spriteStar2, spriteBullet, spriteMuzzle
 var charID = 0;   // Which character the player has selected
 const characterStats =
   [
-    { maxSpeed: 350, acceleration: 300, deceleration: 80, maxRotSpeed: 300, rotAcceleration: 800, forwardsFriction: 0.2, sidewaysFriction: 0.3, bulletSpeed: 20, bulletRate: 8 }
+    { maxSpeed: 350, acceleration: 300, deceleration: 80, maxRotSpeed: 300, rotAcceleration: 800, forwardsFriction: 0.2, sidewaysFriction: 0.3, bulletSpeed: 800, bulletRate: 150 }
   ];
 
 
 
 // Utilities
-var gameWidth = 1600;
+var gameWidth = 1600; 
 var gameHeight = 900;
 
 // Game state
@@ -86,7 +86,9 @@ function setup() {
 
 
   // TEMP
-  createObstacle(createVector(500, -300), createVector(0.5, -1), 150, 100, 100, 0);
+  createObstacle(createVector(500, -300), createVector(50, -100), 150, 100, 100, 0, false);
+  createObstacle(createVector(2200, -1000), createVector(5, -10), 150, 100, 100, 0, false);
+  createObstacle(createVector(2300, -1000), createVector(0, -10), 150, 60, 100, 2, true);
 
 }
 

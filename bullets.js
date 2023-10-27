@@ -13,12 +13,12 @@ class Bullet {
         this.position = createVector(0, 0);
         this.velocity = createVector(0, 0);
         this.age = 0;
-        this.owner = 0;       // 0 - enemy bullet     1 - player bullet
+        this.owner = 0;       // 0 - enemy bullet     1 - player1 bullet    2 -  player2 bullet
     }
 
     update() {
         if (this.active) {
-            this.position.add(this.velocity);
+            this.position.add(p5.Vector.mult(this.velocity, deltaTime * 0.001));
             this.age += deltaTime;
 
             if (this.age > 2000) {
