@@ -62,7 +62,7 @@ function setup() {
   // Setup player
   angleMode(DEGREES);
   imageMode(CENTER)
-  playerShip = { character: 0, pos: createVector(800, 800), rot: 0, rotVel: 0, vel: createVector(0, 0), sprite: spriteShip, controlAccel:0, controlRot:0, controlFire:false };
+  playerShip = { character: 0, pos: createVector(800, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), sprite: spriteShip, controlAccel:0, controlRot:0, controlFire:false };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
@@ -93,7 +93,7 @@ function draw() {
   fill(10, 0, 20);
   rect(0, 0, gameWidth, gameHeight, 20);
 
-  drawStarfield(2);
+  drawBackground((-playerShip.pos.y)/30000);  // TODO: Update this number to length of map in pixels
   fill(10, 0, 20, 100);
   rect(0, 0, gameWidth, gameHeight, 20);
 
@@ -117,7 +117,7 @@ function draw() {
 
   pop();
 
-  drawBlinders();
+  //drawBlinders();
 }
 
 
