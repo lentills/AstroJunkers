@@ -68,30 +68,49 @@ function drawBullets() {
 
 
 // Check this player's bullets collisions against any obstacles (asteroids, enemies etc)
-function checkBulletCollisions(ship) {
+function checkBulletCollisions() {
 
     for (let bullet of bullets) {
-        if (bullet.active && bullet.owner == ship.playerID) {
 
-            // Check collisions with obstacles
+        // Check collisions with obstacles
+        if (bullet.active && bullet.owner == playerShip.playerID) {
+
             for (let obstacle of obstacles) {
                 if (obstacle.active) {
 
-                    if (bullet.position.dist(obstacle.position) < obstacle.radius*0.5) {
+                    if (bullet.position.dist(obstacle.position) < obstacle.radius * 0.5) {
 
                         obstacle.health -= 15;
-                        obstacle.velocity.add(p5.Vector.mult(bullet.velocity, 1/obstacle.weight));
+                        obstacle.velocity.add(p5.Vector.mult(bullet.velocity, 1 / obstacle.weight));
                         bullet.deactivate();
 
                     }
                 }
             }
 
-            // TODO: Check collisions against other players
+            // Check collisions against other players (don't deduct health here, this is done on other player's end)
+            if (multiplayer){
+                if (bullet.position.dist(opponentShip.pos) < 20) {
+                    //playerShip.health -= 10;
+                    bullet.deactivate();
+                }
+            }
 
             // TODO: Check collisions against boss
 
         }
+
+
+        // Check enemy and opponent bullet collisions
+        if (bullet.active && (bullet.owner == 0 || bullet.owner != playerShip.playerID)) {
+
+            if (bullet.position.dist(playerShip.pos) < 20) {
+                playerShip.health -= 10;
+                bullet.deactivate();
+            }
+
+        }
+
     }
 
 }

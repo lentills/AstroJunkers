@@ -2,7 +2,7 @@
 //       TODO:
 // + Render continuous background
 // + Add gun
-// - Add enemies
+// + Add enemies
 // + Add asteroids
 // - Add boss fight
 // + Add collisions
@@ -30,7 +30,7 @@ let spriteShip, spriteFire, spriteStar1, spriteStar2, spriteBullet, spriteMuzzle
 var charID = 0;   // Which character the player has selected
 const characterStats =
   [
-    { maxSpeed: 350, acceleration: 300, deceleration: 80, maxRotSpeed: 300, rotAcceleration: 800, forwardsFriction: 0.2, sidewaysFriction: 0.3, bulletSpeed: 800, bulletRate: 150 }
+    { health:80, maxSpeed: 350, acceleration: 300, deceleration: 80, maxRotSpeed: 300, rotAcceleration: 800, forwardsFriction: 0.2, sidewaysFriction: 0.3, bulletSpeed: 800, bulletRate: 150 }
   ];
 
 
@@ -40,7 +40,8 @@ var gameWidth = 1600;
 var gameHeight = 900;
 
 // Game state
-var playerShip;
+var playerShip, opponentShip;
+var multiplayer;
 
 
 
@@ -68,6 +69,7 @@ function setup() {
 
 
   // Setup player
+  multiplayer = false;
   playerShip = { playerID: 1, character: 0, pos: createVector(2250, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 100, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
@@ -159,7 +161,7 @@ function doTimeStep() {
   updateObjects();
 
   checkPlayerCollisions(playerShip);
-  checkBulletCollisions(playerShip);
+  checkBulletCollisions();
 
 }
 
@@ -213,6 +215,7 @@ function calculateScale() {
   } else {
     scaleFactor = scaleW;
   }
+  
 }
 
 

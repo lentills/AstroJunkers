@@ -35,6 +35,12 @@ function getControls() {
 
 function moveShip(ship) {
 
+    // Check the health here TODO: move somewhere else where it is better for multiplayer
+    if (ship.health < 0){
+        ship.health = characterStats[ship.character].health;
+        ship.isCrashing = 2000;
+    }
+
     // Ship is crashing, rotate the player a bunch
     if (ship.isCrashing > 0){
         ship.isCrashing -= deltaTime;
@@ -96,7 +102,9 @@ function checkPlayerCollisions(ship){
                 ship.vel.mult(0.3);
                 ship.isCrashing = obstacle.weight*15;
 
-                obstacle.destroy();
+                if (ship.playerID == playerShip.playerID){  // Only the local player destroys objects, and will send this data to the other player
+                    obstacle.destroy();
+                }
 
             }
         }
