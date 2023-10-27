@@ -22,7 +22,7 @@
 
 
 // Assets
-let spriteShip, spriteFire, spriteStar1, spriteStar2, spriteBullet;
+let spriteShip, spriteFire, spriteStar1, spriteStar2, spriteBullet, spriteMuzzleFlash;
 
 // Character stats
 var charID = 0;   // Which character the player has selected
@@ -40,10 +40,6 @@ var cameraPos, cameraVel, cameraZoom, cameraZoomSpeed;
 // Game state
 var playerShip;
 
-// Objects
-const MAX_BULLETS = 200;
-let bullets = [];
-
 
 
 function preload() {
@@ -52,6 +48,7 @@ function preload() {
   spriteStar1 = loadImage('assets/temp/star1.png');
   spriteStar2 = loadImage('assets/temp/star2.png');
   spriteBullet = loadImage('assets/temp/laserBlue05.png');
+  spriteMuzzleFlash = loadImage('assets/temp/muzzleFlash.png');
 }
 
 
@@ -70,9 +67,13 @@ function setup() {
   cameraZoom = 3;
   cameraZoomSpeed = 0;
 
+  // Initialise bullet object pool
   for (let i = 0; i < MAX_BULLETS; i++) {
     bullets.push(new Bullet());
   }
+  
+  // Initialise obstacle object pool
+
 
 }
 
@@ -98,15 +99,8 @@ function draw() {
   fill(10, 0, 20, 100);
   rect(0, 0, gameWidth, gameHeight, 20);
 
-
-  // Do the timestep
-  doTimeStep();
-
-
   // Move the camera
   push();
-  
-  // Camera Controls
   translate(gameWidth / 2, gameHeight / 2);
   scale(cameraZoom);
   translate(-cameraPos.x, -cameraPos.y);
@@ -114,6 +108,9 @@ function draw() {
   moveCameraDamped();
 
   drawStarfield(5);
+
+  // Do the timestep
+   doTimeStep();
 
   // Draw player (temp)
   drawPlayerShip(playerShip);

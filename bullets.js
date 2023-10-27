@@ -1,4 +1,5 @@
-
+const MAX_BULLETS = 200;
+let bullets = [];
 
 class Bullet {
     constructor() {
@@ -40,7 +41,7 @@ class Bullet {
     }
   }
 
-  
+
 
   function drawBullets(){
     for (let bullet of bullets) {

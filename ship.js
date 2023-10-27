@@ -91,6 +91,10 @@ function drawPlayerShip(ship) {
     if (ship.controlAccel > 0.1) {
       image(spriteFire, 0, 25);
     }
+
+    if (ship.controlFire && frameCount%characterStats[charID].bulletRate == 0  ){
+        image(spriteMuzzleFlash, 0, -15, 40, 40);
+    }
   
     pop();
   }
