@@ -73,15 +73,18 @@ function checkBulletCollisions() {
     for (let bullet of bullets) {
 
         // Check collisions with obstacles
-        if (bullet.active && bullet.owner == playerShip.playerID) {
+        if (bullet.active && bullet.owner == 1 || bullet.owner == 2) {
 
             for (let obstacle of obstacles) {
                 if (obstacle.active) {
 
                     if (bullet.position.dist(obstacle.position) < obstacle.radius * 0.5) {
 
-                        obstacle.health -= 15;
-                        obstacle.velocity.add(p5.Vector.mult(bullet.velocity, 1 / obstacle.weight));
+                        if (bullet.owner == playerID){  // Only affect objects if this is our bullet - otherwise the other player handles this
+                            obstacle.health -= 15;
+                            obstacle.velocity.add(p5.Vector.mult(bullet.velocity, 1 / obstacle.weight));
+                        }
+                        
                         bullet.deactivate();
 
                     }

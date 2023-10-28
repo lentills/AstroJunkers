@@ -1,5 +1,7 @@
 
 var shotCooldown = 0;
+var opponentShotCooldown = 0;
+var wasFiringLastFrame = false; // Allows us to see if we have started or stopped firing
 
 // Gets the player controls and applies them to the player ship
 function getControls() {
@@ -26,9 +28,16 @@ function getControls() {
     // Spacebar for firing guns
     if (keyIsDown(32) || mouseIsPressed) {
         playerShip.controlFire = true;
+        if (!wasFiringLastFrame){
+            reportPlayerFiring(true);
+        }
     } else {
         playerShip.controlFire = false;
+        if (wasFiringLastFrame){
+            reportPlayerFiring(false);
+        }
     }
+    wasFiringLastFrame = playerShip.controlFire;
 
 }
 
@@ -80,11 +89,20 @@ function moveShip(ship) {
     }
 
     // Fire bullets (TODO: bullet cooldown)
-    shotCooldown += deltaTime;
-    if (ship.controlFire && shotCooldown > characterStats[charID].bulletRate) {
-        //  shotCooldown = 0; // Shot cooldown set to zero in the draw function, so we can draw muzzle flash
-        fireBullet(p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20)), p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[charID].bulletSpeed), ship.playerID);
+    if (ship.playerID == playerID){
+        shotCooldown += deltaTime;
+        if (ship.controlFire && shotCooldown > characterStats[charID].bulletRate) {
+            //  shotCooldown = 0; // Shot cooldown set to zero in the draw function, so we can draw muzzle flash
+            fireBullet(p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20)), p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[charID].bulletSpeed), ship.playerID);
+        }
+    }else{
+        opponentShotCooldown += deltaTime;
+        if (ship.controlFire && opponentShotCooldown > characterStats[charID].bulletRate) {
+            //  shotCooldown = 0; // Shot cooldown set to zero in the draw function, so we can draw muzzle flash
+            fireBullet(p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20)), p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[charID].bulletSpeed), ship.playerID);
+        }
     }
+
 
 }
 
@@ -137,9 +155,16 @@ function drawPlayerShip(ship) {
     }
 
     // Draw muzzle flash (TODO: different muzzle flash for each character?)
-    if (ship.controlFire && shotCooldown > characterStats[charID].bulletRate ) {
-        image(spriteMuzzleFlash, 0, -15, 40, 40);
-        shotCooldown = 0;
+    if (ship.playerID == playerID){
+        if (ship.controlFire && shotCooldown > characterStats[charID].bulletRate ) {
+            image(spriteMuzzleFlash, 0, -15, 40, 40);
+            shotCooldown = 0;
+        }
+    }else{
+        if (ship.controlFire && opponentShotCooldown > characterStats[charID].bulletRate ) {
+            image(spriteMuzzleFlash, 0, -15, 40, 40);
+            opponentShotCooldown = 0;
+        }
     }
 
     pop();

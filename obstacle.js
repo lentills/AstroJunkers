@@ -35,7 +35,8 @@ class Obstacle {
             this.position.add(p5.Vector.mult(this.velocity, deltaTime * 0.001));
             this.age += deltaTime;
 
-            if (this.health <= 0) {
+            if (this.health < 0) {
+                reportDestroyObstacle(this.id, true);
                 this.destroy();
             }
 
@@ -44,8 +45,12 @@ class Obstacle {
                 // TODO: Better AI
 
                 // Move toward the player
-                var vecToPlayer = p5.Vector.sub(playerShip.pos, this.position);
-                if (this.position.dist(playerShip.pos) < 300 && this.position.dist(playerShip.pos) > 150) {
+                var closestVec = playerShip.pos.copy();
+                if (this.position.dist(playerShip.pos) > this.position.dist(opponentShip.pos)) {
+                    closestVec = opponentShip.pos.copy();
+                }
+                var vecToPlayer = p5.Vector.sub(closestVec, this.position);
+                if (this.position.dist(closestVec) < 300 && this.position.dist(closestVec) > 150) {
                     vecToPlayer.setMag(40);
                     this.velocity = vecToPlayer.copy();
                 } else {
@@ -53,7 +58,7 @@ class Obstacle {
                 }
 
                 // Fire at the player
-                if (this.position.dist(playerShip.pos) < 300) {
+                if (this.position.dist(closestVec) < 300) {
                     this.shotCooldown += deltaTime;
                     if (this.shotCooldown > this.fireRate) {
                         if (this.shotCount < 3) {
@@ -75,7 +80,7 @@ class Obstacle {
         }
     }
 
-    create(pos, vel, weight, radius, health, sprite, isEnemy) {
+    create(id, pos, vel, weight, radius, health, sprite, isEnemy, fireRate) {
         this.active = true;
         this.position = pos.copy();
         this.velocity = vel.copy();
@@ -86,7 +91,10 @@ class Obstacle {
         this.sprite = sprite;
         this.isEnemy = isEnemy;
         lastObstacleID++;
-        this.id = lastObstacleID;
+        this.id = id;
+        this.fireRate = fireRate;
+        this.shotCooldown = 0;  // Cooldown on each burst
+        this.shotCount = 0;
     }
 
     deactivate() {
@@ -96,29 +104,46 @@ class Obstacle {
     // Deactivates the obstacle/enemy but makes them explode!
     destroy() {
 
-        this.deactivate();
+        if (this.active) {
+            this.deactivate();
 
-        // TODO: explosion effect
+            // TODO: explosion effect
 
-        // If this is a big asteroid, split it into little ones
-        if (this.weight > 60 && !this.isEnemy) {
-            randomSeed(this.position.y);
-            createObstacle(this.position.copy(), p5.Vector.add(this.velocity, createVector(random(-50, 0), random(-50, 80))), 30, 30, 20, 1, false);
-            createObstacle(this.position.copy(), p5.Vector.add(this.velocity, createVector(random(-30, 30), random(-50, 50))), 30, 20, 30, 1, false);
+            // If this is a big asteroid, split it into little ones
+            if (this.weight > 60 && !this.isEnemy && playerID == 1) {
+                randomSeed(this.position.y);
+                createObstacle(-1, this.position.copy(), p5.Vector.add(this.velocity, createVector(random(-50, 0), random(-50, 80))), 30, 30, 20, 1, false, 0);
+                createObstacle(-1, this.position.copy(), p5.Vector.add(this.velocity, createVector(random(-30, 30), random(-50, 50))), 30, 20, 30, 1, false, 0);
+            }
         }
 
     }
 }
 
 
-// Find an inactive bullet and fire it
-function createObstacle(pos, direction, weight, radius, health, sprite, isEnemy) {
+// Find an inactive obstacle and create it
+// Set id to -1 to automatically assign a free id
+function createObstacle(id, pos, direction, weight, radius, health, sprite, isEnemy, fireRate) {
+
+    if (id == -1) {
+        id = lastObstacleID;
+    }
+    if (lastObstacleID < id) {
+        lastObstacleID = id;
+    }
     for (let obstacle of obstacles) {
         if (!obstacle.active) {
-            obstacle.create(pos, direction, weight, radius, health, sprite, isEnemy);
+            obstacle.create(id, pos, direction, weight, radius, health, sprite, isEnemy, fireRate);
+            // If we are the main player, report that we created this
+            if (playerID == 1) {
+                reportObstacle(obstacle);
+            }
             break;
         }
     }
+
+
+
 }
 
 
@@ -139,6 +164,8 @@ function drawObstacles(obstacle) {
 function loadObstacleSprites() {
     obstacleSprites.push(loadImage('assets/temp/meteorBrown_big1.png'));
     obstacleSprites.push(loadImage('assets/temp/meteorBrown_med3.png'));
+    obstacleSprites.push(loadImage('assets/temp/ufoRed.png'));
+    obstacleSprites.push(loadImage('assets/temp/ufoRed.png'));
     obstacleSprites.push(loadImage('assets/temp/ufoRed.png'));
 }
 

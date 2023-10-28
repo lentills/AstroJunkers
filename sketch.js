@@ -139,18 +139,13 @@ function drawGame(){
   // Draw the scenery
   drawMapTiles(0);
 
-  // TEMP - debug map collisions
-  /*for (var x = 0; x < 10 * 500; x += 10) {
-    for (var y = 0; y < 30 * 500; y += 10) {
-      if (checkMapCollision(0, x, -y) == 1) {
-        fill(255, 0, 0);
-        rect(x, -y, 5, 5);
-      }
-    }
-  }*/
-
-  // Draw player (temp)
+  // Draw players
   drawPlayerShip(playerShip);
+  if (multiplayer){
+    drawPlayerShip(opponentShip);
+  }
+
+  // Draw other scene objects
   drawBullets();
   drawObstacles();
 
@@ -166,10 +161,18 @@ function doTimeStep() {
 
   getControls();
   moveShip(playerShip);
+  if (multiplayer){
+    moveShip(opponentShip);
+    checkPlayerCollisions(opponentShip);
+  }
   updateObjects();
 
   checkPlayerCollisions(playerShip);
   checkBulletCollisions();
+
+  if (multiplayer){
+    syncGamestates();
+  }
 
 }
 
@@ -229,9 +232,48 @@ function setupSingleplayer(){
 
 
   // TEMP
-  createObstacle(createVector(500, -300), createVector(50, -100), 150, 100, 100, 0, false);
-  createObstacle(createVector(2200, -1000), createVector(5, -10), 150, 100, 100, 0, false);
-  createObstacle(createVector(2300, -1000), createVector(0, -10), 150, 60, 100, 2, true);
+  createObstacle(-1, createVector(500, -300), createVector(50, -100), 150, 100, 100, 0, false, 0);
+  createObstacle(-1, createVector(2200, -1000), createVector(5, -10), 150, 100, 100, 0, false, 0);
+  createObstacle(-1, createVector(2300, -1000), createVector(0, -10), 150, 60, 100, 2, true, 250);
+}
+
+
+
+/////
+// Setup multiplayer game
+/////
+
+function setupMultiplayerplayer(){
+
+  // Setup player
+  multiplayer = true;
+  playerShip = { playerID: playerID, character: 0, pos: createVector(2200 + (playerID-1)*100, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 100, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1 };
+  opponentShip = { playerID: playerID%2+1, character: 0, pos: createVector(2200 + (playerID%2)*100, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 100, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1 };
+  cameraPos = playerShip.pos.copy();
+  cameraVel = playerShip.vel.copy();
+  cameraZoom = 3;
+  cameraZoomSpeed = 0;
+
+  // Initialise bullet object pool
+  bullets = [];
+  for (let i = 0; i < MAX_BULLETS; i++) {
+    bullets.push(new Bullet());
+  }
+
+  // Initialise obstacle object pool
+  obstacles = [];
+  for (let i = 0; i < MAX_OBSTACLES; i++) {
+    obstacles.push(new Obstacle());
+  }
+
+
+  // TEMP
+  if (playerID == 1){
+    createObstacle(-1, createVector(500, -300), createVector(50, -100), 150, 100, 100, 0, false, 0);
+    createObstacle(-1, createVector(2200, -1000), createVector(5, -10), 150, 100, 100, 0, false, 0);
+    createObstacle(-1, createVector(2300, -1000), createVector(0, -10), 150, 60, 100, 2, true, 250);
+  }
+  
 }
 
 
