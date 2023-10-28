@@ -9,15 +9,15 @@
 // + Build map
 // - Menu and character select screens
 // - Build characters abilities
-// - Extra animations and sparkles
-// - Integrate multiplayer
-//    - Peer to peer code
+// + Integrate multiplayer
+//    + Peer to peer code
 //    - data syncing for menu screens
-//    - data syncing for gameplay
-//    - Character interactions
+//    + data syncing for gameplay
+//    + Character interactions
 // - Final artworks
 // - Sound effects
 // - Music
+// - Extra animations and sparkles
 ///////////////////////
 
 
