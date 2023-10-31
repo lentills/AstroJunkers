@@ -28,6 +28,7 @@ class Obstacle {
         this.shotCooldown = 0;  // Cooldown on each burst
         this.shotCount = 0;
         this.fireRate = 250;
+        this.hitEffect = 0;     // Make the object glow for a couple frames on hit
     }
 
     update() {
@@ -46,9 +47,12 @@ class Obstacle {
 
                 // Move toward the player
                 var closestVec = playerShip.pos.copy();
-                if (this.position.dist(playerShip.pos) > this.position.dist(opponentShip.pos)) {
-                    closestVec = opponentShip.pos.copy();
+                if (multiplayer){
+                    if (this.position.dist(playerShip.pos) > this.position.dist(opponentShip.pos)) {
+                        closestVec = opponentShip.pos.copy();
+                    }
                 }
+                
                 var vecToPlayer = p5.Vector.sub(closestVec, this.position);
                 if (this.position.dist(closestVec) < 300 && this.position.dist(closestVec) > 150) {
                     vecToPlayer.setMag(40);
@@ -95,6 +99,10 @@ class Obstacle {
         this.fireRate = fireRate;
         this.shotCooldown = 0;  // Cooldown on each burst
         this.shotCount = 0;
+    }
+
+    hit(){
+        this.hitEffect = 2;
     }
 
     deactivate() {
@@ -148,12 +156,16 @@ function createObstacle(id, pos, direction, weight, radius, health, sprite, isEn
 
 
 
-function drawObstacles(obstacle) {
+function drawObstacles() {
     for (let obstacle of obstacles) {
         if (obstacle.active) {
             push();
             translate(obstacle.position.x, obstacle.position.y);
             //rotate(obstacle.velocity.heading()+90 );
+            if (obstacle.hitEffect > 0){
+                obstacle.hitEffect --;
+                tint(255, 80, 0);      // TODO: see if we can make this flash white instead of red?
+            }
             image(obstacleSprites[obstacle.sprite], 0, 0, obstacle.radius, obstacle.radius);
             pop();
         }

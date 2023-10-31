@@ -135,74 +135,85 @@ function setupClient(peer, peerID) {
 //  controlRot: 0, controlFire: false, isCrashing: -1 };
 function reportPlayerState(ship) {
 
-    // Clean up the data of the ship and send it across
-    let dataToSend = {
-        type: 'shipState',
-        timestamp: Date.now(),
-        playerID: ship.playerID,
-        character: ship.character,
-        posX: ship.pos.x,
-        posY: ship.pos.y,
-        rot: ship.rot,
-        rotVel: ship.rotVel,
-        velX: ship.vel.x,
-        velY: ship.vel.y,
-        health: ship.health,
-        controlAccel: ship.controlAccel,
-        controlRot: ship.controlRot,
-        controlFire: ship.controlFire,
-        isCrashing: ship.isCrashing
-    };
+    if (multiplayer){
+        // Clean up the data of the ship and send it across
+        let dataToSend = {
+            type: 'shipState',
+            timestamp: Date.now(),
+            playerID: ship.playerID,
+            character: ship.character,
+            posX: ship.pos.x,
+            posY: ship.pos.y,
+            rot: ship.rot,
+            rotVel: ship.rotVel,
+            velX: ship.vel.x,
+            velY: ship.vel.y,
+            health: ship.health,
+            controlAccel: ship.controlAccel,
+            controlRot: ship.controlRot,
+            controlFire: ship.controlFire,
+            isCrashing: ship.isCrashing
+        };
 
-    conn.send(dataToSend);
+        conn.send(dataToSend);
+    }
 
 }
 
 // A more granular event that reports if the current player has started or stopped firing
 function reportPlayerFiring(isfiring) {
-    let dataToSend = {
-        type: 'isFiring',
-        isFiring: isfiring
-    };
 
-    conn.send(dataToSend);
+    if (multiplayer){
+        let dataToSend = {
+            type: 'isFiring',
+            isFiring: isfiring
+        };
+    
+        conn.send(dataToSend);
+    }
+
 }
 
 
 // Reports about an obstacle. If this is a new obstacle it will be created on the other end
 function reportObstacle(ob) {
 
-    let dataToSend = {
-        type: 'obstacle',
-        id: ob.id,
-        active: ob.active,
-        posX: ob.position.x,
-        posY: ob.position.y,
-        velX: ob.velocity.x,
-        velY: ob.velocity.y,
-        health: ob.health,
-        weight: ob.weight,
-        radius: ob.radius,
-        sprite: ob.sprite,
-        isEnemy: ob.isEnemy,
-        shotCooldown: ob.shotCooldown,
-        shotCount: ob.shotCount,
-        fireRate: ob.fireRate
-    };
-
-    conn.send(dataToSend);
+    if (multiplayer){
+        let dataToSend = {
+            type: 'obstacle',
+            id: ob.id,
+            active: ob.active,
+            posX: ob.position.x,
+            posY: ob.position.y,
+            velX: ob.velocity.x,
+            velY: ob.velocity.y,
+            health: ob.health,
+            weight: ob.weight,
+            radius: ob.radius,
+            sprite: ob.sprite,
+            isEnemy: ob.isEnemy,
+            shotCooldown: ob.shotCooldown,
+            shotCount: ob.shotCount,
+            fireRate: ob.fireRate
+        };
+    
+        conn.send(dataToSend);
+    }
 
 }
 
 function reportDestroyObstacle(obstacleID, makeExplode) {
 
-    let dataToSend = {
-        type: 'destroyObstacle',
-        id: obstacleID,
-        explode: makeExplode
-    };
+    if (multiplayer){
+        let dataToSend = {
+            type: 'destroyObstacle',
+            id: obstacleID,
+            explode: makeExplode
+        };
+    
+        conn.send(dataToSend);
+    }
 
-    conn.send(dataToSend);
 
 }
 

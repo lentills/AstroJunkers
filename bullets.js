@@ -3,7 +3,7 @@
 // When a bullet hits something or lives too long it is deactivated, and can be re-initialised when a new bullet is fired
 
 
-const MAX_BULLETS = 200;    // Number of bullets maximum. More bullets will take longer to resolve collisions
+const MAX_BULLETS = 100;    // Number of bullets maximum. More bullets will take longer to resolve collisions
 let bullets = [];
 
 
@@ -82,6 +82,7 @@ function checkBulletCollisions() {
 
                         if (bullet.owner == playerID){  // Only affect objects if this is our bullet - otherwise the other player handles this
                             obstacle.health -= 15;
+                            obstacle.hit();
                             obstacle.velocity.add(p5.Vector.mult(bullet.velocity, 1 / obstacle.weight));
                         }
                         
