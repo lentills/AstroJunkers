@@ -80,12 +80,19 @@ function checkBulletCollisions() {
 
                     if (bullet.position.dist(obstacle.position) < obstacle.radius * 0.5) {
 
-                        if (bullet.owner == playerID){  // Only affect objects if this is our bullet - otherwise the other player handles this
+                        /*if (bullet.owner == playerID){  // Only affect objects if this is our bullet - otherwise the other player handles this
                             obstacle.health -= 15;
                             obstacle.hit();
                             obstacle.velocity.add(p5.Vector.mult(bullet.velocity, 1 / obstacle.weight));
+                        }*/
+
+                        // Now only the host controls obstacles
+                        if (playerID == 1){
+                            obstacle.health -= 15;
+                            obstacle.velocity.add(p5.Vector.mult(bullet.velocity, 1 / obstacle.weight));
                         }
                         
+                        obstacle.hit();
                         bullet.deactivate();
 
                     }
@@ -95,7 +102,6 @@ function checkBulletCollisions() {
             // Check collisions against other players (don't deduct health here, this is done on other player's end)
             if (multiplayer){
                 if (bullet.position.dist(opponentShip.pos) < 20) {
-                    //playerShip.health -= 10;
                     bullet.deactivate();
                 }
             }

@@ -21,16 +21,19 @@
 ///////////////////////
 
 
+// Obstacles are glitching.
+//  - Closest player controls them?
+//  - Only host controls them?
+
 
 // Assets
 let spriteShip, spriteFire, spriteStar1, spriteStar2, spriteBullet, spriteMuzzleFlash;
 
 
 // Character stats
-var charID = 0;   // Which character the player has selected
 const characterStats =
   [
-    { health:80, maxSpeed: 350, acceleration: 300, deceleration: 160, maxRotSpeed: 300, rotAcceleration: 800, forwardsFriction: 0.2, sidewaysFriction: 0.3, bulletSpeed: 800, bulletRate: 150 }
+    { health:80, maxSpeed: 350, acceleration: 300, deceleration: 160, maxRotSpeed: 300, rotAcceleration: 800, forwardsFriction: 0.2, sidewaysFriction: 0.3, bulletSpeed: 900, bulletRate: 120 }
   ];
 
 

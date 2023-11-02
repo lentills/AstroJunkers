@@ -10,19 +10,19 @@ function getControls() {
     playerShip.controlRot = 0;
 
     if (keyIsDown(UP_ARROW) && !keyIsDown(DOWN_ARROW) || keyIsDown(87) && !keyIsDown(83)) {
-        playerShip.controlAccel = characterStats[charID].acceleration;
+        playerShip.controlAccel = characterStats[playerShip.character].acceleration;
     }
 
     if (keyIsDown(DOWN_ARROW) && !keyIsDown(UP_ARROW) || keyIsDown(83) && !keyIsDown(87)) {
-        playerShip.controlAccel = -characterStats[charID].deceleration;
+        playerShip.controlAccel = -characterStats[playerShip.character].deceleration;
     }
 
     if (keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW) || keyIsDown(65) && !keyIsDown(68)) {
-        playerShip.controlRot = -characterStats[charID].rotAcceleration;
+        playerShip.controlRot = -characterStats[playerShip.character].rotAcceleration;
     }
 
     if (keyIsDown(RIGHT_ARROW) && !keyIsDown(LEFT_ARROW) || keyIsDown(68) && !keyIsDown(65)) {
-        playerShip.controlRot = characterStats[charID].rotAcceleration;
+        playerShip.controlRot = characterStats[playerShip.character].rotAcceleration;
     }
 
     // Spacebar for firing guns
@@ -68,7 +68,7 @@ function moveShip(ship) {
 
 
     // Apply friction to rotation
-    ship.rotVel = min(max(ship.rotVel, -characterStats[charID].maxRotSpeed), characterStats[charID].maxRotSpeed);
+    ship.rotVel = min(max(ship.rotVel, -characterStats[ship.character].maxRotSpeed), characterStats[ship.character].maxRotSpeed);
     ship.rotVel -= (ship.rotVel * 0.7) * deltaTime * 0.001;
     if (ship.rotVel > 1) {
         ship.rotVel -= 100 * deltaTime * 0.001;
@@ -80,26 +80,26 @@ function moveShip(ship) {
     // Apply friction to motion
     var sidewaysComponent = createVector(cos(ship.rot), -sin(ship.rot));
     var sidewaysVelocity = ship.vel.dot(sidewaysComponent);
-    var frictionForce = sidewaysComponent.mult(sidewaysVelocity * deltaTime * 0.001 * characterStats[charID].sidewaysFriction);
+    var frictionForce = sidewaysComponent.mult(sidewaysVelocity * deltaTime * 0.001 * characterStats[ship.character].sidewaysFriction);
     ship.vel.sub(frictionForce);
-    ship.vel.mult(1 - (deltaTime * 0.001 * characterStats[charID].forwardsFriction));   // Forwards friction multiplier 0.5
+    ship.vel.mult(1 - (deltaTime * 0.001 * characterStats[ship.character].forwardsFriction));   // Forwards friction multiplier 0.5
 
-    if (ship.vel.mag() > characterStats[charID].maxSpeed) {
+    if (ship.vel.mag() > characterStats[ship.character].maxSpeed) {
         ship.vel.mult(0.99);
     }
 
     // Fire bullets (TODO: bullet cooldown)
     if (ship.playerID == playerID){
         shotCooldown += deltaTime;
-        if (ship.controlFire && shotCooldown > characterStats[charID].bulletRate) {
+        if (ship.controlFire && shotCooldown > characterStats[ship.character].bulletRate) {
             //  shotCooldown = 0; // Shot cooldown set to zero in the draw function, so we can draw muzzle flash
-            fireBullet(p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20)), p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[charID].bulletSpeed), ship.playerID);
+            fireBullet(p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20)), p5.Vector.add(p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[ship.character].bulletSpeed), createVector(ship.vel.x, -ship.vel.y)), ship.playerID);
         }
     }else{
         opponentShotCooldown += deltaTime;
-        if (ship.controlFire && opponentShotCooldown > characterStats[charID].bulletRate) {
+        if (ship.controlFire && opponentShotCooldown > characterStats[ship.character].bulletRate) {
             //  shotCooldown = 0; // Shot cooldown set to zero in the draw function, so we can draw muzzle flash
-            fireBullet(p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20)), p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[charID].bulletSpeed), ship.playerID);
+            fireBullet(p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20)), p5.Vector.add(p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[ship.character].bulletSpeed), createVector(ship.vel.x, -ship.vel.y)), ship.playerID);
         }
     }
 
@@ -122,6 +122,7 @@ function checkPlayerCollisions(ship){
 
                 if (ship.playerID == playerShip.playerID){  // Only the local player destroys objects, and will send this data to the other player
                     obstacle.destroy();
+                    reportDestroyObstacle(obstacle.id, true);
                 }
 
             }
@@ -156,12 +157,12 @@ function drawPlayerShip(ship) {
 
     // Draw muzzle flash (TODO: different muzzle flash for each character?)
     if (ship.playerID == playerID){
-        if (ship.controlFire && shotCooldown > characterStats[charID].bulletRate ) {
+        if (ship.controlFire && shotCooldown > characterStats[ship.character].bulletRate ) {
             image(spriteMuzzleFlash, 0, -15, 40, 40);
             shotCooldown = 0;
         }
     }else{
-        if (ship.controlFire && opponentShotCooldown > characterStats[charID].bulletRate ) {
+        if (ship.controlFire && opponentShotCooldown > characterStats[ship.character].bulletRate ) {
             image(spriteMuzzleFlash, 0, -15, 40, 40);
             opponentShotCooldown = 0;
         }
