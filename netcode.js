@@ -4,8 +4,8 @@
 var peer = null;
 var myPeerID = null;
 
-const REPORT_RATE_SHIP_UPDATE = 200;    // Send a ship update every x millis
-const REPORT_OBSTACLE_UPDATE = 100;    // Send an update about one obstacle every x millis
+const REPORT_RATE_SHIP_UPDATE = 90;    // Send a ship update every x millis
+const REPORT_OBSTACLE_UPDATE = 105;    // Send an update about one obstacle every x millis
 
 var timestampLast = 0;      // Timestamp of last packet recieved
 var timestampShipUpdate = 0;  // Timestamp since we last sent an update of our ship state
@@ -214,6 +214,18 @@ function reportDestroyObstacle(obstacleID, makeExplode) {
         conn.send(dataToSend);
     }
 
+}
+
+function reportDestroyTarget(targetID) {
+
+    if (multiplayer){
+        let dataToSend = {
+            type: 'destroyTarget',
+            id: targetID,
+        };
+    
+        conn.send(dataToSend);
+    }
 
 }
 
@@ -289,6 +301,15 @@ function gotData(data) {
 
     }
 
+    if (data.type === 'destroyTarget') {
+
+        for (let target of targets) {
+            if (target.id == data.id){
+                target.destroy();
+            }
+        }
+
+    }
 
 }
 

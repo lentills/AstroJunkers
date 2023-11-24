@@ -252,10 +252,10 @@ function setupSingleplayer(){
   createObstacle(-1, createVector(2300, -1000), createVector(0, -10), 150, 60, 100, 2, true, 250);
 
   // Initialise the positions of the targets
-  targets[0].create(createVector(5*tileSize-150, -15*tileSize+145), 100);
-  targets[1].create(createVector(5*tileSize-3,   -15*tileSize+145), 100);
-  targets[2].create(createVector(5*tileSize+135, -15*tileSize+133), 100);
-  targets[3].create(createVector(5*tileSize+260, -15*tileSize+110), 100);
+  targets[0].create(createVector(5*tileSize-150, -15*tileSize+145), 100, 0);
+  targets[1].create(createVector(5*tileSize-3,   -15*tileSize+145), 100, 1);
+  targets[2].create(createVector(5*tileSize+135, -15*tileSize+133), 100, 2);
+  targets[3].create(createVector(5*tileSize+260, -15*tileSize+110), 100, 3);
 }
 
 
@@ -268,8 +268,8 @@ function setupMultiplayerplayer(){
 
   // Setup player
   multiplayer = true;
-  playerShip = { playerID: playerID, character: 0, pos: createVector(2200 + (playerID-1)*100, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 100, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1 };
-  opponentShip = { playerID: playerID%2+1, character: 0, pos: createVector(2200 + (playerID%2)*100, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 100, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1 };
+  playerShip = { playerID: playerID, character: 0, pos: createVector(2200 + (playerID-1)*100, -14*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 100, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1 };
+  opponentShip = { playerID: playerID%2+1, character: 0, pos: createVector(2200 + (playerID%2)*100, -14*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 100, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
@@ -293,11 +293,11 @@ function setupMultiplayerplayer(){
     targets.push(new Target())
   }
 
-  // Initialise the locations of the targets
-  targets[0].create(createVector(5*tileSize, -15*tileSize), 100);
-  targets[1].create(createVector(5*tileSize+100, -15*tileSize), 100);
-  targets[2].create(createVector(5*tileSize+200, -15*tileSize), 100);
-  targets[3].create(createVector(5*tileSize+300, -15*tileSize), 100);
+  // Initialise the positions of the targets
+  targets[0].create(createVector(5*tileSize-150, -15*tileSize+145), 100, 0);
+  targets[1].create(createVector(5*tileSize-3,   -15*tileSize+145), 100, 1);
+  targets[2].create(createVector(5*tileSize+135, -15*tileSize+133), 100, 2);
+  targets[3].create(createVector(5*tileSize+260, -15*tileSize+110), 100, 3);
 
 
   // TEMP

@@ -14,13 +14,14 @@ class Target{
         this.position = createVector(0, 0);
         this.health = 100;
         this.hitEffect = 0;
+        this.id = -1;
     }
 
     update() {
         if (this.active) {
 
             if (this.health < 0) {
-                reportDestroyObstacle(this.id, true);
+                reportDestroyTarget(this.id);
                 this.destroy();
 
                 // TODO: release loot
@@ -33,10 +34,11 @@ class Target{
         this.hitEffect = 3;
     }
 
-    create(pos, health) {
+    create(pos, health, id) {
         this.active = true;
         this.position = pos.copy();
         this.health = health;
+        this.id = id;
     }
 
     deactivate() {
