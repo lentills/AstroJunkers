@@ -21,10 +21,6 @@
 ///////////////////////
 
 
-// Obstacles are glitching.
-//  - Closest player controls them?
-//  - Only host controls them?
-
 
 // Assets
 let spriteShip, spriteFire, spriteStar1, spriteStar2, spriteBullet, spriteMuzzleFlash;
@@ -33,7 +29,7 @@ let spriteShip, spriteFire, spriteStar1, spriteStar2, spriteBullet, spriteMuzzle
 // Character stats
 const characterStats =
   [
-    { health:80, maxSpeed: 350, acceleration: 300, deceleration: 160, maxRotSpeed: 300, rotAcceleration: 800, forwardsFriction: 0.2, sidewaysFriction: 0.3, bulletSpeed: 900, bulletRate: 120 }
+    { health:80, maxSpeed: 350, acceleration: 300, deceleration: 220, maxRotSpeed: 300, rotAcceleration: 800, forwardsFriction: 0.2, sidewaysFriction: 0.3, bulletSpeed: 900, bulletRate: 120 }
   ];
 
 
@@ -51,7 +47,7 @@ var multiplayer;
 
 
 function preload() {
-  spriteShip = loadImage('assets/temp/playerShip3_blue.png');
+  spriteShip = loadImage('assets/temp/nyxShip.png');
   spriteFire = loadImage('assets/temp/fire14.png');
   spriteStar1 = loadImage('assets/temp/star1.png');
   spriteStar2 = loadImage('assets/temp/star2.png');
@@ -123,12 +119,12 @@ function draw() {
 function drawGame(){
   // Draw the background, will not move with the player
   strokeWeight(0);
-  fill(10, 0, 20);
-  rect(0, 0, gameWidth, gameHeight, 20);
-
+  fill(7, 6, 56);
+  rect(0, 0, gameWidth, gameHeight, 40);
+  
   drawBackground((-playerShip.pos.y) / 30000);  // TODO: Update this number to length of map in pixels
-  fill(10, 0, 20, 100);
-  rect(0, 0, gameWidth, gameHeight, 20);
+  fill(7, 6, 56, 100);
+  rect(0, 0, gameWidth, gameHeight, 40);
 
   // Move the camera
   push();
@@ -154,7 +150,7 @@ function drawGame(){
   // Draw other scene objects
   drawBullets();
   drawObstacles();
-
+  drawTargets();
 
   pop();
 }
@@ -202,6 +198,13 @@ function updateObjects() {
     }
   }
 
+  // Update obstace positions
+  for (let target of targets) {
+    if (target.active) {
+      target.update();
+    }
+  }
+
 
 }
 
@@ -218,7 +221,7 @@ function setupSingleplayer(){
 
   // Setup player
   multiplayer = false;
-  playerShip = { playerID: 1, character: 0, pos: createVector(2250, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 100, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1 };
+  playerShip = { playerID: 1, character: 0, pos: createVector(2250, -14*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 100, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
@@ -236,11 +239,23 @@ function setupSingleplayer(){
     obstacles.push(new Obstacle());
   }
 
+  // Initialise target object pool
+  targets = [];
+  for (let i=0; i<NUM_TARGETS; i++){
+    targets.push(new Target())
+  }
+
 
   // TEMP
   createObstacle(-1, createVector(500, -300), createVector(50, -100), 150, 100, 100, 0, false, 0);
   createObstacle(-1, createVector(2200, -1000), createVector(5, -10), 150, 100, 100, 0, false, 0);
   createObstacle(-1, createVector(2300, -1000), createVector(0, -10), 150, 60, 100, 2, true, 250);
+
+  // Initialise the positions of the targets
+  targets[0].create(createVector(5*tileSize-150, -15*tileSize+145), 100);
+  targets[1].create(createVector(5*tileSize-3,   -15*tileSize+145), 100);
+  targets[2].create(createVector(5*tileSize+135, -15*tileSize+133), 100);
+  targets[3].create(createVector(5*tileSize+260, -15*tileSize+110), 100);
 }
 
 
@@ -271,6 +286,18 @@ function setupMultiplayerplayer(){
   for (let i = 0; i < MAX_OBSTACLES; i++) {
     obstacles.push(new Obstacle());
   }
+
+  // Initialise target object pool
+  targets = [];
+  for (let i=0; i<NUM_TARGETS; i++){
+    targets.push(new Target())
+  }
+
+  // Initialise the locations of the targets
+  targets[0].create(createVector(5*tileSize, -15*tileSize), 100);
+  targets[1].create(createVector(5*tileSize+100, -15*tileSize), 100);
+  targets[2].create(createVector(5*tileSize+200, -15*tileSize), 100);
+  targets[3].create(createVector(5*tileSize+300, -15*tileSize), 100);
 
 
   // TEMP

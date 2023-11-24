@@ -2,9 +2,10 @@
 
 
 
-const NUM_TARGETS = 5;
+const NUM_TARGETS = 4;
 let targets = [];
 var spriteTarget;
+var spriteBoss;
 
 class Target{
 
@@ -12,7 +13,7 @@ class Target{
         this.active = false;
         this.position = createVector(0, 0);
         this.health = 100;
-        this.hit = 0;
+        this.hitEffect = 0;
     }
 
     update() {
@@ -29,13 +30,12 @@ class Target{
     }
 
     hit(){
-        this.hit = 3;
+        this.hitEffect = 3;
     }
 
-    create(pos, vel, health) {
+    create(pos, health) {
         this.active = true;
         this.position = pos.copy();
-        this.velocity = vel.copy();
         this.health = health;
     }
 
@@ -57,14 +57,18 @@ class Target{
 
 
 function drawTargets() {
+    image(spriteBoss, 5*tileSize, -15*tileSize, 3*tileSize, 3*tileSize*0.4); 
     for (let target of targets) {
         if (target.active) {
             push();
-            if (target.hit > 0){
-                target.hit --;
-                tint(255, 0, 0);
+            if (target.hitEffect > 0){
+                target.hitEffect --;
+                //tint(255, 0, 0);
+                fill(255, 0, 0, 200);
+                circle(target.position.x, target.position.y, 85);
+            }else{
+                image(spriteTarget, target.position.x, target.position.y, 90, 90);
             }
-            image(spriteTarget, 0, 0, 120, 120);
             pop();
         }
     }
@@ -72,8 +76,8 @@ function drawTargets() {
 
 
 function loadBossSprites() {
-    spriteTarget = loadImage('assets/temp/ufoRed.png');
+    spriteTarget = loadImage('assets/temp/target.png');
+    spriteBoss = loadImage('assets/temp/boss.png');
 }
-
 
 

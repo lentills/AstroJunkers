@@ -25,6 +25,8 @@ function loadTileSprites() {
     tileSprites.push(loadImage('assets/temp/verticalRight.png'));
     tileSprites.push(loadImage('assets/temp/wiggle1.png'));
     tileSprites.push(loadImage('assets/temp/wiggle2.png'));
+    tileSprites.push(loadImage('assets/temp/blankTile.png'));
+    tileSprites.push(loadImage('assets/temp/wall.png'));
 }
 
 
@@ -165,6 +167,35 @@ const tileCollisions = [
         0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0
     ],
 
+    [   // 9 - Free tile
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+    ],
+
+    [   // 10 - Empty tile with stars
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    ]
 ];
 
 
@@ -183,11 +214,11 @@ const mapTiles = [
         0, 0, 0, 0, 7, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 8, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0,10, 1,10,10, 0, 0, 0,
+        0, 0, 0,10, 9, 9,10, 0, 0, 0,
+        0, 0, 0,10, 9, 9,10, 0, 0, 0,
+        0, 0, 0,10, 9, 9,10, 0, 0, 0,
+        0, 0, 0,10,10,10,10, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -222,7 +253,8 @@ function checkMapCollision(mapID, posX, posY) {
     let mapX = floor(posX / tileSize);
 
     let tileID = mapTiles[mapID][mapY * mapWidth + mapX];
-    if (tileID == 0) { return 0; } // All points on tile 0 are 0, so skip next step
+    if (tileID == 0 || tileID == 10) { return 0; } // All points on tile 0 and 10 are 0, so skip next step
+    if (tileID == 9) { return 1; } // All points on tile 9 are 1, so skip next step
 
     // Get the position on this tile
     posX -= mapX * tileSize;

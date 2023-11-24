@@ -148,7 +148,7 @@ function drawPlayerShip(ship) {
     translate(ship.pos.x, ship.pos.y);
     rotate(ship.rot);
 
-    image(ship.sprite, 0, 0, 30, 30);
+    image(ship.sprite, 0, 0, 50, 50);
 
     // Draw the rocket engine firing
     if (ship.controlAccel > 0.1) {

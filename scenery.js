@@ -17,9 +17,9 @@ function drawBackground(offset) {
 
         if (y < -offset*BACKGROUND_LENGTH + gameHeight && y > -offset*BACKGROUND_LENGTH){    // don't bother drawing stars off the screen
             if (floor(y)%2 === 0) {   // Choose one of two star sprites
-                image(spriteStar1, x, y + offset*BACKGROUND_LENGTH, 4, 4);
+                image(spriteStar1, x, y + offset*BACKGROUND_LENGTH, 6, 6);
             } else {
-                image(spriteStar2, x, y + offset*BACKGROUND_LENGTH, 6, 6);
+                image(spriteStar2, x, y + offset*BACKGROUND_LENGTH, 10, 10);
             }
         }
 
@@ -35,7 +35,7 @@ function drawMapTiles(mapID){
         for (var y=0;y<mapHeight;y++){
 
             let spriteID = mapTiles[mapID][y*mapWidth + x] - 1;
-            if (spriteID != -1){
+            if (spriteID != -1 && spriteID != 10){
                 imageMode(CORNER);
                 image(tileSprites[spriteID], x*tileSize, -y*tileSize-tileSize, tileSize, tileSize);
                 imageMode(CENTER);
