@@ -54,7 +54,7 @@ class Obstacle {
                 }
                 
                 var vecToPlayer = p5.Vector.sub(closestVec, this.position);
-                if (this.position.dist(closestVec) < 300 && this.position.dist(closestVec) > 150) {
+                if (this.position.dist(closestVec) < 500 && this.position.dist(closestVec) > 150) {
                     vecToPlayer.setMag(40);
                     this.velocity = vecToPlayer.copy();
                 } else {
@@ -121,7 +121,7 @@ class Obstacle {
             if (this.weight > 60 && !this.isEnemy && playerID == 1) {
                 randomSeed(this.position.y);
                 createObstacle(-1, this.position.copy(), p5.Vector.add(this.velocity, createVector(random(-50, 0), random(-50, 80))), 30, 30, 20, 1, false, 0);
-                createObstacle(-1, this.position.copy(), p5.Vector.add(this.velocity, createVector(random(-30, 30), random(-50, 50))), 30, 20, 30, 1, false, 0);
+                createObstacle(-1, this.position.copy(), p5.Vector.add(this.velocity, createVector(random(-30, 30), random(-50, 50))), 30, 20, 20, 1, false, 0);
             }
         }
 

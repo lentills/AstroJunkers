@@ -121,8 +121,13 @@ function checkPlayerCollisions(ship){
                 ship.isCrashing = obstacle.weight*15;
 
                 if (ship.playerID == playerShip.playerID){  // Only the local player destroys objects, and will send this data to the other player
-                    obstacle.destroy();
-                    reportDestroyObstacle(obstacle.id, true);
+                    ship.vel = p5.Vector.mult(createVector(p5.Vector.sub(ship.pos, obstacle.position).x, -p5.Vector.sub(ship.pos, obstacle.position.y)), 5);
+                    if (obstacle.isEnemy){
+                        obstacle.health -= 40;
+                    }else{
+                        obstacle.destroy();
+                        reportDestroyObstacle(obstacle.id, true);
+                    }
                 }
 
             }
@@ -133,6 +138,14 @@ function checkPlayerCollisions(ship){
     if (checkMapCollision(0, ship.pos.x, ship.pos.y) == 0){
         ship.vel.mult(1 - (deltaTime * 0.001 * 5.0 ));
         //console.log("WHAT KOIND OF A COLLISION?");
+    }
+
+    // Check to see if we are crashing into the boss, and bounce off
+    if (bossAlive && ship.pos.y < -BOSS_POSITION*tileSize+130){
+        ship.vel.y = -250;
+        ship.pos.y = -BOSS_POSITION*tileSize+140;
+        ship.health -= 40;
+        ship.isCrashing = 100;
     }
 }
 
@@ -155,15 +168,15 @@ function drawPlayerShip(ship) {
         image(spriteFire, 0, 25);
     }
 
-    // Draw muzzle flash (TODO: different muzzle flash for each character?)
+    // Draw muzzle flash
     if (ship.playerID == playerID){
         if (ship.controlFire && shotCooldown > characterStats[ship.character].bulletRate ) {
-            image(spriteMuzzleFlash, 0, -15, 40, 40);
+            image(spriteMuzzleFlash[Math.floor(Math.random() * 3)], 0, -15, 40, 40);
             shotCooldown = 0;
         }
     }else{
         if (ship.controlFire && opponentShotCooldown > characterStats[ship.character].bulletRate ) {
-            image(spriteMuzzleFlash, 0, -15, 40, 40);
+            image(spriteMuzzleFlash[floor(random()*3)], 0, -15, 40, 40);
             opponentShotCooldown = 0;
         }
     }

@@ -110,9 +110,7 @@ function checkBulletCollisions() {
             for (let target of targets){
                 if (target.active){
                     if (bullet.position.dist(target.position) < 45) {
-                        if (playerID == 1){
-                            target.health -= 15;    // TODO: hit points based on character stats
-                        }
+                        target.health -= 15;    // TODO: hit points based on character stats
                         target.hit();
                         bullet.deactivate();
                     }

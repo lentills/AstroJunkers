@@ -229,6 +229,18 @@ function reportDestroyTarget(targetID) {
 
 }
 
+function reportDestroyBoss() {
+
+    if (multiplayer){
+        let dataToSend = {
+            type: 'destroyTarget'
+        };
+    
+        conn.send(dataToSend);
+    }
+
+}
+
 
 // Recieve data from the opponent, use this to update our game state
 function gotData(data) {
@@ -309,6 +321,10 @@ function gotData(data) {
             }
         }
 
+    }
+
+    if (data.type === 'destroyBoss') {
+        bossAlive = false;
     }
 
 }

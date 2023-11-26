@@ -1,11 +1,12 @@
 
 
 
-
+const BOSS_POSITION = 26;    // Y position of the pos in tiles
 const NUM_TARGETS = 4;
 let targets = [];
 var spriteTarget;
 var spriteBoss;
+var bossAlive = true;
 
 class Target{
 
@@ -54,18 +55,30 @@ class Target{
             // TODO: explosion effect
         }
 
+        // Check to see if this is the last target
+        bossAlive = false;
+        for (let target of targets) {
+            if (target.active) {
+                bossAlive = true;
+            }
+        }
+
     }
 }
 
 
 function drawTargets() {
-    image(spriteBoss, 5*tileSize, -15*tileSize, 3*tileSize, 3*tileSize*0.4); 
+
+    if (!bossAlive){
+        return;
+    }
+
+    image(spriteBoss, 5*tileSize, -BOSS_POSITION*tileSize, 3*tileSize, 3*tileSize*0.4); 
     for (let target of targets) {
         if (target.active) {
             push();
             if (target.hitEffect > 0){
                 target.hitEffect --;
-                //tint(255, 0, 0);
                 fill(255, 0, 0, 200);
                 circle(target.position.x, target.position.y, 85);
             }else{
