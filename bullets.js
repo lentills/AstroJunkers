@@ -124,7 +124,9 @@ function checkBulletCollisions() {
         if (bullet.active && (bullet.owner == 0 || bullet.owner != playerShip.playerID)) {
 
             if (bullet.position.dist(playerShip.pos) < 20) {
-                playerShip.health -= 10;
+                if (playerShip.invincibility < 3){
+                    playerShip.health -= 10;
+                }
                 bullet.deactivate();
             }
 

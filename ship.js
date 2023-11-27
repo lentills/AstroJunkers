@@ -1,5 +1,6 @@
 
 var shotCooldown = 0;
+var healthRechargeCooldown = 0;
 var opponentShotCooldown = 0;
 var wasFiringLastFrame = false; // Allows us to see if we have started or stopped firing
 
@@ -45,9 +46,10 @@ function getControls() {
 function moveShip(ship) {
 
     // Check the health here TODO: move somewhere else where it is better for multiplayer
-    if (ship.health < 0){
+    if (ship.health < 2){
         ship.health = characterStats[ship.character].health;
         ship.isCrashing = 2000;
+        ship.invincibility = 2000;
     }
 
     // Ship is crashing, rotate the player a bunch
@@ -91,9 +93,14 @@ function moveShip(ship) {
     // Fire bullets (TODO: bullet cooldown)
     if (ship.playerID == playerID){
         shotCooldown += deltaTime;
-        if (ship.controlFire && shotCooldown > characterStats[ship.character].bulletRate) {
+        if (ship.controlFire && shotCooldown > characterStats[ship.character].bulletRate && ship.fireCooldown > 0) {
             //  shotCooldown = 0; // Shot cooldown set to zero in the draw function, so we can draw muzzle flash
             fireBullet(p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20)), p5.Vector.add(p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[ship.character].bulletSpeed), createVector(ship.vel.x, -ship.vel.y)), ship.playerID);
+            ship.fireCooldown -= characterStats[ship.character].bulletRate * 2;
+            // Penalise firing the last bullet without recharging
+            if (ship.fireCooldown < 0){
+                ship.fireCooldown = -500;
+            }
         }
     }else{
         opponentShotCooldown += deltaTime;
@@ -101,6 +108,26 @@ function moveShip(ship) {
             //  shotCooldown = 0; // Shot cooldown set to zero in the draw function, so we can draw muzzle flash
             fireBullet(p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20)), p5.Vector.add(p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[ship.character].bulletSpeed), createVector(ship.vel.x, -ship.vel.y)), ship.playerID);
         }
+    }
+
+    // Control the invincibility cooldown after losing all healths
+    if (ship.invincibility > 0){
+        ship.invincibility -= deltaTime;
+        if (ship.invincibility < 0){
+            ship.invincibility = 0;
+        }
+    }
+
+    // Health replenishes very slowly
+    if (ship.health < characterStats[ship.character].health && healthRechargeCooldown > 600 && ship.playerID == playerID){
+        healthRechargeCooldown = 0;
+        ship.health ++;
+    }
+    healthRechargeCooldown += deltaTime;
+
+    // Fire cooldown replenishes
+    if (ship.fireCooldown < 3000 && ship.playerID == playerID){
+        ship.fireCooldown += floor(deltaTime);
     }
 
 
@@ -116,7 +143,9 @@ function checkPlayerCollisions(ship){
             if (ship.pos.dist(obstacle.position) < obstacle.radius*0.5+10){
 
                 // Crash!
-                ship.health -= obstacle.weight;
+                if (playerShip.invincibility < 3){
+                    ship.health -= obstacle.weight;
+                }
                 ship.vel.mult(0.3);
                 ship.isCrashing = obstacle.weight*15;
 
@@ -144,8 +173,10 @@ function checkPlayerCollisions(ship){
     if (bossAlive && ship.pos.y < -BOSS_POSITION*tileSize+130){
         ship.vel.y = -250;
         ship.pos.y = -BOSS_POSITION*tileSize+140;
-        ship.health -= 40;
-        ship.isCrashing = 100;
+        if (playerShip.invincibility < 3){
+            ship.health -= 40;
+        }
+        ship.isCrashing = 300;
     }
 }
 
@@ -169,7 +200,7 @@ function drawPlayerShip(ship) {
     }
 
     // Draw muzzle flash
-    if (ship.playerID == playerID){
+    if (ship.playerID == playerID && ship.fireCooldown > 0){
         if (ship.controlFire && shotCooldown > characterStats[ship.character].bulletRate ) {
             image(spriteMuzzleFlash[Math.floor(Math.random() * 3)], 0, -15, 40, 40);
             shotCooldown = 0;
@@ -182,5 +213,32 @@ function drawPlayerShip(ship) {
     }
 
     pop();
+}
+
+
+// Draws the health bar for the given ship
+function drawHealthBar(ship){
+    // TODO: replace with graphics
+    fill(230);
+    rect (1600 - 400, 900 - 100, 300, 15);
+
+    if (ship.invincibility > 0){
+        fill (150, 10, 110);
+        rect (1600 - 400, 900 - 100, 300 * ((2000-ship.invincibility)/2000), 15);
+    }else{
+        fill (200, 20, 10);
+        rect (1600 - 400, 900 - 100, 300 * (max(ship.health, 0) / characterStats[ship.character].health), 15);
+    }
+
+}
+
+
+// Draws the cooldown bar under the health bar
+function drawCooldown(ship){
+    // TODO: replace with graphics
+    fill(230);
+    rect (1600 - 400, 900 - 60, 300, 15);
+    fill (80, 80, 255);
+    rect (1600 - 400, 900 - 60, 300 * (max(ship.fireCooldown, 0) / 3000), 15);
 }
 

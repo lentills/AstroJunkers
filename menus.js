@@ -63,7 +63,7 @@ function drawCharacterSelect(){
 
 
     push();
-    characterViewPosition = lerp(characterViewPosition, characterSelection * -1600, 0.1);
+    characterViewPosition = lerp(characterViewPosition, characterSelection * -1600, 0.15);
     translate(characterViewPosition, 0);    // Move the camera to where the character we are looking at is
 
 

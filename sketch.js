@@ -41,7 +41,7 @@ const characterStats =
   [
     { health:90, maxSpeed: 330, acceleration: 300, deceleration: 220, maxRotSpeed: 300, rotAcceleration: 800, forwardsFriction: 0.2, sidewaysFriction: 0.3, bulletSpeed: 800, bulletRate: 140 },
     { health:80, maxSpeed: 370, acceleration: 300, deceleration: 200, maxRotSpeed: 320, rotAcceleration: 750, forwardsFriction: 0.2, sidewaysFriction: 0.3, bulletSpeed: 900, bulletRate: 120 },
-    { health:110, maxSpeed: 390, acceleration: 250, deceleration: 200, maxRotSpeed: 250, rotAcceleration: 700, forwardsFriction: 0.15, sidewaysFriction: 0.35, bulletSpeed: 900, bulletRate: 100 }
+    { health:110, maxSpeed: 390, acceleration: 250, deceleration: 200, maxRotSpeed: 250, rotAcceleration: 700, forwardsFriction: 0.15, sidewaysFriction: 0.5, bulletSpeed: 900, bulletRate: 100 }
   ];
 
 
@@ -172,6 +172,10 @@ function drawGame(){
   drawTargets();
 
   pop();
+
+  // Draw GUI elements
+  drawHealthBar(playerShip);
+  drawCooldown(playerShip);
 }
 
 
@@ -240,7 +244,7 @@ function setupSingleplayer(playerCharacter){
 
   // Setup player
   multiplayer = false;
-  playerShip = { playerID: 1, character: playerCharacter, pos: createVector(2250, -17*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 100, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1 };
+  playerShip = { playerID: 1, character: playerCharacter, pos: createVector(2250, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
@@ -305,8 +309,8 @@ function setupMultiplayerplayer(){
 
   // Setup player
   multiplayer = true;
-  playerShip = { playerID: playerID, character: 0, pos: createVector(2200 + (playerID-1)*100, -14*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 100, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1 };
-  opponentShip = { playerID: playerID%2+1, character: 0, pos: createVector(2200 + (playerID%2)*100, -14*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 100, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1 };
+  playerShip = { playerID: playerID, character: 0, pos: createVector(2200 + (playerID-1)*100, -14*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000 };
+  opponentShip = { playerID: playerID%2+1, character: 0, pos: createVector(2200 + (playerID%2)*100, -14*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
