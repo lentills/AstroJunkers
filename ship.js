@@ -28,9 +28,9 @@ function getControls() {
 
     // Spacebar for firing guns
     if (keyIsDown(32) || mouseIsPressed) {
-        playerShip.controlFire = true;
-        if (!wasFiringLastFrame){
+        if (!wasFiringLastFrame && playerShip.fireCooldown > 0){
             reportPlayerFiring(true);
+            playerShip.controlFire = true;
         }
     } else {
         playerShip.controlFire = false;
@@ -38,7 +38,18 @@ function getControls() {
             reportPlayerFiring(false);
         }
     }
-    wasFiringLastFrame = playerShip.controlFire;
+
+    // Handle fire cooldown with reporting multiplayer
+    if (wasFiringLastFrame && playerShip.fireCooldown < 0){
+        reportPlayerFiring(false);
+        playerShip.controlFire = false;
+        wasFiringLastFrame = false;
+    }
+    if (playerShip.fireCooldown > 0){
+        wasFiringLastFrame = playerShip.controlFire;
+    }else{
+        wasFiringLastFrame = false;
+    }
 
 }
 
@@ -126,7 +137,7 @@ function moveShip(ship) {
     healthRechargeCooldown += deltaTime;
 
     // Fire cooldown replenishes
-    if (ship.fireCooldown < 3000 && ship.playerID == playerID){
+    if (ship.fireCooldown < 3000){
         ship.fireCooldown += floor(deltaTime);
     }
 
@@ -206,7 +217,7 @@ function drawPlayerShip(ship) {
             shotCooldown = 0;
         }
     }else{
-        if (ship.controlFire && opponentShotCooldown > characterStats[ship.character].bulletRate ) {
+        if (ship.controlFire && opponentShotCooldown > characterStats[ship.character].bulletRate && ship.fireCooldown > 0) {
             image(spriteMuzzleFlash[floor(random()*3)], 0, -15, 40, 40);
             opponentShotCooldown = 0;
         }
