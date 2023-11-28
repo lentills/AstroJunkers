@@ -152,7 +152,10 @@ function reportPlayerState(ship) {
             controlAccel: ship.controlAccel,
             controlRot: ship.controlRot,
             controlFire: ship.controlFire,
-            isCrashing: ship.isCrashing
+            isCrashing: ship.isCrashing,
+            invincibility: ship.invincibility,
+            fireCooldown: ship.fireCooldown,
+            ultimate: ship.ultimate
         };
 
         conn.send(dataToSend);
@@ -242,6 +245,22 @@ function reportDestroyBoss() {
 }
 
 
+function reportUltimate(characterUlt, ultTime){
+
+    if (multiplayer){
+        let dataToSend = {
+            type: 'ultimate',
+            character: characterUlt,
+            owner: playerID,
+            time: ultTime
+        };
+    
+        conn.send(dataToSend);
+    }
+
+}
+
+
 // Recieve data from the opponent, use this to update our game state
 function gotData(data) {
 
@@ -258,6 +277,8 @@ function gotData(data) {
                 opponentShip.controlRot = data.controlRot;
                 opponentShip.controlFire = data.controlFire;
                 opponentShip.isCrashing = data.isCrashing;
+                opponentShip.invincibility = data.invincibility;
+                opponentShip.fireCooldown = data.fireCooldown;
             }
             timestampLast = data.timestamp;
         }
@@ -325,6 +346,22 @@ function gotData(data) {
 
     if (data.type === 'destroyBoss') {
         bossAlive = false;
+    }
+
+    if (data.type === 'ultimate') {
+
+        opponentShip.ultimate = data.time;
+
+        if (data.character == 0){
+        }
+
+        if (data.character == 1){
+            ultimateNyx(opponentShip.playerID);
+        }
+
+        if (data.character == 2){
+        }
+
     }
 
 }

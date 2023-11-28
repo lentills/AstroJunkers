@@ -2,6 +2,7 @@
 var shotCooldown = 0;
 var healthRechargeCooldown = 0;
 var opponentShotCooldown = 0;
+var ultimateCharge = 0;
 var wasFiringLastFrame = false; // Allows us to see if we have started or stopped firing
 
 // Gets the player controls and applies them to the player ship
@@ -24,6 +25,33 @@ function getControls() {
 
     if (keyIsDown(RIGHT_ARROW) && !keyIsDown(LEFT_ARROW) || keyIsDown(68) && !keyIsDown(65)) {
         playerShip.controlRot = characterStats[playerShip.character].rotAcceleration;
+    }
+
+    // Using ultimate
+    if (keyIsDown(81) || keyIsDown(SHIFT)){
+        if (ultimateCharge >= 100000-10){
+
+            ultimateCharge = 0;
+
+            // Hopper and Skipp's ultimate
+            if (playerShip.character == 0){
+                // TODO
+            }
+
+            // Nyx's ultimate
+            if (playerShip.character == 1){
+                playerShip.ultimate = 1;    // Nyx's ult is the EMP burst
+                reportUltimate(1, 1);
+                ultimateNyx(playerID);
+            }
+
+            //Yasmin's ultimate
+            if (playerShip.character == 2){
+                playerShip.ultimate = 5000; // Yasmin's ult is super fast gun for 5 seconds
+                reportUltimate(2, 5000);
+            }
+
+        }
     }
 
     // Spacebar for firing guns
@@ -141,6 +169,7 @@ function moveShip(ship) {
         ship.fireCooldown += floor(deltaTime);
     }
 
+    ultimateCharge = max(min(ultimateCharge + deltaTime*10, 100000), 0);
 
 }
 
@@ -253,3 +282,11 @@ function drawCooldown(ship){
     rect (1600 - 400, 900 - 60, 300 * (max(ship.fireCooldown, 0) / 3000), 15);
 }
 
+
+function drawUltimateBar(){
+    // TODO: replace with graphics
+    fill(230);
+    rect (100, 900 - 80, 300, 25);
+    fill (20, 255, 30);
+    rect (100, 900 - 80, 300 * (max(ultimateCharge, 0) / 100000), 25);
+}

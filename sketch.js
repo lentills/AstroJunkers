@@ -10,6 +10,9 @@
 // + Build map
 // - Menu and character select screens
 // - Build characters abilities
+//    - Hopper and Skipp
+//    + Nyx
+//    - Yasmin
 // + Cooldowns and health bar
 // + Integrate multiplayer
 //    + Peer to peer code
@@ -183,6 +186,7 @@ function drawGame(){
   // Draw GUI elements
   drawHealthBar(playerShip);
   drawCooldown(playerShip);
+  drawUltimateBar();
 }
 
 
@@ -251,7 +255,8 @@ function setupSingleplayer(playerCharacter){
 
   // Setup player
   multiplayer = false;
-  playerShip = { playerID: 1, character: playerCharacter, pos: createVector(2250, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000 };
+  ultimateCharge = 0;
+  playerShip = { playerID: 1, character: playerCharacter, pos: createVector(2250, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
@@ -280,7 +285,6 @@ function setupSingleplayer(playerCharacter){
   // Boss fight henchmen
   createObstacle(-1, createVector(5*tileSize-150, -BOSS_POSITION*tileSize+220), createVector(0, -10), 150, 60, 150, 2, true, 100);
   createObstacle(-1, createVector(5*tileSize+150, -BOSS_POSITION*tileSize+220), createVector(0, -10), 150, 60, 150, 2, true, 100);
-
 
   // Random asteroids
   createObstacle(-1, createVector(4*tileSize+20, -4*tileSize-190), createVector(5, -4), 120, 120, 60, 0, false, 0);
@@ -316,9 +320,10 @@ function setupMultiplayerplayer(){
 
   // Setup player
   multiplayer = true;
+  ultimateCharge = 0;
   lastObstacleID = 0;
-  playerShip = { playerID: playerID, character: 0, pos: createVector(2200 + (playerID-1)*100, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000 };
-  opponentShip = { playerID: playerID%2+1, character: 0, pos: createVector(2200 + (playerID%2)*100, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000 };
+  playerShip = { playerID: playerID, character: 1, pos: createVector(2200 + (playerID-1)*100, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0 };
+  opponentShip = { playerID: playerID%2+1, character: 0, pos: createVector(2200 + (playerID%2)*100, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;

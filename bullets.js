@@ -85,9 +85,14 @@ function checkBulletCollisions() {
                             obstacle.health -= 15;
                             obstacle.velocity.add(p5.Vector.mult(bullet.velocity, 1 / obstacle.weight));
                         }
+
+                        if (bullet.owner == playerID){
+                            ultimateCharge += 500;
+                        }
                         
                         obstacle.hit();
                         bullet.deactivate();
+                        
 
                     }
                 }
@@ -97,6 +102,7 @@ function checkBulletCollisions() {
             if (multiplayer){
                 if (bullet.position.dist(opponentShip.pos) < 20 && bullet.active) {
                     bullet.deactivate();
+                    ultimateCharge += 1000;
                 }
             }
 
@@ -106,6 +112,9 @@ function checkBulletCollisions() {
                     if (bullet.position.dist(target.position) < 45 && bullet.active) {
                         target.health -= 15;    // TODO: hit points based on character stats
                         target.hit();
+                        if (bullet.owner == playerID){
+                            ultimateCharge += 300;
+                        }
                         bullet.deactivate();
                     }
                 }
@@ -121,6 +130,11 @@ function checkBulletCollisions() {
                 if (playerShip.invincibility < 3){
                     playerShip.health -= 10;
                 }
+
+                if (bullet.owner == playerID){
+                    ultimateCharge += 500;
+                }
+
                 bullet.deactivate();
             }
 
@@ -129,3 +143,40 @@ function checkBulletCollisions() {
     }
 
 }
+
+
+
+// Does Nyx's ultimate
+function ultimateNyx(playerUlt) {
+
+    if (playerUlt == playerID) {
+        addExplosion(playerShip.pos.x, playerShip.pos.y, 800, explosionFrames);
+        // Loop through enemies and obstacles and apply massive damage
+        for (let obstacle of obstacles) {
+            if (obstacle.active) {
+                if (playerShip.pos.dist(obstacle.position) < 500) {
+                    obstacle.hit();
+                    obstacle.health -= floor((500 - playerShip.pos.dist(obstacle.position)) / 3);
+                }
+            }
+        }
+    } else {
+        addExplosion(opponentShip.pos.x, opponentShip.pos.y, 800, explosionFrames);
+        // Damage us, since we are caught in the ult
+        if (playerShip.pos.dist(opponentShip.pos) < 500) {
+            playerShip.health -= floor((500 - playerShip.pos.dist(opponentShip.pos)) / 4);
+        }
+        // Loop through enemies and obstacles and apply massive damage
+        for (let obstacle of obstacles) {
+            if (obstacle.active) {
+                if (playerShip.pos.dist(obstacle.position) < 500) {
+                    obstacle.hit();
+                    obstacle.health -= floor((500 - playerShip.pos.dist(obstacle.position)) / 3);
+                }
+            }
+        }
+    }
+
+
+}
+
