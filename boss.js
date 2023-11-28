@@ -51,8 +51,7 @@ class Target{
 
         if (this.active) {
             this.deactivate();
-
-            // TODO: explosion effect
+            addExplosion(this.position.x, this.position.y, 300, explosionFrames);
         }
 
         // Check to see if this is the last target
@@ -61,6 +60,11 @@ class Target{
             if (target.active) {
                 bossAlive = true;
             }
+        }
+
+        if (!bossAlive){
+            reportDestroyBoss();
+            addExplosion(5*tileSize, -BOSS_POSITION*tileSize, 2000, explosionFrames);
         }
 
     }
@@ -91,8 +95,8 @@ function drawTargets() {
 
 
 function loadBossSprites() {
-    spriteTarget = loadImage('assets/temp/target.png');
-    spriteBoss = loadImage('assets/temp/boss.png');
+    spriteTarget = loadImage('assets/target.png');
+    spriteBoss = loadImage('assets/boss.png');
 }
 
 

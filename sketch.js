@@ -10,7 +10,7 @@
 // + Build map
 // - Menu and character select screens
 // - Build characters abilities
-// - Cooldowns and health bar
+// + Cooldowns and health bar
 // + Integrate multiplayer
 //    + Peer to peer code
 //    - data syncing for menu screens
@@ -61,16 +61,19 @@ var multiplayer;
 function preload() {
   spriteShip = loadImage('assets/temp/nyxShip.png');
   spriteFire = loadImage('assets/temp/fire14.png');
-  spriteStar1 = loadImage('assets/temp/star1.png');
-  spriteStar2 = loadImage('assets/temp/star2.png');
+  spriteStar1 = loadImage('assets/star1.png');
+  spriteStar2 = loadImage('assets/star2.png');
   spriteBullet = loadImage('assets/temp/laserBlue05.png');
-  spriteMuzzleFlash.push (loadImage('assets/temp/muzzleFlash1.png'));
-  spriteMuzzleFlash.push (loadImage('assets/temp/muzzleFlash2.png'));
-  spriteMuzzleFlash.push (loadImage('assets/temp/muzzleFlash3.png'));
+
+  spriteMuzzleFlash.push (loadImage('assets/MuzzleFlash1.png'));
+  spriteMuzzleFlash.push (loadImage('assets/MuzzleFlash2.png'));
+  spriteMuzzleFlash.push (loadImage('assets/MuzzleFlash3.png'));
+  spriteMuzzleFlash.push (loadImage('assets/MuzzleFlash4.png'));
 
   loadObstacleSprites();
   loadTileSprites();
   loadBossSprites();
+  loadExplosionSprites();
 }
 
 
@@ -159,6 +162,9 @@ function drawGame(){
 
   // Draw the scenery
   drawMapTiles(0);
+
+  // Do animated explosions
+  handleExplosions();
 
   // Draw players
   drawPlayerShip(playerShip);

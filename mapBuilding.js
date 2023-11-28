@@ -17,16 +17,16 @@ var tileSprites = [];
 
 
 function loadTileSprites() {
-    tileSprites.push(loadImage('assets/temp/verticalStraight.png'));
-    tileSprites.push(loadImage('assets/temp/horizontalStraight.png'));
-    tileSprites.push(loadImage('assets/temp/leftVertical.png'));
-    tileSprites.push(loadImage('assets/temp/rightVertical.png'));
-    tileSprites.push(loadImage('assets/temp/verticalLeft.png'));
-    tileSprites.push(loadImage('assets/temp/verticalRight.png'));
-    tileSprites.push(loadImage('assets/temp/wiggle1.png'));
-    tileSprites.push(loadImage('assets/temp/wiggle2.png'));
-    tileSprites.push(loadImage('assets/temp/blankTile.png'));
-    tileSprites.push(loadImage('assets/temp/wall.png'));
+    tileSprites.push(loadImage('assets/verticalStraight.png'));
+    tileSprites.push(loadImage('assets/horizontalStraight.png'));
+    tileSprites.push(loadImage('assets/leftVertical.png'));
+    tileSprites.push(loadImage('assets/rightVertical.png'));
+    tileSprites.push(loadImage('assets/verticalLeft.png'));
+    tileSprites.push(loadImage('assets/verticalRight.png'));
+    tileSprites.push(loadImage('assets/wiggle1.png'));
+    tileSprites.push(loadImage('assets/wiggle2.png'));
+    tileSprites.push(loadImage('assets/blankTile.png'));
+    tileSprites.push(loadImage('assets/wall.png'));
 }
 
 

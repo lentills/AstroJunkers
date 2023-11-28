@@ -115,7 +115,8 @@ class Obstacle {
         if (this.active) {
             this.deactivate();
 
-            // TODO: explosion effect
+
+            addExplosion(this.position.x, this.position.y, this.radius*3, explosionFrames);
 
             // If this is a big asteroid, split it into little ones
             if (this.weight > 60 && !this.isEnemy && playerID == 1) {

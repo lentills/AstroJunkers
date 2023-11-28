@@ -211,14 +211,14 @@ function drawPlayerShip(ship) {
     }
 
     // Draw muzzle flash
-    if (ship.playerID == playerID && ship.fireCooldown > 0){
+    if (ship.playerID == playerID ){
         if (ship.controlFire && shotCooldown > characterStats[ship.character].bulletRate ) {
-            image(spriteMuzzleFlash[Math.floor(Math.random() * 3)], 0, -15, 40, 40);
+            image(spriteMuzzleFlash[Math.floor(Math.random() * spriteMuzzleFlash.length)], 0, -15, 40, 40);
             shotCooldown = 0;
         }
     }else{
-        if (ship.controlFire && opponentShotCooldown > characterStats[ship.character].bulletRate && ship.fireCooldown > 0) {
-            image(spriteMuzzleFlash[floor(random()*3)], 0, -15, 40, 40);
+        if (ship.controlFire && opponentShotCooldown > characterStats[ship.character].bulletRate) {
+            image(spriteMuzzleFlash[floor(random()*spriteMuzzleFlash.length)], 0, -15, 40, 40);
             opponentShotCooldown = 0;
         }
     }
