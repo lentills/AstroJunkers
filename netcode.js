@@ -279,6 +279,7 @@ function gotData(data) {
                 opponentShip.isCrashing = data.isCrashing;
                 opponentShip.invincibility = data.invincibility;
                 opponentShip.fireCooldown = data.fireCooldown;
+                opponentShip.ultimate = data.ultimate;
             }
             timestampLast = data.timestamp;
         }
@@ -360,6 +361,7 @@ function gotData(data) {
         }
 
         if (data.character == 2){
+
         }
 
     }

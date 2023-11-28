@@ -129,21 +129,33 @@ function moveShip(ship) {
         ship.vel.mult(0.99);
     }
 
-    // Fire bullets (TODO: bullet cooldown)
+    // Fire bullets
     if (ship.playerID == playerID){
+
+        // Shot cooldown
         shotCooldown += deltaTime;
-        if (ship.controlFire && shotCooldown > characterStats[ship.character].bulletRate && ship.fireCooldown > 0) {
+        // If Yasmin is ulting then speedup cooldown
+        if (playerShip.character == 2 && playerShip.ultimate > 0){
+            playerShip.ultimate -= deltaTime;
+            shotCooldown += deltaTime*2;
+        }
+
+        if ((playerShip.character == 2 && playerShip.ultimate > 0) || (ship.controlFire && shotCooldown > characterStats[ship.character].bulletRate && ship.fireCooldown > 0)) {
             //  shotCooldown = 0; // Shot cooldown set to zero in the draw function, so we can draw muzzle flash
             fireBullet(p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20)), p5.Vector.add(p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[ship.character].bulletSpeed), createVector(ship.vel.x, -ship.vel.y)), ship.playerID);
-            ship.fireCooldown -= characterStats[ship.character].bulletRate * 2;
-            // Penalise firing the last bullet without recharging
-            if (ship.fireCooldown < 0){
-                ship.fireCooldown = -500;
+
+            if (playerShip.character != 2 || playerShip.ultimate < 1){
+                ship.fireCooldown -= characterStats[ship.character].bulletRate * 2;
+                // Penalise firing the last bullet without recharging
+                if (ship.fireCooldown < 0){
+                    ship.fireCooldown = -500;
+                }
             }
+
         }
     }else{
         opponentShotCooldown += deltaTime;
-        if (ship.controlFire && opponentShotCooldown > characterStats[ship.character].bulletRate) {
+        if ((opponentShip.character == 2 && opponentShip.ultimate > 0) || (ship.controlFire && opponentShotCooldown > characterStats[ship.character].bulletRate)) {
             //  shotCooldown = 0; // Shot cooldown set to zero in the draw function, so we can draw muzzle flash
             fireBullet(p5.Vector.add(ship.pos, p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), 20)), p5.Vector.add(p5.Vector.mult(createVector(sin(ship.rot), -cos(ship.rot)), characterStats[ship.character].bulletSpeed), createVector(ship.vel.x, -ship.vel.y)), ship.playerID);
         }

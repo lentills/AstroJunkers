@@ -1,5 +1,5 @@
 
-const BACKGROUND_LENGTH = gameHeight*4; // How many screens tall should the background be?
+const BACKGROUND_LENGTH = gameHeight*8; // How many screens tall should the background be?
 
 // Draws the far background, that moves very slowly based on the player's position in the map
 // offset is a number from 0.0-1.0 that determines how far up the starfield we should draw.
