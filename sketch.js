@@ -5,7 +5,7 @@
 // + Add gun
 // + Add enemies
 // + Add asteroids
-// - Add boss fight
+// + Add boss fight
 // + Add collisions
 // + Build map
 // - Menu and character select screens
@@ -22,6 +22,7 @@
 // - Extra animations and sparkles
 //    - Particles when colliding with walls
 //    - Particles ejected from ship - interact with opponent ship?
+//    + Explosions!
 //
 // - Bugfixes
 //    + When tabbing out of the game, deta time becomes large and causes glitched location when logging back in
@@ -315,8 +316,9 @@ function setupMultiplayerplayer(){
 
   // Setup player
   multiplayer = true;
-  playerShip = { playerID: playerID, character: 0, pos: createVector(2200 + (playerID-1)*100, -14*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000 };
-  opponentShip = { playerID: playerID%2+1, character: 0, pos: createVector(2200 + (playerID%2)*100, -14*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000 };
+  lastObstacleID = 0;
+  playerShip = { playerID: playerID, character: 0, pos: createVector(2200 + (playerID-1)*100, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000 };
+  opponentShip = { playerID: playerID%2+1, character: 0, pos: createVector(2200 + (playerID%2)*100, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip, controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
@@ -340,20 +342,34 @@ function setupMultiplayerplayer(){
     targets.push(new Target())
   }
 
+
+  // Initialise obstacles
+  // Boss fight henchmen
+  createObstacle(-1, createVector(5*tileSize-150, -BOSS_POSITION*tileSize+220), createVector(0, -10), 150, 60, 150, 2, true, 100);
+  createObstacle(-1, createVector(5*tileSize+150, -BOSS_POSITION*tileSize+220), createVector(0, -10), 150, 60, 150, 2, true, 100);
+
+
+  // Random asteroids
+  createObstacle(-1, createVector(4*tileSize+20, -4*tileSize-190), createVector(5, -4), 120, 120, 60, 0, false, 0);
+  createObstacle(-1, createVector(4*tileSize-40, -4*tileSize-200), createVector(3, 7), 100, 100, 50, 1, false, 0);
+
+  // Asteroid blockage
+  createObstacle(-1, createVector(4*tileSize+190, -19*tileSize-180), createVector(0, 0), 120, 80, 60, 0, false, 0);
+  createObstacle(-1, createVector(4*tileSize+300, -19*tileSize-200), createVector(0, 0), 100, 100, 50, 1, false, 0);
+  createObstacle(-1, createVector(4*tileSize+330, -19*tileSize-280), createVector(0, 0), 80, 60, 40, 1, false, 0);
+  createObstacle(-1, createVector(4*tileSize+280, -19*tileSize-330), createVector(0, 0), 90, 60, 40, 0, false, 0);
+  createObstacle(-1, createVector(4*tileSize+210, -19*tileSize-280), createVector(0, 0), 110, 90, 50, 0, false, 0);
+  createObstacle(-1, createVector(4*tileSize+400, -19*tileSize-280), createVector(0, 0), 110, 90, 50, 1, false, 0);
+  createObstacle(-1, createVector(4*tileSize+415, -19*tileSize-200), createVector(0, 0), 100, 100, 50, 0, false, 0);
+  createObstacle(-1, createVector(4*tileSize+105, -19*tileSize-200), createVector(0, 0), 30, 30, 20, 0, false, 0);
+  
+
   // Initialise the positions of the boss targets
   targets[0].create(createVector(5*tileSize-150, -BOSS_POSITION*tileSize+145), 300, 0);
   targets[1].create(createVector(5*tileSize-3,   -BOSS_POSITION*tileSize+145), 300, 1);
   targets[2].create(createVector(5*tileSize+135, -BOSS_POSITION*tileSize+133), 300, 2);
   targets[3].create(createVector(5*tileSize+260, -BOSS_POSITION*tileSize+110), 300, 3);
   bossAlive = true;
-
-
-  // TEMP
-  if (playerID == 1){
-    createObstacle(-1, createVector(500, -300), createVector(50, -100), 150, 100, 100, 0, false, 0);
-    createObstacle(-1, createVector(2200, -1000), createVector(5, -10), 150, 100, 100, 0, false, 0);
-    createObstacle(-1, createVector(2300, -1000), createVector(0, -10), 150, 60, 100, 2, true, 250);
-  }
   
 }
 

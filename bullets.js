@@ -78,13 +78,7 @@ function checkBulletCollisions() {
             for (let obstacle of obstacles) {
                 if (obstacle.active) {
 
-                    if (bullet.position.dist(obstacle.position) < obstacle.radius * 0.5) {
-
-                        /*if (bullet.owner == playerID){  // Only affect objects if this is our bullet - otherwise the other player handles this
-                            obstacle.health -= 15;
-                            obstacle.hit();
-                            obstacle.velocity.add(p5.Vector.mult(bullet.velocity, 1 / obstacle.weight));
-                        }*/
+                    if (bullet.position.dist(obstacle.position) < obstacle.radius * 0.5 && bullet.active) {
 
                         // Now only the host controls obstacles
                         if (playerID == 1){
@@ -101,7 +95,7 @@ function checkBulletCollisions() {
 
             // Check collisions against other players (don't deduct health here, this is done on other player's end)
             if (multiplayer){
-                if (bullet.position.dist(opponentShip.pos) < 20) {
+                if (bullet.position.dist(opponentShip.pos) < 20 && bullet.active) {
                     bullet.deactivate();
                 }
             }
@@ -109,7 +103,7 @@ function checkBulletCollisions() {
             // Check collisions against boss
             for (let target of targets){
                 if (target.active){
-                    if (bullet.position.dist(target.position) < 45) {
+                    if (bullet.position.dist(target.position) < 45 && bullet.active) {
                         target.health -= 15;    // TODO: hit points based on character stats
                         target.hit();
                         bullet.deactivate();

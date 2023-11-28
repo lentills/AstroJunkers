@@ -57,7 +57,7 @@ function getControls() {
 function moveShip(ship) {
 
     // Check the health here TODO: move somewhere else where it is better for multiplayer
-    if (ship.health < 2){
+    if (ship.health < 1){
         ship.health = characterStats[ship.character].health;
         ship.isCrashing = 2000;
         ship.invincibility = 2000;
