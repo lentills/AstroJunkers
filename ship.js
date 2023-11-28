@@ -47,8 +47,8 @@ function getControls() {
 
             //Yasmin's ultimate
             if (playerShip.character == 2){
-                playerShip.ultimate = 5000; // Yasmin's ult is super fast gun for 5 seconds
-                reportUltimate(2, 5000);
+                playerShip.ultimate = 4000; // Yasmin's ult is super fast gun for 5 seconds
+                reportUltimate(2, 4000);
             }
 
         }
@@ -97,6 +97,10 @@ function moveShip(ship) {
         ship.rotVel = 500;
     }
 
+    if (ship.ultimate > 0){
+        ship.ultimate -= deltaTime;
+    }
+
     // Rotate the player
     ship.rotVel += ship.controlRot * deltaTime * 0.001
     ship.rot += ship.rotVel * deltaTime * 0.001;
@@ -136,7 +140,6 @@ function moveShip(ship) {
         shotCooldown += deltaTime;
         // If Yasmin is ulting then speedup cooldown
         if (playerShip.character == 2 && playerShip.ultimate > 0){
-            playerShip.ultimate -= deltaTime;
             shotCooldown += deltaTime*2;
         }
 
@@ -253,12 +256,12 @@ function drawPlayerShip(ship) {
 
     // Draw muzzle flash
     if (ship.playerID == playerID ){
-        if (ship.controlFire && shotCooldown > characterStats[ship.character].bulletRate ) {
+        if ((ship.character == 2 && ship.ultimate > 0) || ship.controlFire && shotCooldown > characterStats[ship.character].bulletRate ) {
             image(spriteMuzzleFlash[Math.floor(Math.random() * spriteMuzzleFlash.length)], 0, -15, 40, 40);
             shotCooldown = 0;
         }
     }else{
-        if (ship.controlFire && opponentShotCooldown > characterStats[ship.character].bulletRate) {
+        if ((ship.character == 2 && ship.ultimate > 0) || ship.controlFire && opponentShotCooldown > characterStats[ship.character].bulletRate) {
             image(spriteMuzzleFlash[floor(random()*spriteMuzzleFlash.length)], 0, -15, 40, 40);
             opponentShotCooldown = 0;
         }

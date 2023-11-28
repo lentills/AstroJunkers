@@ -361,7 +361,7 @@ function gotData(data) {
         }
 
         if (data.character == 2){
-
+            // Nothing neede here
         }
 
     }
