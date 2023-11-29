@@ -82,6 +82,7 @@ function preload() {
   loadTileSprites();
   loadBossSprites();
   loadExplosionSprites();
+  loadMenuAssets();
 }
 
 
