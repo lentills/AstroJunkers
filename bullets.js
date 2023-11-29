@@ -160,6 +160,15 @@ function ultimateNyx(playerUlt) {
                 }
             }
         }
+        // Loop through enemies and obstacles and apply massive damage
+        for (let target of targets) {
+            if (target.active) {
+                if (playerShip.pos.dist(target.position) < 500) {
+                    target.hit();
+                    target.health -= floor((500 - playerShip.pos.dist(target.position)) / 3);
+                }
+            }
+        }
     } else {
         addExplosion(opponentShip.pos.x, opponentShip.pos.y, 800, explosionFrames);
         // Damage us, since we are caught in the ult

@@ -71,7 +71,7 @@ function preload() {
 
   spriteShip.push (loadImage('assets/temp/playerShip3_blue.png'));
   spriteShip.push (loadImage('assets/nyxShip.png'));
-  spriteShip.push (loadImage('assets/temp/yasminShip.png'));
+  spriteShip.push (loadImage('assets/yasminShip.png'));
 
   spriteMuzzleFlash.push (loadImage('assets/MuzzleFlash1.png'));
   spriteMuzzleFlash.push (loadImage('assets/MuzzleFlash2.png'));
