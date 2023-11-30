@@ -3,7 +3,7 @@
 // When a bullet hits something or lives too long it is deactivated, and can be re-initialised when a new bullet is fired
 
 
-const MAX_BULLETS = 100;    // Number of bullets maximum. More bullets will take longer to resolve collisions
+const MAX_BULLETS = 150;    // Number of bullets maximum. More bullets will take longer to resolve collisions
 let bullets = [];
 
 
