@@ -89,7 +89,7 @@ function preload() {
 
 function setup() {
 
-  frameRate(60);
+  frameRate(50);
   createCanvas(windowWidth, windowHeight);
   calculateScale();
   angleMode(DEGREES);
@@ -105,11 +105,15 @@ function setup() {
     playerID = 1;
   }
 
+  initialiseStarfield();
+
 }
 
 
 
 function draw() {
+
+  frameRate(50);
 
   if (deltaTime > 1000){  // Tabbing out can cause big delta time spikes leading to glitches. Ignore the tick if there is a big delta time
     return;
@@ -138,6 +142,13 @@ function draw() {
   if (appState == 3){
     drawCharacterSelect();
   }
+
+  
+  // Print framerate
+  fill(200, 200, 200, 50);
+  textSize(20);
+  textAlign(LEFT, CENTER);
+  text(floor(frameRate()), 20, 10);
 
 
   drawBlinders();

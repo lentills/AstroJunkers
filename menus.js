@@ -20,6 +20,54 @@ function loadMenuAssets(){
 }
 
 
+// character select has a 3d starfield effect. This initialises the stars
+let stars = [];
+const numStars = 200;
+function initialiseStarfield(){
+
+    stars = [];
+
+    for (let i = 0; i < numStars; i++) {
+        stars.push(createStar());
+    }
+
+}
+
+function drawStarField(){
+    push();
+
+    // Move the 'camera' back a bit on the z-axis for better perspective
+    translate(gameWidth/2, gameHeight/2, -500);
+
+    stars.forEach((star, index) => {
+        star.z -= 10; // Move star towards the viewer
+
+        // Calculate the projected 2D position
+        let sx = map(star.x / star.z, 0, 1, 0, width);
+        let sy = map(star.y / star.z, 0, 1, 0, height);
+        let r = map(star.z, 0, gameWidth, 4, 1);
+
+        // Draw star
+        fill(255);
+        noStroke();
+        circle(sx, sy, r);
+
+        // Reset star if it moves too close
+        if (star.z < 5) {
+            stars[index] = createStar();
+        }
+    });
+    pop();
+}
+
+function createStar() {
+    let x = random(-500, 500);
+    let y = random(-500, 500);
+    let z = random(1500, 3000); // Start far away on the z-axis
+    return { x, y, z };
+}
+
+
 function drawMainMenu(){
 
     fill(200);
@@ -72,7 +120,7 @@ function drawCharacterSelect(){
 
 
     // Draw starfield in background
-    drawBackground(0);
+    drawStarField();
 
     push();
     characterViewPosition = lerp(characterViewPosition, characterSelection * -1600, 0.15);
@@ -149,10 +197,33 @@ function drawCharacterSelect(){
     rect (0, 800, 1600, 100);
     if (!characterSelected){
 
-        if (mouseX/scaleFactor < 350 && mouseY/scaleFactor > 700 && !characterSelected){
-            fill (200);
-            circle(205, 700, 50);
+        textFont(fontWhiteRabbit);
+        textSize(80);
+        textAlign(CENTER, CENTER);
+
+        // Align mouse positions to relative game scale and translation
+        let horizontalOffset = (windowWidth - (gameWidth * scaleFactor)) / 2;
+        let mouseGameX = (mouseX - horizontalOffset) / scaleFactor;
+        let mouseGameY = mouseY / scaleFactor;
+
+        fill(252, 152, 45, 80);
+        if (mouseGameX < 250 && mouseGameY > 780 && !characterSelected){
+            fill(252, 152, 45, 255);
         }
+        text("<", 120, 860);
+        
+        fill(252, 152, 45, 80);
+        if (mouseGameX > 1350 && mouseGameY > 780 && !characterSelected){
+            fill(252, 152, 45, 255);
+        }
+        text(">", 1480, 860);
+
+        fill(252, 152, 45, 80);
+        textSize(65);
+        if (mouseGameX < 1000 && mouseGameX > 600 && mouseGameY > 780 && !characterSelected){
+            fill(252, 152, 45, 255);
+        }
+        text("SELECT", 800, 860);
 
     }else{
         // TODO: some text here, "waiting for opponent" or something
@@ -193,24 +264,30 @@ function drawCharacterFrame(){
     tint(50, 255, 100);
     image(spriteStar2, 150, 230, 30, 30);
     tint(255);
-    
+
 }
 
 
 //  Mouse has been clicked! Find out what screen we are on and what button was clicked
-function mouseClicked(){
+function mouseClicked() {
+
+
+    // Align mouse positions to relative game scale and translation
+    let horizontalOffset = (windowWidth - (gameWidth * scaleFactor)) / 2;
+    let mouseGameX = (mouseX - horizontalOffset) / scaleFactor;
+    let mouseGameY = mouseY / scaleFactor;
 
 
     // Main menu screen
-    if (appState == 1){
-        if (mouseY/scaleFactor > 250 && mouseY/scaleFactor < 350){
+    if (appState == 1) {
+        if (mouseGameY > 250 && mouseGameY < 350) {
             // singleplayer clicked!
             console.log("Singleplayer Clicked!");
             appState = 3;
             multiplayer = false;
             //setupSingleplayer();
         }
-        if (mouseY/scaleFactor > 350 && mouseY/scaleFactor < 450){
+        if (mouseGameY > 350 && mouseGameY < 450){
             // multiplayer clicked!
             console.log("Multiplayer Clicked!");
             appState = 2;   // Enter multiplayer lobby
@@ -223,7 +300,7 @@ function mouseClicked(){
     // Character select
     if (appState == 3){
 
-        if (mouseX/scaleFactor < 350 && mouseY/scaleFactor > 700 && !characterSelected){
+        if (mouseGameX < 250 && mouseGameY > 780 && !characterSelected){
             // Back button clicked
             characterSelection -= 1;
             if (characterSelection < 0){
@@ -231,7 +308,7 @@ function mouseClicked(){
             }
             printClock = 0;
         }
-        if (mouseX/scaleFactor > 1250 && mouseY/scaleFactor > 700 && !characterSelected){
+        if (mouseGameX > 1350 && mouseGameY > 780 && !characterSelected){
             // Forwards buttons clicked
             characterSelection += 1;
             if (characterSelection > 2){
@@ -240,7 +317,7 @@ function mouseClicked(){
             printClock = 0;
         }
         //console.log(characterSelection);
-        if (mouseX/scaleFactor < 1100 && mouseX/scaleFactor > 500 && mouseY/scaleFactor > 700 && !characterSelected){
+        if (mouseGameX < 1000 && mouseGameX > 600 && mouseGameY > 780 && !characterSelected){
             // Select button clicked
             characterSelected = true;
             if (multiplayer){
@@ -266,13 +343,18 @@ function mouseClicked(){
 // Prints text in a scrolling effect
 function printText(theText, charactersToPrint) {
 
-    if (charactersToPrint > theText.length/2){
-        charactersToPrint = theText.length/2;
-    }
     textAlign(LEFT, TOP);
     textSize(20);
     fill(60, 255, 120);
-    text(theText.substring(0, charactersToPrint*2), 140, 265, 580, 800);
+    textFont('Courier New');
+    
+    if (charactersToPrint > theText.length/2){
+        text(theText, 140, 265, 580, 800);
+        //text(theText, 140, 265);
+    }else{
+        text(theText.substring(0, charactersToPrint*2), 140, 265, 580, 800);
+    }
+
 }
 
 
