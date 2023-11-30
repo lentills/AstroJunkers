@@ -46,7 +46,7 @@ const characterStats =
   [
     { health:90, maxSpeed: 330, acceleration: 300, deceleration: 220, maxRotSpeed: 300, rotAcceleration: 800, forwardsFriction: 0.2, sidewaysFriction: 0.3, bulletSpeed: 800, bulletRate: 140 },
     { health:80, maxSpeed: 370, acceleration: 300, deceleration: 200, maxRotSpeed: 320, rotAcceleration: 750, forwardsFriction: 0.2, sidewaysFriction: 0.3, bulletSpeed: 900, bulletRate: 120 },
-    { health:110, maxSpeed: 400, acceleration: 290, deceleration: 200, maxRotSpeed: 240, rotAcceleration: 600, forwardsFriction: 0.15, sidewaysFriction: 0.2, bulletSpeed: 1200, bulletRate: 100 }
+    { health:110, maxSpeed: 420, acceleration: 300, deceleration: 200, maxRotSpeed: 240, rotAcceleration: 600, forwardsFriction: 0.1, sidewaysFriction: 0.4, bulletSpeed: 1200, bulletRate: 100 }
   ];
 
 
