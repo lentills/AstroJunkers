@@ -14,12 +14,18 @@
 //    + Nyx
 //    + Yasmin
 // + Cooldowns and health bar
+// - Character HUDS
 // + Integrate multiplayer
 //    + Peer to peer code
-//    - data syncing for menu screens
+//    + data syncing for menu screens
 //    + data syncing for gameplay
 //    + Character interactions
 // - Final artworks
+//    - Character Splashes
+//    - Asteroids
+//    - Enemies
+//    - Debris
+//    - Character HUDS
 // - Sound effects
 // - Music
 // - Extra animations and sparkles
