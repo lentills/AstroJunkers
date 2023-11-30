@@ -22,7 +22,7 @@ function loadMenuAssets(){
 
 // character select has a 3d starfield effect. This initialises the stars
 let stars = [];
-const numStars = 200;
+const numStars = 400;
 function initialiseStarfield(){
 
     stars = [];
@@ -45,12 +45,13 @@ function drawStarField(){
         // Calculate the projected 2D position
         let sx = map(star.x / star.z, 0, 1, 0, width);
         let sy = map(star.y / star.z, 0, 1, 0, height);
-        let r = map(star.z, 0, gameWidth, 4, 1);
+        let r = map(star.z, 0, gameWidth, 6, 2);
 
         // Draw star
         fill(255);
         noStroke();
-        circle(sx, sy, r);
+        //circle(sx, sy, r);
+        image(spriteStar1, sx, sy, 2*r, 2*r);
 
         // Reset star if it moves too close
         if (star.z < 5) {
@@ -226,7 +227,10 @@ function drawCharacterSelect(){
         text("SELECT", 800, 860);
 
     }else{
-        // TODO: some text here, "waiting for opponent" or something
+        fill(252, 152, 45, 255);
+        textSize(65);
+        textAlign(CENTER, CENTER);
+        text("WAITING FOR OPPONENT", 800, 860);
     }
 }
 
@@ -292,6 +296,7 @@ function mouseClicked() {
             console.log("Multiplayer Clicked!");
             appState = 2;   // Enter multiplayer lobby
             multiplayer = true;
+            opponentCharacterSelection = -1;
             setupServer(peer);
         }
     }
@@ -321,7 +326,14 @@ function mouseClicked() {
             // Select button clicked
             characterSelected = true;
             if (multiplayer){
-                // Send packet and start waiting i guess?
+                // Send packet and start waiting
+                reportCharacterSelection(characterSelection);
+                console.log("AAAA " + opponentCharacterSelection);
+                if (opponentCharacterSelection != -1 && (typeof opponentCharacterSelection !== 'undefined') ){
+                    console.log("BBBB");
+                    setupMultiplayerplayer(characterSelection, opponentCharacterSelection);
+                    appState = 0;
+                }
             }else{
                 appState = 0;
                 setupSingleplayer(characterSelection);

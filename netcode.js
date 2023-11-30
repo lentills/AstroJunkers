@@ -78,11 +78,10 @@ function setupServer(peer) {
             conn.send('Hello from Player 1!');
 
             // Go to next state, character select screen
-            appState = 0;
+            appState = 3;
             idField.hide();
 
             playerID = 1;
-            setupMultiplayerplayer();
 
         });
 
@@ -118,8 +117,7 @@ function setupClient(peer, peerID) {
 
             // Go to next state, character select screen TODO
             playerID = 2;
-            appState = 0;
-            setupMultiplayerplayer();
+            appState = 3;
 
         });
 
@@ -260,6 +258,18 @@ function reportUltimate(characterUlt, ultTime){
 
 }
 
+function reportCharacterSelection(characterSelect) {
+    if (multiplayer){
+        let dataToSend = {
+            type: 'characterSelected',
+            character: characterSelect
+        };
+    
+        conn.send(dataToSend);
+    }
+
+}
+
 
 // Recieve data from the opponent, use this to update our game state
 function gotData(data) {
@@ -365,6 +375,21 @@ function gotData(data) {
         }
 
     }
+
+
+    if (data.type = 'characterSelected'){
+        console.log(data);
+        if (appState == 3){
+            opponentCharacterSelection = data.character;
+            if (characterSelected){
+                console.log("Joining game!");
+                // Both players have selected character! Start the game
+                setupMultiplayerplayer(characterSelection, opponentCharacterSelection);
+                appState = 0;
+            }
+        }
+    }
+
 
 }
 

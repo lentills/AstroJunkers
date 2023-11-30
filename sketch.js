@@ -69,7 +69,7 @@ function preload() {
   spriteStar2 = loadImage('assets/star2.png');
   spriteBullet = loadImage('assets/temp/laserBlue05.png');
 
-  spriteShip.push (loadImage('assets/temp/playerShip3_blue.png'));
+  spriteShip.push (loadImage('assets/HopperSkippShip.png'));
   spriteShip.push (loadImage('assets/nyxShip.png'));
   spriteShip.push (loadImage('assets/yasminShip.png'));
 
@@ -101,6 +101,7 @@ function setup() {
     appState = 2;
     playerID = 2;
     setupClient(peer, peerID);
+    multiplayer = true;
   }else{
     playerID = 1;
   }
@@ -332,14 +333,14 @@ function setupSingleplayer(playerCharacter){
 // Setup multiplayer game
 /////
 
-function setupMultiplayerplayer(){
+function setupMultiplayerplayer(playerCharacter, opponentCharacter){
 
   // Setup player
   multiplayer = true;
   ultimateCharge = 0;
   lastObstacleID = 0;
-  playerShip = { playerID: playerID, character: 2, pos: createVector(2200 + (playerID-1)*100, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[playerCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0 };
-  opponentShip = { playerID: playerID%2+1, character: 0, pos: createVector(2200 + (playerID%2)*100, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[playerCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0 };
+  playerShip = { playerID: playerID, character: playerCharacter, pos: createVector(2200 + (playerID-1)*100, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[playerCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0 };
+  opponentShip = { playerID: playerID%2+1, character: opponentCharacter, pos: createVector(2200 + (playerID%2)*100, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[opponentCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
