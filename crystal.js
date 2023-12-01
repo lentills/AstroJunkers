@@ -1,6 +1,6 @@
 
 
-const MAX_CRYSTALS = 150;    // Number of energy crystals maximum. More will take longer to resolve collisions
+const MAX_CRYSTALS = 300;    // Number of energy crystals maximum. More will take longer to resolve collisions
 let crystals = [];
 
 
@@ -10,12 +10,29 @@ class Crystal {
         this.active = false;
         this.position = createVector(0, 0);
         this.velocity = createVector(0, 0);
+        this.age = 0;
     }
 
     update() {
         if (this.active) {
+            this.age += deltaTime;
             this.position.add(p5.Vector.mult(this.velocity, deltaTime * 0.001));
             this.velocity.mult(1.0 - (3.0 * deltaTime * 0.001));
+
+            // Be sucked towards nearby players
+            var closestVec = playerShip.pos.copy();
+            if (multiplayer){
+                if (this.position.dist(playerShip.pos) > this.position.dist(opponentShip.pos)) {
+                    closestVec = opponentShip.pos.copy();
+                }
+            }
+            
+            var vecToPlayer = p5.Vector.sub(closestVec, this.position);
+            if (this.position.dist(closestVec) < 40 && this.age > 1000) {
+                vecToPlayer.setMag(1200);
+                this.velocity.lerp(vecToPlayer, deltaTime * 0.001 * 3.0);
+            }
+
         }
     }
 
@@ -23,6 +40,7 @@ class Crystal {
         this.active = true;
         this.position = pos.copy();
         this.velocity = vel.copy();
+        this.age = 0;
     }
 
     deactivate() {

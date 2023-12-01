@@ -90,6 +90,12 @@ function moveShip(ship) {
         ship.health = characterStats[ship.character].health;
         ship.isCrashing = 2000;
         ship.invincibility = 2000;
+
+        // Release a bunch of our precious crystals on crash
+        if(playerID == ship.playerID){
+            createCrystalBurst(floor(ship.score * 0.8), ship.pos, 300, 360);
+            ship.score -= floor(ship.score * 0.8);
+        }
     }
 
     // Ship is crashing, rotate the player a bunch
@@ -234,6 +240,15 @@ function checkPlayerCollisions(ship){
         }
         ship.isCrashing = 300;
     }
+
+    // Check if we are touching any crystals
+    for (let crystal of crystals) {
+        if (crystal.active && crystal.age > 1000 && crystal.position.dist(playerShip.pos) < 15) {
+            crystal.deactivate();
+            ship.score += 1;
+        }
+    }
+
 }
 
 
@@ -305,4 +320,11 @@ function drawUltimateBar(){
     rect (100, 900 - 80, 300, 25);
     fill (20, 255, 30);
     rect (100, 900 - 80, 300 * (max(ultimateCharge, 0) / 100000), 25);
+}
+
+function drawScore(ship){
+    fill(0, 250, 250, 250);
+    textSize(40);
+    textAlign(CENTER, CENTER);
+    text(ship.score, 800, 850);
 }
