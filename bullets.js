@@ -126,13 +126,41 @@ function checkBulletCollisions() {
         // Check enemy and opponent bullet collisions
         if (bullet.active && (bullet.owner == 0 || bullet.owner != playerShip.playerID)) {
 
+
             if (bullet.position.dist(playerShip.pos) < 20) {
+
                 if (playerShip.invincibility < 3){
-                    playerShip.health -= 10;
+
+                    // Different health based on character
+                    if (bullet.owner == 0 || !multiplayer){
+                        playerShip.health -= 10;
+                    }else{
+
+                        if (opponentShip.character == 0){
+                            playerShip.health -= 25;
+                        }
+    
+                        if (opponentShip.character == 1){
+                            playerShip.health -= 20;
+                        }
+    
+                        if (opponentShip.character == 2){
+                            playerShip.health -= 20;
+                        }
+    
+                        if (opponentShip.character == 2){
+                            playerShip.health -= 10;        // Yasmin does less bullet damage while ulting, cos that's a little nuts
+                        }
+
+                    }
+
+
+                    
                 }
 
-                if (bullet.owner == playerID){
-                    ultimateCharge += 500;
+                // Getting hit gives you alt charge, why not lmao
+                if (bullet.owner != playerID){
+                    ultimateCharge += 300;
                 }
 
                 bullet.deactivate();

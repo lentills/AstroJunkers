@@ -36,6 +36,7 @@ function getControls() {
             // Hopper and Skipp's ultimate
             if (playerShip.character == 0){
                 // TODO
+                
             }
 
             // Nyx's ultimate

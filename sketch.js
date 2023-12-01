@@ -15,6 +15,7 @@
 //    + Yasmin
 // + Cooldowns and health bar
 // - Character HUDS
+// - Add crystals and scoring system
 // + Integrate multiplayer
 //    + Peer to peer code
 //    + data syncing for menu screens
@@ -203,6 +204,7 @@ function drawGame(){
   drawBullets();
   drawObstacles();
   drawTargets();
+  drawCrystals();
 
   pop();
 
@@ -262,6 +264,13 @@ function updateObjects() {
     }
   }
 
+  // Update crystal positions
+  for (let crystal of crystals) {
+    if (crystal.active) {
+      crystal.update();
+    }
+  }
+
 
 }
 
@@ -301,6 +310,12 @@ function setupSingleplayer(playerCharacter){
   targets = [];
   for (let i=0; i<NUM_TARGETS; i++){
     targets.push(new Target())
+  }
+
+  // Initialise crystal object pool
+  crystals = [];
+  for (let i=0; i<MAX_CRYSTALS; i++){
+    crystals.push(new Crystal())
   }
 
 
