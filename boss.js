@@ -23,9 +23,8 @@ class Target{
 
             if (this.health < 0) {
                 reportDestroyTarget(this.id);
+                createCrystalBurst(40, this.position, 200, 50);
                 this.destroy();
-
-                // TODO: release loot
             }
 
         }
@@ -52,7 +51,7 @@ class Target{
         if (this.active) {
             this.deactivate();
             addExplosion(this.position.x, this.position.y, 300, explosionFrames);
-            createCrystalBurst(40, this.position, 200, 50);
+            
         }
 
         // Check to see if this is the last target

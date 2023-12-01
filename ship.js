@@ -242,12 +242,18 @@ function checkPlayerCollisions(ship){
     }
 
     // Check if we are touching any crystals
-    for (let crystal of crystals) {
-        if (crystal.active && crystal.age > 1000 && crystal.position.dist(playerShip.pos) < 15) {
-            crystal.deactivate();
-            ship.score += 1;
+    if (ship.playerID == playerID){
+        for (let crystal of crystals) {
+            if (crystal.active && crystal.age > 1000 && crystal.position.dist(ship.pos) < 15) {
+                ship.score += 1;
+                if (multiplayer){
+                    reportDestroyCrystal(crystal.id);
+                }
+                crystal.deactivate();
+            }
         }
     }
+
 
 }
 

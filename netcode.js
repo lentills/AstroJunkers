@@ -153,7 +153,8 @@ function reportPlayerState(ship) {
             isCrashing: ship.isCrashing,
             invincibility: ship.invincibility,
             fireCooldown: ship.fireCooldown,
-            ultimate: ship.ultimate
+            ultimate: ship.ultimate,
+            score: ship.score
         };
 
         conn.send(dataToSend);
@@ -270,6 +271,34 @@ function reportCharacterSelection(characterSelect) {
 
 }
 
+function reportCreateCrystal(position, velocity, crystalID){
+
+    if (multiplayer){
+        let dataToSend = {
+            type: 'createCrystal',
+            posX: position.x,
+            posY: position.y,
+            velX: velocity.x,
+            velY: velocity.y,
+            id: crystalID
+        };
+    
+        conn.send(dataToSend);
+    }
+}
+
+function reportDestroyCrystal(crystalID){
+
+    if (multiplayer){
+        let dataToSend = {
+            type: 'destroyCrystal',
+            id: crystalID
+        };
+    
+        conn.send(dataToSend);
+    }
+}
+
 
 // Recieve data from the opponent, use this to update our game state
 function gotData(data) {
@@ -290,6 +319,7 @@ function gotData(data) {
                 opponentShip.invincibility = data.invincibility;
                 opponentShip.fireCooldown = data.fireCooldown;
                 opponentShip.ultimate = data.ultimate;
+                opponentShip.score = data.score;
             }
             timestampLast = data.timestamp;
         }
@@ -377,8 +407,7 @@ function gotData(data) {
     }
 
 
-    if (data.type = 'characterSelected'){
-        console.log(data);
+    if (data.type == 'characterSelected'){
         if (appState == 3){
             opponentCharacterSelection = data.character;
             if (characterSelected){
@@ -390,6 +419,18 @@ function gotData(data) {
         }
     }
 
+
+    if (data.type == 'createCrystal'){
+        createCrystal(createVector(data.posX, data.posY), createVector(data.velX, data.velY), data.id, false);
+    }
+
+    if (data.type == 'destroyCrystal'){
+        for (let crystal of crystals) {
+            if (crystal.id == data.id){
+                crystal.deactivate();
+            }
+        }
+    }
 
 }
 

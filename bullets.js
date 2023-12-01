@@ -206,9 +206,9 @@ function ultimateNyx(playerUlt) {
         // Loop through enemies and obstacles and apply massive damage
         for (let obstacle of obstacles) {
             if (obstacle.active) {
-                if (playerShip.pos.dist(obstacle.position) < 500) {
+                if (opponentShip.pos.dist(obstacle.position) < 500) {
                     obstacle.hit();
-                    obstacle.health -= floor((500 - playerShip.pos.dist(obstacle.position)) / 3);
+                    obstacle.health -= floor((500 - opponentShip.pos.dist(obstacle.position)) / 3);
                 }
             }
         }

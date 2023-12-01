@@ -11,6 +11,7 @@ class Crystal {
         this.position = createVector(0, 0);
         this.velocity = createVector(0, 0);
         this.age = 0;
+        this.id = -1;
     }
 
     update() {
@@ -36,11 +37,12 @@ class Crystal {
         }
     }
 
-    create(pos, vel) {
+    create(pos, vel, id) {
         this.active = true;
         this.position = pos.copy();
         this.velocity = vel.copy();
         this.age = 0;
+        this.id = id;
     }
 
     deactivate() {
@@ -49,10 +51,14 @@ class Crystal {
 
 }
 
-function createCrystal(pos, vel){
+function createCrystal(pos, vel, id, report){
+    console.log("CRYSTAL " + pos.x + " " + pos.y);
     for (let crystal of crystals) {
         if (!crystal.active) {
-            crystal.create(pos, vel);
+            crystal.create(pos, vel, id);
+            if (multiplayer && report){
+                reportCreateCrystal(pos, vel, id);
+            }
             break;
         }
     }
@@ -65,7 +71,7 @@ function createCrystalBurst(num, pos, speed, spread) {
         var spawnVector = createVector(0, speed);
         spawnVector.rotate(random(-spread, spread));
         spawnVector.mult(random(0.5, 1.5));
-        createCrystal(pos, spawnVector);
+        createCrystal(pos, spawnVector, floor(random(0, 1000000)), true);
     }
 
 }
