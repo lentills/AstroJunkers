@@ -22,7 +22,7 @@
 //    + data syncing for gameplay
 //    + Character interactions
 // - Final artworks
-//    - Character Splashes
+//    + Character Splashes
 //    - Asteroids
 //    - Enemies
 //    - Debris

@@ -29,8 +29,8 @@ class Crystal {
             }
             
             var vecToPlayer = p5.Vector.sub(closestVec, this.position);
-            if (this.position.dist(closestVec) < 40 && this.age > 1000) {
-                vecToPlayer.setMag(1200);
+            if (this.position.dist(closestVec) < 50 && this.age > 1000) {
+                vecToPlayer.setMag((50-this.position.dist(closestVec))*40 + 500);
                 this.velocity.lerp(vecToPlayer, deltaTime * 0.001 * 3.0);
             }
 

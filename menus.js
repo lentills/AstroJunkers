@@ -11,12 +11,18 @@ var printClock = 0;   // Counts frames since last switched character, used for d
 // Assets
 let fontWhiteRabbit;
 let spriteNyxWireframe, spriteYasminWireframe, spriteHopperSkippWireframe;
+let spriteNyxPortrait, spriteYasminPortrait, spriteHopperSkippPortrait;
 
 function loadMenuAssets(){
     fontWhiteRabbit = loadFont('assets/whitrabt.ttf');
+
     spriteNyxWireframe = loadImage('assets/NyxShipWireframe.png');
     spriteYasminWireframe = loadImage('assets/YasminShipWireframe.png');
     spriteHopperSkippWireframe = loadImage('assets/HopperSkippShipWireframe.png');
+
+    spriteNyxPortrait = loadImage('assets/NyxPortrait.png');
+    spriteYasminPortrait = loadImage('assets/YasminPortrait.png');
+    spriteHopperSkippPortrait = loadImage('assets/Hopper_And_SkippPortrait.png');
 }
 
 
@@ -142,8 +148,7 @@ function drawCharacterSelect(){
 
     image(spriteHopperSkippWireframe, 425, 650, 440, 290);
 
-    fill(150, 230, 80);
-    circle(1200, 450, 300);
+    image(spriteHopperSkippPortrait, 1150, 410, 1032, 800);
 
     translate(1600, 0);
 
@@ -163,8 +168,7 @@ function drawCharacterSelect(){
 
     image(spriteNyxWireframe, 425, 650, 440, 306);
 
-    fill(200, 50, 250);
-    circle(1200, 450, 300);
+    image(spriteNyxPortrait, 1200, 410, 800, 800);
 
 
     translate(1600, 0);
@@ -185,8 +189,7 @@ function drawCharacterSelect(){
 
     image(spriteYasminWireframe, 425, 650, 480, 270);
 
-    fill(170, 80, 50);
-    circle(1200, 450, 300);
+    image(spriteYasminPortrait, 1200, 410, 800, 800);
 
 
     pop();
