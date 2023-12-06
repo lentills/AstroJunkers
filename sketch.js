@@ -63,6 +63,7 @@ const characterStats =
 var gameWidth = 1600; 
 var gameHeight = 900;
 var appState = 1;     // 0-in-game  1-main menu  2-multiplayer lobby  3-character select
+var startGameCountdown = 0;
 
 // Game state
 var playerID;
@@ -214,6 +215,10 @@ function drawGame(){
   drawCooldown(playerShip);
   drawUltimateBar();
   drawScore(playerShip);
+
+  if (startGameCountdown > 0){
+    drawStartGameCountdown();
+  }
 }
 
 
@@ -311,13 +316,13 @@ function setupSingleplayer(playerCharacter){
   // Initialise target object pool
   targets = [];
   for (let i=0; i<NUM_TARGETS; i++){
-    targets.push(new Target())
+    targets.push(new Target());
   }
 
   // Initialise crystal object pool
   crystals = [];
   for (let i=0; i<MAX_CRYSTALS; i++){
-    crystals.push(new Crystal())
+    crystals.push(new Crystal());
   }
 
 
@@ -347,6 +352,7 @@ function setupSingleplayer(playerCharacter){
   targets[2].create(createVector(5*tileSize+135, -BOSS_POSITION*tileSize+133), 300, 2);
   targets[3].create(createVector(5*tileSize+260, -BOSS_POSITION*tileSize+110), 300, 3);
   bossAlive = true;
+  startGameCountdown = 3000;  // 3 second intro to game
 
 }
 
@@ -421,6 +427,7 @@ function setupMultiplayerplayer(playerCharacter, opponentCharacter){
   targets[2].create(createVector(5*tileSize+135, -BOSS_POSITION*tileSize+133), 300, 2);
   targets[3].create(createVector(5*tileSize+260, -BOSS_POSITION*tileSize+110), 300, 3);
   bossAlive = true;
+  startGameCountdown = 3000;  // 3 second intro to game
   
 }
 

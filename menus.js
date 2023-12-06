@@ -275,6 +275,55 @@ function drawCharacterFrame(){
 }
 
 
+
+
+function drawStartGameCountdown(){
+
+    fill(7, 4, 60, 150 - max(0, 150-startGameCountdown));
+    rect(0, 0, gameWidth, gameHeight, 40);
+
+    noStroke();
+    fill(60, 255, 120);
+    textFont(fontWhiteRabbit);
+    textAlign(CENTER, CENTER);
+
+    textSize(70);
+    if (playerShip.character == 0){
+        image(spriteHopperSkippPortrait, 420 - 2*max(0, 500-startGameCountdown) , 550, 1032, 800);
+        text("HOPPER AND SKIPP", 400 - 2*max(0, 500-startGameCountdown), 150);
+    }
+    if (playerShip.character == 1){
+        image(spriteNyxPortrait, 420 - 2*max(0, 500-startGameCountdown) , 550, 800, 800);
+        text("NYX", 400 - 2*max(0, 500-startGameCountdown), 150);
+    }
+    if (playerShip.character == 2){
+        image(spriteYasminPortrait, 420 - 2*max(0, 500-startGameCountdown) , 550, 800, 800);
+        text("YASMIN", 400 - 2*max(0, 500-startGameCountdown), 150);
+    }
+
+    textSize(50);
+    text("vs", 800, 200 - 2*max(0, 500-startGameCountdown));
+
+    if (multiplayer){
+        textSize(70);
+        if (opponentShip.character == 0){
+            image(spriteHopperSkippPortrait, 1180 + 2*max(0, 500-startGameCountdown) , 550, 1032, 800);
+            text("HOPPER AND SKIPP", 1180 + 2*max(0, 500-startGameCountdown), 150);
+        }
+        if (opponentShip.character == 1){
+            image(spriteNyxPortrait, 1180 + 2*max(0, 500-startGameCountdown) , 550, 800, 800);
+            text("NYX", 1180 + 2*max(0, 500-startGameCountdown), 150);
+        }
+        if (opponentShip.character == 2){
+            image(spriteYasminPortrait, 1180 + 2*max(0, 500-startGameCountdown) , 550, 800, 800);
+            text("YASMIN", 1180 + 2*max(0, 500-startGameCountdown), 150);
+        }
+    }
+
+
+}
+
+
 //  Mouse has been clicked! Find out what screen we are on and what button was clicked
 function mouseClicked() {
 

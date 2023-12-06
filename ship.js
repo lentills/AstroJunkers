@@ -27,6 +27,13 @@ function getControls() {
         playerShip.controlRot = characterStats[playerShip.character].rotAcceleration;
     }
 
+    // Check to see if we are at the start of the game in the countdown period
+    if (startGameCountdown > 0){
+        playerShip.controlAccel = 0;
+        playerShip.controlRot = 0;
+        startGameCountdown -= deltaTime;
+    }
+
     // Using ultimate
     if (keyIsDown(81) || keyIsDown(SHIFT)){
         if (ultimateCharge >= 100000-10){
@@ -303,7 +310,7 @@ function drawHealthBar(ship){
         fill (150, 10, 110);
         rect (1600 - 400, 900 - 100, 300 * ((2000-ship.invincibility)/2000), 15);
     }else{
-        fill (200, 20, 10);
+        fill (230, 30, 60);
         rect (1600 - 400, 900 - 100, 300 * (max(ship.health, 0) / characterStats[ship.character].health), 15);
     }
 
@@ -315,7 +322,7 @@ function drawCooldown(ship){
     // TODO: replace with graphics
     fill(230);
     rect (1600 - 400, 900 - 60, 300, 15);
-    fill (80, 80, 255);
+    fill (50, 110, 155);
     rect (1600 - 400, 900 - 60, 300 * (max(ship.fireCooldown, 0) / 3000), 15);
 }
 
@@ -324,7 +331,7 @@ function drawUltimateBar(){
     // TODO: replace with graphics
     fill(230);
     rect (100, 900 - 80, 300, 25);
-    fill (20, 255, 30);
+    fill (70, 160, 130);
     rect (100, 900 - 80, 300 * (max(ultimateCharge, 0) / 100000), 25);
 }
 
