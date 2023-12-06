@@ -8,7 +8,7 @@
 // + Add boss fight
 // + Add collisions
 // + Build map
-// - Menu and character select screens
+// + Menu and character select screens
 // - Build characters abilities
 //    - Hopper and Skipp
 //    + Nyx
@@ -27,6 +27,7 @@
 //    - Enemies
 //    - Debris
 //    - Character HUDS
+//    - Menu screens
 // - Sound effects
 // - Music
 // - Extra animations and sparkles

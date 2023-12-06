@@ -144,7 +144,7 @@ function drawCharacterSelect(){
     textSize(25);
     textAlign(LEFT, CENTER);
     text("Proxima Centauri b", 190, 230);
-    printText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", printClock);
+    printText("Two notorious scavengers, Hopper and Skipp are a pair who make their living salvaging shipwrecks and merchant ships for scrap metal and parts. They travel in a ship cobbled from scraps from their previous missions, and it is believed that they are in posession of a weapons system stolen from a damaged Galactic Federation ship.\nEngage with extreme caution", printClock);
 
     image(spriteHopperSkippWireframe, 425, 650, 440, 290);
 
@@ -164,7 +164,7 @@ function drawCharacterSelect(){
     textSize(25);
     textAlign(LEFT, CENTER);
     text("Antares 4b", 190, 230);
-    printText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", printClock);
+    printText("An infamous space pirate from the Antares system, Nyx is known for her bold heists and ruthless demenour. Once a low-tier smuggler, she became known to the Federation after a series of high-profile raids against Federation supply lines.\nHer ship is equipped with a powerful EMP, which delivers a devistating pulse of energy into nearby ships.", printClock);
 
     image(spriteNyxWireframe, 425, 650, 440, 306);
 
@@ -185,7 +185,7 @@ function drawCharacterSelect(){
     textSize(25);
     textAlign(LEFT, CENTER);
     text("Earth (Sol-3)", 190, 230);
-    printText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", printClock);
+    printText("Once a decorated pilot of the Galactic Federation, Yasmin is now one of the most elusive figures in the galaxy.\nKnown for her unrivalled skills in combat and navigation, she shocked the Federation when she defected, vanishing with one of the Federatin's most advanced starfighters ever engineered.\nThis ship, the Astra II, is equipped with a powerful overclocking mechanism allowing the fighter to drastically boost the fire rate of the ship's guns.", printClock);
 
     image(spriteYasminWireframe, 425, 650, 480, 270);
 
