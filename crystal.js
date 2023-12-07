@@ -52,7 +52,6 @@ class Crystal {
 }
 
 function createCrystal(pos, vel, id, report){
-    console.log("CRYSTAL " + pos.x + " " + pos.y);
     for (let crystal of crystals) {
         if (!crystal.active) {
             crystal.create(pos, vel, id);
@@ -82,7 +81,7 @@ function createCrystalBurst(num, pos, speed, spread) {
 function drawCrystals() {
     for (let crystal of crystals) {
         if (crystal.active) {
-            image(spriteBullet, crystal.position.x, crystal.position.y, 4, 6);
+            image(spriteCrystal, crystal.position.x, crystal.position.y, 12, 12);
         }
     }
 }

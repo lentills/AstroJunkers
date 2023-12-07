@@ -3,8 +3,10 @@
 // When a bullet hits something or lives too long it is deactivated, and can be re-initialised when a new bullet is fired
 
 
-const MAX_BULLETS = 150;    // Number of bullets maximum. More bullets will take longer to resolve collisions
+const MAX_BULLETS = 200;    // Number of bullets maximum. More bullets will take longer to resolve collisions
 let bullets = [];
+
+var spriteBullet = [];
 
 
 class Bullet {
@@ -14,6 +16,7 @@ class Bullet {
         this.velocity = createVector(0, 0);
         this.age = 0;
         this.owner = 0;       // 0 - enemy bullet     1 - player1 bullet    2 -  player2 bullet
+        this.character = -1;  // The character who shot the bullet
     }
 
     update() {
@@ -34,6 +37,13 @@ class Bullet {
         this.velocity = vel.copy();
         this.age = 0;
         this.owner = owner;
+
+        if (this.owner == playerID){
+            this.character = playerShip.character;
+        }else if (this.owner != 0){
+            this.character = opponentShip.character;
+        }
+
     }
 
     deactivate() {
@@ -60,7 +70,24 @@ function drawBullets() {
             push();
             translate(bullet.position.x, bullet.position.y);
             rotate(bullet.velocity.heading() + 90);
-            image(spriteBullet, 0, 0, 4, 10);
+
+            if(bullet.owner == 0){
+                image(spriteBullet[0], 0, 0, 10, 17);
+            }else{
+                switch (bullet.character){
+                    case 0:
+                        image(spriteBullet[1], 0, 0, 10, 17);
+                        break;
+                    case 1:
+                        image(spriteBullet[2], 0, 0, 10, 17);
+                        break;
+                    case 2:
+                        image(spriteBullet[3], 0, 0, 10, 17);
+                        break;
+                }
+            }
+
+            
             pop();
         }
     }
@@ -73,7 +100,7 @@ function checkBulletCollisions() {
     for (let bullet of bullets) {
 
         // Check collisions with obstacles
-        if (bullet.active && bullet.owner == 1 || bullet.owner == 2) {
+        if (bullet.active && (bullet.owner == 1 || bullet.owner == 2)) {
 
             for (let obstacle of obstacles) {
                 if (obstacle.active) {
@@ -84,6 +111,11 @@ function checkBulletCollisions() {
                         if (playerID == 1){
                             obstacle.health -= 15;
                             obstacle.velocity.add(p5.Vector.mult(bullet.velocity, 1 / obstacle.weight));
+
+                            if (bullet.character == 0){
+                                obstacle.health -= 15;
+                            }
+                            
                         }
 
                         if (bullet.owner == playerID){
@@ -112,7 +144,13 @@ function checkBulletCollisions() {
                     if (bullet.position.dist(target.position) < 45 && bullet.active) {
                         target.health -= 15;    // TODO: hit points based on character stats
                         target.hit();
-                        if (bullet.owner == playerID){
+
+                        // Check if the bullet was fired by hopper and skipp, and if so deduct more health
+                        if (bullet.character == 0){
+                            target.health -= 15;
+                        }
+
+                        if (bullet.owner == playerID) {
                             ultimateCharge += 300;
                         }
                         bullet.deactivate();
@@ -137,7 +175,7 @@ function checkBulletCollisions() {
                     }else{
 
                         if (opponentShip.character == 0){
-                            playerShip.health -= 25;
+                            playerShip.health -= 40;
                         }
     
                         if (opponentShip.character == 1){
@@ -217,3 +255,12 @@ function ultimateNyx(playerUlt) {
 
 }
 
+
+function loadBulletSprites(){
+
+    spriteBullet.push(loadImage('assets/bulletEnemy.png'));
+    spriteBullet.push(loadImage('assets/bulletHopperSkipp.png'));
+    spriteBullet.push(loadImage('assets/bulletNyx.png'));
+    spriteBullet.push(loadImage('assets/bulletYasmin.png'));
+
+}
