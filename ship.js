@@ -280,7 +280,17 @@ function drawPlayerShip(ship) {
 
     // Draw the rocket engine firing
     if (ship.controlAccel > 0.1) {
-        image(spriteFire, 0, 25);
+        switch (ship.character){
+            case 0:
+                image(spriteFire[0], 0, 32, 40, 40);
+                break;
+            case 1:
+                image(spriteFire[1], 0, 32, 40, 40);
+                break;
+            case 2:
+                image(spriteFire[2], 0, 32, 40, 40);
+                break;
+        }
     }
 
     // Draw muzzle flash

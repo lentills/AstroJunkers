@@ -44,8 +44,9 @@
 
 
 // Assets
-let spriteFire, spriteStar1, spriteStar2, spriteCrystal;
+let spriteStar1, spriteStar2, spriteCrystal;
 let spriteShip = [];
+let spriteFire = [];
 let spriteMuzzleFlash = [];
 
 
@@ -73,7 +74,7 @@ var multiplayer;
 
 
 function preload() {
-  spriteFire = loadImage('assets/temp/fire14.png');
+
   spriteStar1 = loadImage('assets/star1.png');
   spriteStar2 = loadImage('assets/star2.png');
   spriteCrystal = loadImage('assets/Energy_Crystal.png');
@@ -86,6 +87,10 @@ function preload() {
   spriteMuzzleFlash.push (loadImage('assets/MuzzleFlash2.png'));
   spriteMuzzleFlash.push (loadImage('assets/MuzzleFlash3.png'));
   spriteMuzzleFlash.push (loadImage('assets/MuzzleFlash4.png'));
+
+  spriteFire.push (loadImage('assets/fireHopperSkipp.png'));
+  spriteFire.push (loadImage('assets/fireNyx.png'));
+  spriteFire.push (loadImage('assets/fireYasmin.png'));
 
   loadObstacleSprites();
   loadTileSprites();
