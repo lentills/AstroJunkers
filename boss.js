@@ -66,8 +66,8 @@ class Target{
             reportDestroyBoss();
             addExplosion(5*tileSize, -BOSS_POSITION*tileSize, 2000, explosionFrames);
             if (playerID == 1){
-                createObstacle(-1, createVector(5*tileSize-150, -BOSS_POSITION*tileSize+220), createVector(0, -10), 150, 60, 150, 2, true, 100);
-                createObstacle(-1, createVector(5*tileSize+150, -BOSS_POSITION*tileSize+220), createVector(0, -10), 150, 60, 150, 2, true, 100);
+                createObstacle(-1, createVector(5*tileSize-150, -BOSS_POSITION*tileSize+120), createVector(0, -10), 150, 60, 150, 2, true, 100);
+                createObstacle(-1, createVector(5*tileSize+150, -BOSS_POSITION*tileSize+120), createVector(0, -10), 150, 60, 150, 2, true, 100);
             }
         }
 

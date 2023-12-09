@@ -177,7 +177,9 @@ function drawCharacterSelect(){
     text("Proxima Centauri b", 190, 230);
     printText("Two notorious scavengers, Hopper and Skipp are a pair who make their living salvaging shipwrecks and merchant ships for scrap metal and parts. They travel in a ship cobbled from scraps from their previous missions, and it is believed that they are in posession of a weapons system stolen from a damaged Galactic Federation ship.\nEngage with extreme caution", printClock);
 
-    image(spriteHopperSkippWireframe, 425, 650, 440, 290);
+    image(spriteHopperSkippWireframe, 325, 650, 440, 290);
+    textSize(15);
+    text("Speed:     ***\nAgility:   ***\nStrength:  ***\nFirepower: *****", 540, 600);
 
     image(spriteHopperSkippPortrait, 1150, 410, 1032, 800);
 
@@ -197,7 +199,9 @@ function drawCharacterSelect(){
     text("Antares 4b", 190, 230);
     printText("An infamous space pirate from the Antares system, Nyx is known for her bold heists and ruthless demenour. Once a low-tier smuggler, she became known to the Federation after a series of high-profile raids against Federation supply lines.\nHer ship is equipped with a powerful EMP, which delivers a devistating pulse of energy into nearby ships.", printClock);
 
-    image(spriteNyxWireframe, 425, 650, 440, 306);
+    image(spriteNyxWireframe, 325, 650, 440, 306);
+    textSize(15);
+    text("Speed:     *****\nAgility:   *****\nStrength:  **\nFirepower: ***", 545, 600);
 
     image(spriteNyxPortrait, 1200, 410, 800, 800);
 
@@ -218,7 +222,9 @@ function drawCharacterSelect(){
     text("Earth (Sol-3)", 190, 230);
     printText("Once a decorated pilot of the Galactic Federation, Yasmin is now one of the most elusive figures in the galaxy.\nKnown for her unrivalled skills in combat and navigation, she shocked the Federation when she defected, vanishing with one of the Federatin's most advanced starfighters ever engineered.\nThis ship, the Astra II, is equipped with a powerful overclocking mechanism allowing the fighter to drastically boost the fire rate of the ship's guns.", printClock);
 
-    image(spriteYasminWireframe, 425, 650, 480, 270);
+    image(spriteYasminWireframe, 325, 650, 480, 270);
+    textSize(15);
+    text("Speed:     ***\nAgility:   **\nStrength:  *****\nFirepower: ****", 550, 600);
 
     image(spriteYasminPortrait, 1200, 410, 800, 800);
 
