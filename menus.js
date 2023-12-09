@@ -95,7 +95,7 @@ function drawMainMenu(){
     drawStarField();
 
     // Draw the splash
-    image(spriteMainMenuSplash, gameWidth/2, gameHeight/2-100, gameHeight*0.8, gameHeight*0.8);
+    image(spriteMainMenuSplash, gameWidth/2, gameHeight/2-100, gameHeight*0.9, gameHeight*0.9);
 
 
     textSize(40);
