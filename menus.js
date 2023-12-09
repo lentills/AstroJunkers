@@ -12,9 +12,13 @@ var printClock = 0;   // Counts frames since last switched character, used for d
 let fontWhiteRabbit;
 let spriteNyxWireframe, spriteYasminWireframe, spriteHopperSkippWireframe;
 let spriteNyxPortrait, spriteYasminPortrait, spriteHopperSkippPortrait;
+let spriteMainMenuSplash, spriteMainMenuSplashBG;
 
 function loadMenuAssets(){
     fontWhiteRabbit = loadFont('assets/whitrabt.ttf');
+
+    spriteMainMenuSplash = loadImage('assets/astroJunkersSplash.png');
+    spriteMainMenuSplashBG = loadImage('assets/astroJunkersSplashBG.png');
 
     spriteNyxWireframe = loadImage('assets/NyxShipWireframe.png');
     spriteYasminWireframe = loadImage('assets/YasminShipWireframe.png');
@@ -77,25 +81,38 @@ function createStar() {
 
 function drawMainMenu(){
 
-    fill(200);
-    textSize(80);
-    textAlign(CENTER, CENTER);
-    //textFont(myFont);
-    text("AstroJunkers", gameWidth/2, 50);
+    fill(7, 6, 56);
+    rect(0, 0, gameWidth, gameHeight, 40);
+
+    // Rotating galaxy in background
+    push();
+    translate(gameWidth/2, gameHeight/2-100);
+    rotate((frameCount/3)%360);
+    image(spriteMainMenuSplashBG, 0, 0, gameHeight*0.8, gameHeight*0.8);
+    pop();
+
+    // Draw starfield in background
+    drawStarField();
+
+    // Draw the splash
+    image(spriteMainMenuSplash, gameWidth/2, gameHeight/2-100, gameHeight*0.8, gameHeight*0.8);
 
 
     textSize(40);
-    fill(150);
-    if (mouseY/scaleFactor > 250 && mouseY/scaleFactor < 350){
-        fill(230);
+    textFont(fontWhiteRabbit);
+    textAlign(CENTER, CENTER);
+    fill(50, 255, 100, 180);
+    if (mouseY/scaleFactor > gameHeight/2+160 && mouseY/scaleFactor < gameHeight/2+240){
+        fill(50, 255, 100, 255);
     }
-    text("Singleplayer", gameWidth/2, 300);
+    text("Multiplayer", gameWidth/2, gameHeight/2+200);
 
-    fill(150);
-    if (mouseY/scaleFactor > 350 && mouseY/scaleFactor < 450){
-        fill(230);
+    fill(50, 255, 100, 180);
+    textSize(30);
+    if (mouseY/scaleFactor > gameHeight/2+260 && mouseY/scaleFactor < gameHeight/2+340){
+        fill(50, 255, 100, 255);
     }
-    text("Multiplayer", gameWidth/2, 400);
+    text("Singleplayer", gameWidth/2, gameHeight/2+300);
 
 }
 
@@ -336,14 +353,14 @@ function mouseClicked() {
 
     // Main menu screen
     if (appState == 1) {
-        if (mouseGameY > 250 && mouseGameY < 350) {
+        if (mouseY/scaleFactor > gameHeight/2+260 && mouseY/scaleFactor < gameHeight/2+340) {
             // singleplayer clicked!
             console.log("Singleplayer Clicked!");
             appState = 3;
             multiplayer = false;
             //setupSingleplayer();
         }
-        if (mouseGameY > 350 && mouseGameY < 450){
+        if (mouseY/scaleFactor > gameHeight/2+160 && mouseY/scaleFactor < gameHeight/2+240){
             // multiplayer clicked!
             console.log("Multiplayer Clicked!");
             appState = 2;   // Enter multiplayer lobby
