@@ -179,7 +179,7 @@ function drawCharacterSelect(){
 
     image(spriteHopperSkippWireframe, 325, 650, 440, 290);
     textSize(15);
-    text("Speed:     ***\nAgility:   ***\nStrength:  ***\nFirepower: *****", 540, 600);
+    text("Speed:     ***\nAgility:   ****\nStrength:  ***\nFirepower: *****", 540, 600);
 
     image(spriteHopperSkippPortrait, 1150, 410, 1032, 800);
 
@@ -357,6 +357,53 @@ function drawStartGameCountdown(){
         }
     }
 
+
+}
+
+
+function endGameScreen(){
+
+    gameInSession -= deltaTime;    // This slowly fades in the game over screen
+
+    fill(7, 4, 60, min(max(0, abs(gameInSession/5)), 200));
+    rect(0, 0, gameWidth, gameHeight, 40);
+
+    if (gameInSession < -800){
+
+        fill(60, 255, 120);
+        textFont(fontWhiteRabbit);
+        textAlign(CENTER, CENTER);
+        textSize(70);
+
+        if (multiplayer){
+            if (playerShip.score > opponentShip.score){
+                text("YOU WIN", gameWidth/2, 200);
+            }else if (playerShip.score < opponentShip.score){
+                text("YOU LOSE", gameWidth/2, 200);
+            }else{
+                text("DRAW", gameWidth/2, 200);
+            }
+        }else{
+            text("YOU WIN", gameWidth/2, 200);
+        }
+
+
+        text("Score: " + playerShip.score, gameWidth/2-500, 800);
+
+        if (multiplayer){
+            text("Opponent: " + opponentShip.score, gameWidth/2+500, 800);
+        }
+
+    }
+
+    if (gameInSession < -8000){
+        // Go back to character select screen
+        appState = 3;
+        characterSelection = 0;
+        opponentCharacterSelection = -1;
+        characterSelected = false;
+        characterViewPosition = 0;
+    }
 
 }
 

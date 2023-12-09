@@ -42,6 +42,8 @@
 ///////////////////////
 
 
+const WEBGL_MODE_ENABLED = false; // Set to true to use WEBGL (better colours, better performance for more sprites, causes lag spikes and graphics bugs though
+
 
 // Assets
 let spriteStar1, spriteStar2, spriteCrystal;
@@ -65,6 +67,7 @@ var gameWidth = 1600;
 var gameHeight = 900;
 var appState = 1;     // 0-in-game  1-main menu  2-multiplayer lobby  3-character select
 var startGameCountdown = 0;
+var gameInSession = -1;
 
 // Game state
 var playerID;
@@ -105,7 +108,13 @@ function preload() {
 function setup() {
 
   frameRate(50);
-  createCanvas(windowWidth, windowHeight);
+
+  if (WEBGL_MODE_ENABLED){
+    createCanvas(windowWidth, windowHeight, WEBGL);
+  }else{
+    createCanvas(windowWidth, windowHeight);
+  }
+  
   calculateScale();
   angleMode(DEGREES);
   imageMode(CENTER)
@@ -136,6 +145,11 @@ function draw() {
   }
 
   background(0);
+
+  if (WEBGL_MODE_ENABLED){
+    // Translate to top-left corner (WEBGL origin is centre of screen)
+    translate(-width / 2, -height / 2);
+  }
 
   // Do scaling to account for screen size
   translate(windowWidth / 2, 0);
@@ -225,6 +239,10 @@ function drawGame(){
   if (startGameCountdown > 0){
     drawStartGameCountdown();
   }
+
+  if (gameInSession < 0){
+    endGameScreen();
+  }
 }
 
 
@@ -301,7 +319,7 @@ function setupSingleplayer(playerCharacter){
   // Setup player
   multiplayer = false;
   ultimateCharge = 0;
-  playerShip = { playerID: 1, character: playerCharacter, pos: createVector(2250, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[playerCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0, score:0 };
+  playerShip = { playerID: 1, character: playerCharacter, pos: createVector(2250, -30*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[playerCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0, score:0 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
@@ -359,6 +377,8 @@ function setupSingleplayer(playerCharacter){
   targets[3].create(createVector(5*tileSize+260, -BOSS_POSITION*tileSize+110), 300, 3);
   bossAlive = true;
   startGameCountdown = 3000;  // 3 second intro to game
+
+  gameInSession = 1;
 
 }
 
@@ -433,6 +453,8 @@ function setupMultiplayerplayer(playerCharacter, opponentCharacter){
   targets[3].create(createVector(5*tileSize+260, -BOSS_POSITION*tileSize+110), 300, 3);
   bossAlive = true;
   startGameCountdown = 3000;  // 3 second intro to game
+
+  gameInSession = 1;
   
 }
 

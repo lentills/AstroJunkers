@@ -163,6 +163,12 @@ function moveShip(ship) {
 
             if (playerShip.character != 2 || playerShip.ultimate < 1){
                 ship.fireCooldown -= characterStats[ship.character].bulletRate * 2;
+
+                // Hopper and skipp have a slower fire cooldown
+                if (playerShip.character == 0){
+                    ship.fireCooldown += characterStats[ship.character].bulletRate/3;
+                }
+
                 // Penalise firing the last bullet without recharging
                 if (ship.fireCooldown < 0){
                     ship.fireCooldown = -500;
@@ -196,6 +202,12 @@ function moveShip(ship) {
     // Fire cooldown replenishes
     if (ship.fireCooldown < 3000){
         ship.fireCooldown += floor(deltaTime);
+    }
+
+    // Check for end of the race
+    if (ship.pos.y < -mapHeight*tileSize && gameInSession == 1){
+        gameInSession = -1;
+        addExplosion(ship.pos.x, ship.pos.y, 100, explosionFrames);
     }
 
     ultimateCharge = max(min(ultimateCharge + deltaTime*10, 100000), 0);
