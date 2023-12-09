@@ -119,7 +119,21 @@ function drawMainMenu(){
 
 
 function drawMutliplayerLobby(){
-    fill(200);
+
+    fill(7, 6, 56);
+    rect(0, 0, gameWidth, gameHeight, 40);
+
+    // Rotating galaxy in background
+    push();
+    translate(gameWidth/2, gameHeight/2-100);
+    rotate((frameCount/3)%360);
+    image(spriteMainMenuSplashBG, 0, 0, gameHeight*0.8, gameHeight*0.8);
+    pop();
+
+    // Draw starfield in background
+    drawStarField();
+
+    fill(50, 255, 100, 180);
     textSize(80);
     textAlign(CENTER, CENTER);
     //textFont(myFont);
