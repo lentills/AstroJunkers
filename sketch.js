@@ -227,6 +227,7 @@ function drawGame(){
   drawObstacles();
   drawTargets();
   drawCrystals();
+  doMissiles();
 
   pop();
 
@@ -376,9 +377,12 @@ function setupSingleplayer(playerCharacter){
   targets[2].create(createVector(5*tileSize+135, -BOSS_POSITION*tileSize+133), 300, 2);
   targets[3].create(createVector(5*tileSize+260, -BOSS_POSITION*tileSize+110), 300, 3);
   bossAlive = true;
+  enemyMissileActive = false;
+  friendlyMissileActive = false;
   startGameCountdown = 3000;  // 3 second intro to game
 
   gameInSession = 1;
+  
 
 }
 
@@ -452,6 +456,8 @@ function setupMultiplayerplayer(playerCharacter, opponentCharacter){
   targets[2].create(createVector(5*tileSize+135, -BOSS_POSITION*tileSize+133), 300, 2);
   targets[3].create(createVector(5*tileSize+260, -BOSS_POSITION*tileSize+110), 300, 3);
   bossAlive = true;
+  enemyMissileActive = false;
+  friendlyMissileActive = false;
   startGameCountdown = 3000;  // 3 second intro to game
 
   gameInSession = 1;

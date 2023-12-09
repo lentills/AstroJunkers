@@ -394,6 +394,7 @@ function gotData(data) {
         opponentShip.ultimate = data.time;
 
         if (data.character == 0){
+            ultimateHopperSkipp(opponentShip.playerID);
         }
 
         if (data.character == 1){

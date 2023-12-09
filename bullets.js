@@ -7,6 +7,7 @@ const MAX_BULLETS = 200;    // Number of bullets maximum. More bullets will take
 let bullets = [];
 
 var spriteBullet = [];
+var spriteMissile;
 
 
 class Bullet {
@@ -256,11 +257,78 @@ function ultimateNyx(playerUlt) {
 }
 
 
+
+var friendlyMissilePos, friendlyMissileActive;
+var enemyMissilePos, enemyMissileActive;
+function ultimateHopperSkipp(playerUlt){
+
+    // Set the relevant missile active and initialise it's possition
+    if (playerUlt == playerID || !multiplayer){
+        friendlyMissilePos = playerShip.pos.copy();
+        friendlyMissileActive = true;
+    }else{
+        enemyMissilePos = opponentShip.pos.copy();
+        enemyMissileActive = true;
+    }
+
+}
+
+function doMissiles(){
+
+    if (multiplayer){
+
+        if (friendlyMissileActive){
+            var vecToPlayer = p5.Vector.sub(opponentShip.pos, friendlyMissilePos);
+            vecToPlayer.setMag(deltaTime*1.5);
+            friendlyMissilePos.add(vecToPlayer);
+
+            push();
+            translate(friendlyMissilePos.x, friendlyMissilePos.y);
+            rotate(vecToPlayer.heading() + 90);
+            image(spriteMissile, 0, 0, 100, 100);
+            pop();
+
+            // Opponent got hit!
+            if (friendlyMissilePos.dist(opponentShip.pos) < 60){
+                friendlyMissileActive = false;
+                addExplosion(friendlyMissilePos.x, friendlyMissilePos.y, 300, explosionFrames);
+            }
+
+
+        }
+
+        if (enemyMissileActive){
+            var vecToPlayer = p5.Vector.sub(playerShip.pos, enemyMissilePos);
+            vecToPlayer.setMag(deltaTime*1.5);
+            enemyMissilePos.add(vecToPlayer);
+            
+            push();
+            translate(enemyMissilePos.x, enemyMissilePos.y);
+            rotate(vecToPlayer.heading() + 90);
+            image(spriteMissile, 0, 0, 100, 100);
+            pop();
+
+            // We got hit!
+            if (enemyMissilePos.dist(playerShip.pos) < 60){
+                enemyMissileActive = false;
+                addExplosion(enemyMissilePos.x, enemyMissilePos.y, 300, explosionFrames);
+                playerShip.health -= 200;
+            }
+
+        }
+
+    }
+
+}
+
+
 function loadBulletSprites(){
 
     spriteBullet.push(loadImage('assets/bulletEnemy.png'));
     spriteBullet.push(loadImage('assets/bulletHopperSkipp.png'));
     spriteBullet.push(loadImage('assets/bulletNyx.png'));
     spriteBullet.push(loadImage('assets/bulletYasmin.png'));
+
+    spriteMissile = loadImage('assets/bulletNyx.png');
 
 }

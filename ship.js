@@ -42,13 +42,14 @@ function getControls() {
 
             // Hopper and Skipp's ultimate
             if (playerShip.character == 0){
-                // TODO
-                
+                playerShip.ultimate = 2000;    // Hopper and Skipp's ult is the homing missile
+                reportUltimate(0, 2000);
+                ultimateHopperSkipp(playerID);
             }
 
             // Nyx's ultimate
             if (playerShip.character == 1){
-                playerShip.ultimate = 1;    // Nyx's ult is the EMP burst
+                playerShip.ultimate = 1200;    // Nyx's ult is the EMP burst, still set this to a number for the HUD facial expressions
                 reportUltimate(1, 1);
                 ultimateNyx(playerID);
             }

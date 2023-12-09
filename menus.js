@@ -136,7 +136,8 @@ function drawMutliplayerLobby(){
     fill(50, 255, 100, 180);
     textSize(80);
     textAlign(CENTER, CENTER);
-    //textFont(myFont);
+    textFont(fontWhiteRabbit);
+    
     text("Multiplayer", gameWidth/2, 250);
 
     if (myPeerID == null){
