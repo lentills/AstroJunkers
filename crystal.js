@@ -66,11 +66,13 @@ function createCrystal(pos, vel, id, report){
 // Find an inactive bullet and fire it
 function createCrystalBurst(num, pos, speed, spread) {
 
+    randomSeed(frameCount);
+
     for (var i=0;i<num;i++){
         var spawnVector = createVector(0, speed);
         spawnVector.rotate(random(-spread, spread));
         spawnVector.mult(random(0.5, 1.5));
-        createCrystal(pos, spawnVector, floor(random(0, 1000000)), true);
+        createCrystal(pos, spawnVector, floor(random(0, 100000000)), true);
     }
 
 }

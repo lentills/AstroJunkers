@@ -23,7 +23,6 @@ class Target{
 
             if (this.health < 0) {
                 reportDestroyTarget(this.id);
-                createCrystalBurst(50, this.position, 200, 50);
                 this.destroy();
             }
 
@@ -51,7 +50,10 @@ class Target{
         if (this.active) {
             this.deactivate();
             addExplosion(this.position.x, this.position.y, 300, explosionFrames);
-            
+        }
+
+        if (playerID == 1){
+            createCrystalBurst(50, this.position, 200, 50);
         }
 
         // Check to see if this is the last target
