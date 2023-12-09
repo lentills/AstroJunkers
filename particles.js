@@ -25,7 +25,7 @@ class Particle {
     draw() {
         if (this.active) {
             noStroke();
-            fill(color(this.colour[0], this.colour[1], this.colour[2], min(160, this.lifespan)));
+            fill(color(this.colour[0], this.colour[1], this.colour[2], min(200, this.lifespan*2)));
             circle(this.position.x, this.position.y, this.size);
         }
     }
@@ -80,3 +80,18 @@ function createParticleExhaust(ship, spread, speed, lifespan, colour, size){
 
 }
 
+
+function createParticleExplosion(pos, num, speed, lifespan, colour, size){
+
+    randomSeed(frameCount);
+    var spawnVector;
+
+    for (var i=0;i<num;i++){
+        spawnVector = createVector(0, speed);
+        spawnVector.rotate(random(0, 360));
+        spawnVector.mult(random(0.0, 1.2));
+
+        createParticle(pos, spawnVector, colour, size, lifespan);
+    }
+
+}

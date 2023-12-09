@@ -300,7 +300,7 @@ function drawPlayerShip(ship) {
                 break;
             case 1:
                 image(spriteFire[1], 0, 32, 40, 40);
-                createParticleExhaust(ship, 6, 400, 150, [255, 120, 125], 1.2);
+                createParticleExhaust(ship, 6, 450, 130, [255, 160, 175], 1.5);
                 break;
             case 2:
                 image(spriteFire[2], 0, 32, 40, 40);

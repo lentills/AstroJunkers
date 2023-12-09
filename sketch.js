@@ -32,7 +32,7 @@
 // - Music
 // - Extra animations and sparkles
 //    - Particles when colliding with walls
-//    - Particles ejected from ship - interact with opponent ship?
+//    + Particles ejected from ship - interact with opponent ship?
 //    + Explosions!
 //
 // - Bugfixes

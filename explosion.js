@@ -39,6 +39,7 @@ let explosions = [];
 // Function to add a new explosion
 function addExplosion(x, y, size, frames) {
     explosions.push(new Explosion(x, y, size, frames));
+    createParticleExplosion(createVector(x, y), 50, size*1.5, 500, [255, 220, 180], 1.5);
 }
 
 // Update and draw all explosions
