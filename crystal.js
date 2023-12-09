@@ -79,10 +79,13 @@ function createCrystalBurst(num, pos, speed, spread) {
 
 // Draws all the active bullets in the pool
 function drawCrystals() {
-    randomSeed(floor(playerShip.pos.x + frameCount));
+
+    let time = millis();
     for (let crystal of crystals) {
         if (crystal.active) {
-            //tint (255, 255, 255, floor(random(180, 255)));
+            // Create a twinkle effect using the sin function and time
+            let alpha = map(sin(time * 1.2 + crystal.position.x*50 + crystal.position.y*30), -1, 1, 180, 255);
+            tint(255, alpha);
             image(spriteCrystal, crystal.position.x, crystal.position.y, 12, 12);
         }
     }
