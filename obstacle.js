@@ -120,8 +120,8 @@ class Obstacle {
             // If this is a big asteroid, split it into little ones
             if (this.weight > 60 && !this.isEnemy && playerID == 1) {
                 randomSeed(this.position.y);
-                createObstacle(-1, this.position.copy(), p5.Vector.add(this.velocity, createVector(random(-50, 0), random(-50, 80))), 30, 30, 20, 1, false, 0);
-                createObstacle(-1, this.position.copy(), p5.Vector.add(this.velocity, createVector(random(-30, 30), random(-50, 50))), 30, 20, 20, 1, false, 0);
+                createObstacle(-1, this.position.copy(), p5.Vector.add(this.velocity, createVector(random(-50, 0), random(-50, 80))), 30, 30, 20, 3, false, 0);
+                createObstacle(-1, this.position.copy(), p5.Vector.add(this.velocity, createVector(random(-30, 30), random(-50, 50))), 30, 20, 20, 3, false, 0);
             }
         }
 
@@ -164,7 +164,7 @@ function drawObstacles() {
             //rotate(obstacle.velocity.heading()+90 );
             if (obstacle.hitEffect > 0){
                 obstacle.hitEffect --;
-                tint(255, 80, 0);      // TODO: see if we can make this flash white instead of red?
+                tint(255, 80, 0);
             }
             image(obstacleSprites[obstacle.sprite], 0, 0, obstacle.radius, obstacle.radius);
             pop();
@@ -174,10 +174,10 @@ function drawObstacles() {
 
 
 function loadObstacleSprites() {
-    obstacleSprites.push(loadImage('assets/temp/meteorBrown_big1.png'));
-    obstacleSprites.push(loadImage('assets/temp/meteorBrown_med3.png'));
-    obstacleSprites.push(loadImage('assets/temp/ufoRed.png'));
-    obstacleSprites.push(loadImage('assets/temp/ufoRed.png'));
+    obstacleSprites.push(loadImage('assets/asteroid1.png'));
+    obstacleSprites.push(loadImage('assets/asteroid2.png'));
+    obstacleSprites.push(loadImage('assets/asteroid3.png'));
+    obstacleSprites.push(loadImage('assets/asteroid4.png'));
     obstacleSprites.push(loadImage('assets/temp/ufoRed.png'));
 }
 

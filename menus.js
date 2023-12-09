@@ -137,14 +137,14 @@ function drawMutliplayerLobby(){
     textSize(80);
     textAlign(CENTER, CENTER);
     //textFont(myFont);
-    text("Multiplayer", gameWidth/2, 50);
+    text("Multiplayer", gameWidth/2, 250);
 
     if (myPeerID == null){
         textSize(40);
-        text("Connecting...", gameWidth/2, 150);
+        text("Connecting...", gameWidth/2, 400);
     }else{
         textSize(40);
-        text("Share this link with your opponent:", gameWidth/2, 150);
+        text("Share this link with your opponent:", gameWidth/2, 400);
     }
 
 }

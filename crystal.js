@@ -79,8 +79,10 @@ function createCrystalBurst(num, pos, speed, spread) {
 
 // Draws all the active bullets in the pool
 function drawCrystals() {
+    randomSeed(floor(playerShip.pos.x + frameCount));
     for (let crystal of crystals) {
         if (crystal.active) {
+            //tint (255, 255, 255, floor(random(180, 255)));
             image(spriteCrystal, crystal.position.x, crystal.position.y, 12, 12);
         }
     }

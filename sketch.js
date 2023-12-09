@@ -334,8 +334,8 @@ function setupSingleplayer(playerCharacter){
 
   // Initialise obstacles
   // Boss fight henchmen
-  createObstacle(-1, createVector(5*tileSize-150, -BOSS_POSITION*tileSize+220), createVector(0, -10), 150, 60, 150, 2, true, 100);
-  createObstacle(-1, createVector(5*tileSize+150, -BOSS_POSITION*tileSize+220), createVector(0, -10), 150, 60, 150, 2, true, 100);
+  createObstacle(-1, createVector(5*tileSize-150, -BOSS_POSITION*tileSize+220), createVector(0, -10), 150, 60, 150, 4, true, 100);
+  createObstacle(-1, createVector(5*tileSize+150, -BOSS_POSITION*tileSize+220), createVector(0, -10), 150, 60, 150, 4, true, 100);
 
   // Random asteroids
   createObstacle(-1, createVector(4*tileSize+20, -4*tileSize-190), createVector(5, -4), 120, 120, 60, 0, false, 0);
@@ -344,12 +344,12 @@ function setupSingleplayer(playerCharacter){
   // Asteroid blockage
   createObstacle(-1, createVector(4*tileSize+190, -19*tileSize-180), createVector(0, 0), 120, 80, 60, 0, false, 0);
   createObstacle(-1, createVector(4*tileSize+300, -19*tileSize-200), createVector(0, 0), 100, 100, 50, 1, false, 0);
-  createObstacle(-1, createVector(4*tileSize+330, -19*tileSize-280), createVector(0, 0), 80, 60, 40, 1, false, 0);
-  createObstacle(-1, createVector(4*tileSize+280, -19*tileSize-330), createVector(0, 0), 90, 60, 40, 0, false, 0);
+  createObstacle(-1, createVector(4*tileSize+330, -19*tileSize-280), createVector(0, 0), 80, 60, 40, 2, false, 0);
+  createObstacle(-1, createVector(4*tileSize+280, -19*tileSize-330), createVector(0, 0), 90, 60, 40, 2, false, 0);
   createObstacle(-1, createVector(4*tileSize+210, -19*tileSize-280), createVector(0, 0), 110, 90, 50, 0, false, 0);
   createObstacle(-1, createVector(4*tileSize+400, -19*tileSize-280), createVector(0, 0), 110, 90, 50, 1, false, 0);
-  createObstacle(-1, createVector(4*tileSize+415, -19*tileSize-200), createVector(0, 0), 100, 100, 50, 0, false, 0);
-  createObstacle(-1, createVector(4*tileSize+105, -19*tileSize-200), createVector(0, 0), 30, 30, 20, 0, false, 0);
+  createObstacle(-1, createVector(4*tileSize+415, -19*tileSize-200), createVector(0, 0), 100, 100, 50, 2, false, 0);
+  createObstacle(-1, createVector(4*tileSize+105, -19*tileSize-200), createVector(0, 0), 30, 30, 20, 3, false, 0);
   
 
   // Initialise the positions of the boss targets
