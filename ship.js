@@ -296,9 +296,11 @@ function drawPlayerShip(ship) {
         switch (ship.character){
             case 0:
                 image(spriteFire[0], 0, 32, 40, 40);
+                createParticleExhaust(ship, 10, 400, 150, [255, 200, 155], 1.5);
                 break;
             case 1:
                 image(spriteFire[1], 0, 32, 40, 40);
+                createParticleExhaust(ship, 6, 400, 150, [255, 120, 125], 1.2);
                 break;
             case 2:
                 image(spriteFire[2], 0, 32, 40, 40);

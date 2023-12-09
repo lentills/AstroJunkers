@@ -227,6 +227,7 @@ function drawGame(){
   drawObstacles();
   drawTargets();
   drawCrystals();
+  drawParticles();
   doMissiles();
 
   pop();
@@ -303,6 +304,12 @@ function updateObjects() {
     }
   }
 
+   // Update particle positions
+  for (let particle of particles) {
+    if (particle.active) {
+      particle.update();
+    }
+  }
 
 }
 
@@ -320,7 +327,7 @@ function setupSingleplayer(playerCharacter){
   // Setup player
   multiplayer = false;
   ultimateCharge = 0;
-  playerShip = { playerID: 1, character: playerCharacter, pos: createVector(2250, -30*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[playerCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0, score:0 };
+  playerShip = { playerID: 1, character: playerCharacter, pos: createVector(2250, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[playerCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0, score:0 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
@@ -348,6 +355,12 @@ function setupSingleplayer(playerCharacter){
   crystals = [];
   for (let i=0; i<MAX_CRYSTALS; i++){
     crystals.push(new Crystal());
+  }
+
+  // Initialise particle object pool
+  particles = [];
+  for (let i = 0; i < MAX_PARTICLES; i++) {
+    particles.push(new Particle());
   }
 
 
