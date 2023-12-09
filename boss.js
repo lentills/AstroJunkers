@@ -23,7 +23,7 @@ class Target{
 
             if (this.health < 0) {
                 reportDestroyTarget(this.id);
-                createCrystalBurst(40, this.position, 200, 50);
+                createCrystalBurst(15, this.position, 200, 50);
                 this.destroy();
             }
 
