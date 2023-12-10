@@ -18,7 +18,7 @@ function loadMenuAssets(){
     fontWhiteRabbit = loadFont('assets/whitrabt.ttf');
 
     spriteMainMenuSplash = loadImage('assets/astroJunkersSplash.png');
-    spriteMainMenuSplashBG = loadImage('assets/astroJunkersSplashBG.png');
+    spriteMainMenuSplashBG = loadImage('assets/astroJunkersSplash_BG.png');
 
     spriteNyxWireframe = loadImage('assets/NyxShipWireframe.png');
     spriteYasminWireframe = loadImage('assets/YasminShipWireframe.png');

@@ -174,10 +174,10 @@ function drawObstacles() {
 
 
 function loadObstacleSprites() {
-    obstacleSprites.push(loadImage('assets/asteroid1.png'));
-    obstacleSprites.push(loadImage('assets/asteroid2.png'));
-    obstacleSprites.push(loadImage('assets/asteroid3.png'));
-    obstacleSprites.push(loadImage('assets/asteroid4.png'));
+    obstacleSprites.push(loadImage('assets/asteroid_1.png'));
+    obstacleSprites.push(loadImage('assets/asteroid_2.png'));
+    obstacleSprites.push(loadImage('assets/asteroid_3.png'));
+    obstacleSprites.push(loadImage('assets/asteroid_4.png'));
     obstacleSprites.push(loadImage('assets/temp/ufoRed.png'));
 }
 
