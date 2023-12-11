@@ -209,8 +209,7 @@ function moveShip(ship) {
     if (ship.pos.y < -mapHeight*tileSize && gameInSession == 1){
         gameInSession = -1;
         addExplosion(ship.pos.x, ship.pos.y, 100, explosionFrames);
-        soundMusic2.setVolume(0.0, 2);
-        soundMusic2.stop(2);
+        soundManager.stop('music2');
     }
 
     ultimateCharge = max(min(ultimateCharge + deltaTime*10, 100000), 0);

@@ -438,8 +438,8 @@ function endGameScreen(){
         characterViewPosition = 0;
 
         // Play the menu screen
-        soundMusic2.stop();
-        soundMusic1.play();
+        soundManager.stop('music2');
+        soundManager.play('music1');
     }
 
 }
@@ -516,8 +516,8 @@ function mouseClicked() {
     // Make sure this comes after registering button clicks on main menu, because we don't want to trigger a button click straight away
     if (appState == -1) {
         appState = 1;
-        soundMusic1.play();
-        
+        soundManager.play('music1');
+
         // Check if there is a peer id in the url, and if so go straight to multiplayer screen
         var peerID = getPeerIDFromURL();
         if (peerID) {

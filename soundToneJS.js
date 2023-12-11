@@ -18,34 +18,32 @@ function initialiseSound() {
     slider2.position(windowWidth - 200, 35);
     slider2.style('width', '150px');
 
-    // Load in the sounds
-    soundMusic1 = loadSound('assets/sounds/gametal1_96kbps.mp3');
-    soundMusic2 = loadSound('assets/sounds/gametal2_96kbps.mp3');
+    // Load in the sounds with Tone.js
+    soundManager.addSound('music1', 'assets/sounds/gametal1_96kbps.mp3');
+    soundManager.addSound('music2', 'assets/sounds/gametal2_96kbps.mp3');
     soundManager.addSound('laser', 'assets/sounds/laser_temp.mp3');
-    // soundManager.addSound('backgroundMusic', 'music.mp3');
 }
+
+
 
 
 class SoundEffect {
     constructor(soundFile) {
-        this.sound = loadSound(soundFile);
-        this.sound.playMode('restart');
+        this.player = new Tone.Player(soundFile).toDestination();
     }
 
-    play() {
-        //if (!this.sound.isPlaying()){
-            this.sound.play();
-        //}
+    async play() {
+        await Tone.loaded(); // Ensure the sound is loaded
+        this.player.start();
     }
 
     stop() {
-        this.sound.stop();
+        this.player.stop();
     }
 
     setVolume(volumeLevel) {
-        this.sound.setVolume(volumeLevel);
+        this.player.volume.value = Tone.gainToDb(volumeLevel);
     }
-
 }
 
 
@@ -66,10 +64,22 @@ class SoundManager {
         }
     }
 
-    setAllVolumes(volumeLevel) {
+    setSFXVolumes(volumeLevel) {
         for (let key in this.sounds) {
             if (this.sounds.hasOwnProperty(key)) {
-                this.sounds[key].setVolume(volumeLevel);
+                if (key != 'music1' && key != 'music2'){
+                    this.sounds[key].setVolume(volumeLevel);
+                }
+            }
+        }
+    }
+
+    setMusicVolumes(volumeLevel) {
+        for (let key in this.sounds) {
+            if (this.sounds.hasOwnProperty(key)) {
+                if (key == 'music1' || key == 'music2'){
+                    this.sounds[key].setVolume(volumeLevel);
+                }
             }
         }
     }
@@ -85,7 +95,6 @@ class SoundManager {
             this.sounds[name].stop();
         }
     }
-
 }
 
 

@@ -181,15 +181,12 @@ function draw() {
   drawBlinders();
 
   // Adjust sound volume levels
-  soundManager.setAllVolumes(slider2.value());
+  soundManager.setSFXVolumes(slider2.value());
 
-  if (startGameCountdown < 10){ // Don't adjust menu music volume in the fadeout stage
-    soundMusic1.setVolume(slider1.value());
+  if (startGameCountdown < 10 && (gameInSession > 0 || appState != 0)){ // Don't adjust menu music volume in the fadeout stage
+    soundManager.setMusicVolumes(slider1.value());
   }
 
-  if (gameInSession > 0){   // Don't adjust game music during fadeout stage at end of match
-    soundMusic2.setVolume(slider1.value());
-  }
   
 }
 
@@ -406,9 +403,8 @@ function setupSingleplayer(playerCharacter){
   gameInSession = 1;
   
   // Play the game music
-  soundMusic1.setVolume(0.0, 1, 0);
-  soundMusic1.stop(1);
-  soundMusic2.play();
+  soundManager.stop('music1');
+  soundManager.play('music2');
 
 }
 
@@ -489,9 +485,8 @@ function setupMultiplayerplayer(playerCharacter, opponentCharacter){
   gameInSession = 1;
 
   // Play the game music
-  soundMusic1.setVolume(0.0, 1, 0);
-  soundMusic1.stop(1);
-  soundMusic2.play();
+  soundManager.stop('music1');
+  soundManager.play('music2');
   
 }
 
