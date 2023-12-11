@@ -122,17 +122,6 @@ function setup() {
   angleMode(DEGREES);
   imageMode(CENTER)
 
-  // Check if there is a peer id in the url, and if so go straight to multiplayer screen
-  var peerID = getPeerIDFromURL();
-  if (peerID) {
-    appState = 2;
-    playerID = 2;
-    setupClient(peer, peerID);
-    multiplayer = true;
-  }else{
-    playerID = 1;
-  }
-
   initialiseStarfield();
 
   appState = -1;
@@ -193,8 +182,15 @@ function draw() {
 
   // Adjust sound volume levels
   soundManager.setAllVolumes(slider2.value());
-  soundMusic1.setVolume(slider1.value());
-  soundMusic2.setVolume(slider1.value());
+
+  if (startGameCountdown < 10){ // Don't adjust menu music volume in the fadeout stage
+    soundMusic1.setVolume(slider1.value());
+  }
+
+  if (gameInSession > 0){   // Don't adjust game music during fadeout stage at end of match
+    soundMusic2.setVolume(slider1.value());
+  }
+  
 }
 
 
@@ -410,7 +406,8 @@ function setupSingleplayer(playerCharacter){
   gameInSession = 1;
   
   // Play the game music
-  soundMusic1.stop();
+  soundMusic1.setVolume(0.0, 1, 0);
+  soundMusic1.stop(1);
   soundMusic2.play();
 
 }
@@ -491,9 +488,10 @@ function setupMultiplayerplayer(playerCharacter, opponentCharacter){
 
   gameInSession = 1;
 
-    // Play the game music
-    soundMusic1.stop();
-    soundMusic2.play();
+  // Play the game music
+  soundMusic1.setVolume(0.0, 1, 0);
+  soundMusic1.stop(1);
+  soundMusic2.play();
   
 }
 

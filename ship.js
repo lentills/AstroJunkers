@@ -209,6 +209,8 @@ function moveShip(ship) {
     if (ship.pos.y < -mapHeight*tileSize && gameInSession == 1){
         gameInSession = -1;
         addExplosion(ship.pos.x, ship.pos.y, 100, explosionFrames);
+        soundMusic2.setVolume(0.0, 2);
+        soundMusic2.stop(2);
     }
 
     ultimateCharge = max(min(ultimateCharge + deltaTime*10, 100000), 0);
@@ -312,11 +314,13 @@ function drawPlayerShip(ship) {
     if (ship.playerID == playerID ){
         if ((ship.character == 2 && ship.ultimate > 0) || ship.controlFire && shotCooldown > characterStats[ship.character].bulletRate ) {
             image(spriteMuzzleFlash[Math.floor(Math.random() * spriteMuzzleFlash.length)], 0, -15, 40, 40);
+            soundManager.play('laser');
             shotCooldown = 0;
         }
     }else{
         if ((ship.character == 2 && ship.ultimate > 0) || ship.controlFire && opponentShotCooldown > characterStats[ship.character].bulletRate) {
             image(spriteMuzzleFlash[floor(random()*spriteMuzzleFlash.length)], 0, -15, 40, 40);
+            soundManager.play('laser');
             opponentShotCooldown = 0;
         }
     }

@@ -517,6 +517,18 @@ function mouseClicked() {
     if (appState == -1) {
         appState = 1;
         soundMusic1.play();
+        
+        // Check if there is a peer id in the url, and if so go straight to multiplayer screen
+        var peerID = getPeerIDFromURL();
+        if (peerID) {
+            appState = 2;
+            playerID = 2;
+            setupClient(peer, peerID);
+            multiplayer = true;
+        } else {
+            playerID = 1;
+        }
+
     }
 
 
