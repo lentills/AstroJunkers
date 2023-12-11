@@ -404,6 +404,10 @@ function endGameScreen(){
         opponentCharacterSelection = -1;
         characterSelected = false;
         characterViewPosition = 0;
+
+        // Play the menu screen
+        soundMusic2.stop();
+        soundMusic1.play();
     }
 
 }
@@ -465,9 +469,7 @@ function mouseClicked() {
             if (multiplayer){
                 // Send packet and start waiting
                 reportCharacterSelection(characterSelection);
-                console.log("AAAA " + opponentCharacterSelection);
                 if (opponentCharacterSelection != -1 && (typeof opponentCharacterSelection !== 'undefined') ){
-                    console.log("BBBB");
                     setupMultiplayerplayer(characterSelection, opponentCharacterSelection);
                     appState = 0;
                 }

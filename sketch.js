@@ -25,6 +25,7 @@
 //    + Character Splashes
 //    + Asteroids
 //    - Enemies
+//    - Hopper and Skipp Missile
 //    - Debris
 //    - Character HUDS
 //    + Menu screens
@@ -38,6 +39,7 @@
 // - Bugfixes
 //    + When tabbing out of the game, deta time becomes large and causes glitched location when logging back in
 //    + Targets get stuck in red state for client sometimes, like when host is tabbed out
+//    - Translate the multiplayer text box to the middle of the screen properly
 //
 ///////////////////////
 
@@ -101,6 +103,7 @@ function preload() {
   loadExplosionSprites();
   loadMenuAssets();
   loadBulletSprites();
+  initialiseSound();
 }
 
 
@@ -131,6 +134,9 @@ function setup() {
   }
 
   initialiseStarfield();
+
+  // Play the menu music
+  soundMusic1.play();
 
 }
 
@@ -182,6 +188,11 @@ function draw() {
 
 
   drawBlinders();
+
+  // Adjust sound volume levels
+  soundManager.setAllVolumes(slider2.value());
+  soundMusic1.setVolume(slider1.value());
+  soundMusic2.setVolume(slider1.value());
 }
 
 
@@ -396,6 +407,9 @@ function setupSingleplayer(playerCharacter){
 
   gameInSession = 1;
   
+  // Play the game music
+  soundMusic1.stop();
+  soundMusic2.play();
 
 }
 
@@ -474,6 +488,10 @@ function setupMultiplayerplayer(playerCharacter, opponentCharacter){
   startGameCountdown = 3000;  // 3 second intro to game
 
   gameInSession = 1;
+
+    // Play the game music
+    soundMusic1.stop();
+    soundMusic2.play();
   
 }
 

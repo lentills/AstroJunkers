@@ -56,7 +56,7 @@ function setupServer(peer) {
         var gameLink = `${window.location.href}?peerID=${id}`;
         console.log("Share this link with your opponent:", gameLink);
         idField = createInput();
-        idField.position(scaleFactor * (gameWidth / 2)-250, 650);
+        idField.position(windowWidth/2-250, gameHeight/2);
         idField.size(500);
         idField.value(gameLink);
 
