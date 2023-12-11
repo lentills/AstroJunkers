@@ -67,7 +67,7 @@ const characterStats =
 // Utilities
 var gameWidth = 1600; 
 var gameHeight = 900;
-var appState = 1;     // 0-in-game  1-main menu  2-multiplayer lobby  3-character select
+var appState = -1;     // 0-in-game  1-main menu  2-multiplayer lobby  3-character select
 var startGameCountdown = 0;
 var gameInSession = -1;
 
@@ -135,8 +135,7 @@ function setup() {
 
   initialiseStarfield();
 
-  // Play the menu music
-  soundMusic1.play();
+  appState = -1;
 
 }
 
@@ -162,6 +161,9 @@ function draw() {
   scale(scaleFactor);
   translate(-gameWidth / 2, 0);
 
+  if (appState == -1){
+    drawInitialScreen();
+  }
 
   if (appState == 0){
     drawGame();

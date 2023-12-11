@@ -79,6 +79,38 @@ function createStar() {
 }
 
 
+// This initial screen gets the user to click before entering the main menu.
+// We need to do this to get the music to work, since modern browsers requier user interaction before any audio will play
+// Kinda annoying, maybe we get rid of this if we figure out a solution
+function drawInitialScreen(){
+    fill(7, 6, 56);
+    rect(0, 0, gameWidth, gameHeight, 40);
+
+    // Rotating galaxy in background
+    push();
+    translate(gameWidth/2, gameHeight/2-100);
+    rotate((frameCount/3)%360);
+    image(spriteMainMenuSplashBG, 0, 0, gameHeight*0.8, gameHeight*0.8);
+    pop();
+
+    // Draw starfield in background
+    drawStarField();
+
+    // Draw the splash
+    image(spriteMainMenuSplash, gameWidth/2, gameHeight/2-100, gameHeight*0.9, gameHeight*0.9);
+
+    fill(7, 6, 56, 150);
+    rect(0, 0, gameWidth, gameHeight, 40);
+
+    // Draw blinking text
+    textSize(40);
+    textFont(fontWhiteRabbit);
+    textAlign(CENTER, CENTER);
+    fill(50, 255, 100, floor(abs(255*sin(frameCount*2))) );
+    text("Click anywhere to begin", gameWidth/2, gameHeight/2 + 100);
+}
+
+
 function drawMainMenu(){
 
     fill(7, 6, 56);
@@ -422,7 +454,6 @@ function mouseClicked() {
     let mouseGameX = (mouseX - horizontalOffset) / scaleFactor;
     let mouseGameY = mouseY / scaleFactor;
 
-
     // Main menu screen
     if (appState == 1) {
         if (mouseY/scaleFactor > gameHeight/2+260 && mouseY/scaleFactor < gameHeight/2+340) {
@@ -479,6 +510,13 @@ function mouseClicked() {
             }
         }
 
+    }
+
+    // Initial screen (required to get audio to work on main menu)
+    // Make sure this comes after registering button clicks on main menu, because we don't want to trigger a button click straight away
+    if (appState == -1) {
+        appState = 1;
+        soundMusic1.play();
     }
 
 
