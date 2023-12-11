@@ -30,7 +30,9 @@
 //    - Character HUDS
 //    + Menu screens
 // - Sound effects
-// - Music
+// + Music
+//    + Get working
+//    + Fade outs for menu changes
 // - Extra animations and sparkles
 //    - Particles when colliding with walls
 //    + Particles ejected from ship - interact with opponent ship?
@@ -403,7 +405,7 @@ function setupSingleplayer(playerCharacter){
   gameInSession = 1;
   
   // Play the game music
-  soundManager.stop('music1');
+  soundManager.sounds['music1'].fadeOut(2);
   soundManager.play('music2');
 
 }
@@ -485,7 +487,7 @@ function setupMultiplayerplayer(playerCharacter, opponentCharacter){
   gameInSession = 1;
 
   // Play the game music
-  soundManager.stop('music1');
+  soundManager.sounds['music1'].fadeOut(2);
   soundManager.play('music2');
   
 }

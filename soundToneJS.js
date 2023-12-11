@@ -1,5 +1,6 @@
 
 // Controls for audio
+// Now using Tone.js, since the p5 sound library was causing a memory leak
 
 let soundManager;
 let soundMusic1, soundMusic2;   // Music is handles a little bit differently
@@ -14,7 +15,7 @@ function initialiseSound() {
     slider1.style('width', '150px');
 
     // Create slider for sfx volume control
-    slider2 = createSlider(0, 1, 0.6, 0.01);
+    slider2 = createSlider(0, 1, 0.4, 0.01);
     slider2.position(windowWidth - 200, 35);
     slider2.style('width', '150px');
 
@@ -39,6 +40,11 @@ class SoundEffect {
 
     stop() {
         this.player.stop();
+    }
+
+    fadeOut(duration) {
+        this.player.volume.rampTo(-Infinity, duration); // Fade to silence
+        setTimeout(() => this.player.stop(), duration * 1000); // Stop after fade
     }
 
     setVolume(volumeLevel) {
