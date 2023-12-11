@@ -255,6 +255,7 @@ function ultimateNyx(playerUlt) {
         }
     }
 
+    soundManager.play('emp');
 
 }
 

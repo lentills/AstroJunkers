@@ -31,6 +31,7 @@ function initialiseSound() {
     soundManager.addSound('impact', 'assets/sounds/impact.mp3', false);
     soundManager.addSound('explosionSmall', 'assets/sounds/explosionSmall.mp3', false);
     soundManager.addSound('explosionBig', 'assets/sounds/explosionBig.mp3', false);
+    soundManager.addSound('emp', 'assets/sounds/emp.mp3', false);
 
 }
 

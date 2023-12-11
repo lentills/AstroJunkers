@@ -11,6 +11,7 @@
 // + Menu and character select screens
 // - Build characters abilities
 //    - Hopper and Skipp
+//      - Make work in singleplayer
 //    + Nyx
 //    + Yasmin
 // + Cooldowns and health bar
@@ -29,19 +30,20 @@
 //    - Debris
 //    - Character HUDS
 //    + Menu screens
-// - Sound effects
+// + Sound effects
 // + Music
 //    + Get working
 //    + Fade outs for menu changes
+//    - Sound icons
 // - Extra animations and sparkles
-//    - Particles when colliding with walls
+//    - Particles when colliding with walls?
 //    + Particles ejected from ship - interact with opponent ship?
 //    + Explosions!
 //
 // - Bugfixes
 //    + When tabbing out of the game, deta time becomes large and causes glitched location when logging back in
 //    + Targets get stuck in red state for client sometimes, like when host is tabbed out
-//    - Translate the multiplayer text box to the middle of the screen properly
+//    + Translate the multiplayer text box to the middle of the screen properly
 //
 ///////////////////////
 

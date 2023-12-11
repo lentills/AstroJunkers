@@ -390,6 +390,9 @@ function drawStartGameCountdown(){
         }
     }
 
+    textSize(30);
+    text("OBJECTIVE: Scavenge energy crystals from the Galactic Federation shipwreck", 800, 300 + 2*max(0, 500-startGameCountdown));
+
 
 }
 
@@ -429,7 +432,7 @@ function endGameScreen(){
 
     }
 
-    if (gameInSession < -8000){
+    if (gameInSession < -6500){
         // Go back to character select screen
         appState = 3;
         characterSelection = 0;
@@ -461,7 +464,7 @@ function mouseClicked() {
             console.log("Singleplayer Clicked!");
             appState = 3;
             multiplayer = false;
-            //setupSingleplayer();
+            return;
         }
         if (mouseY/scaleFactor > gameHeight/2+160 && mouseY/scaleFactor < gameHeight/2+240){
             // multiplayer clicked!
@@ -470,6 +473,7 @@ function mouseClicked() {
             multiplayer = true;
             opponentCharacterSelection = -1;
             setupServer(peer);
+            return;
         }
     }
 
