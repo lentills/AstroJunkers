@@ -176,7 +176,7 @@ function drawCharacterSelect(){
     textSize(25);
     textAlign(LEFT, CENTER);
     text("Proxima Centauri b", 190, 230);
-    printText("Two notorious scavengers, Hopper and Skipp are a pair who make their living salvaging shipwrecks and merchant ships for scrap metal and parts. They travel in a ship cobbled from scraps from their previous missions, and it is believed that they are in posession of a weapons system stolen from a damaged Galactic Federation ship.\nEngage with extreme caution", printClock);
+    printText("Two notorious scavengers, Hopper and Skipp are a pair who make their living intercepting distress signals to locate shipwrecks and merchant vessels for cargo and parts. They travel in a ship cobbled from scraps from their previous exploits.\nIt is believed that they are in posession of a weapons system stolen from a destroyed Galactic Federation ship.\nEngage with extreme caution", printClock);
 
     image(spriteHopperSkippWireframe, 325, 650, 440, 290);
     textSize(15);
@@ -221,7 +221,7 @@ function drawCharacterSelect(){
     textSize(25);
     textAlign(LEFT, CENTER);
     text("Earth (Sol-3)", 190, 230);
-    printText("Once a decorated pilot of the Galactic Federation, Yasmin is now one of the most elusive figures in the galaxy.\nKnown for her unrivalled skills in combat and navigation, she shocked the Federation when she defected, vanishing with one of the Federatin's most advanced starfighters ever engineered.\nThis ship, the Astra II, is equipped with a powerful overclocking mechanism allowing the fighter to drastically boost the fire rate of the ship's guns.", printClock);
+    printText("Once a decorated pilot of the Galactic Federation, Yasmin is now one of the most wanted figures in the galaxy.\nAfter a dispute with her higher-ups she defected to piracy, vanishing with the Astra II, the Federations most advanced starfighter.\nThe ship is equipped with a powerful overclocking mechanism allowing the fighter to drastically boost the fire rate of the ship's guns.", printClock);
 
     image(spriteYasminWireframe, 325, 650, 480, 270);
     textSize(15);
