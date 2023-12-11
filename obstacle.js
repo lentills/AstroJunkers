@@ -71,6 +71,8 @@ class Obstacle {
                             if (this.shotCount > 0) {
                                 vecToPlayer.setMag(500);
                                 fireBullet(this.position.copy(), vecToPlayer, 0);
+                                soundManager.sounds['laserDeep'].setVolume(slider2.value() * 0.7);
+                                soundManager.play('laserDeep');
                             }
                         } else {
                             this.shotCount = -3;
@@ -114,6 +116,10 @@ class Obstacle {
 
         if (this.active) {
             this.deactivate();
+
+            if (this.radius > 30){
+                soundManager.play('explosionSmall');
+            }
 
             addExplosion(this.position.x, this.position.y, this.radius*3, explosionFrames);
 

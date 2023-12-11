@@ -307,19 +307,54 @@ function drawPlayerShip(ship) {
                 image(spriteFire[2], 0, 32, 40, 40);
                 break;
         }
+        soundManager.sounds['engine'].unmute(slider2.value());
+    }else{
+        soundManager.sounds['engine'].mute();
     }
 
     // Draw muzzle flash
     if (ship.playerID == playerID ){
         if ((ship.character == 2 && ship.ultimate > 0) || ship.controlFire && shotCooldown > characterStats[ship.character].bulletRate ) {
             image(spriteMuzzleFlash[Math.floor(Math.random() * spriteMuzzleFlash.length)], 0, -15, 40, 40);
-            soundManager.play('laser');
+
+            if (ship.character == 0) {
+                soundManager.play('laserStrong');
+            }
+
+            if (ship.character == 1) {
+                soundManager.play('laser');
+            }
+
+            if (ship.character == 2) {
+                if (ship.ultimate > 0){
+                    soundManager.play('laserDeepLow');
+                }else{
+                    soundManager.play('laserDeep');
+                }
+                
+            }
+            
             shotCooldown = 0;
         }
     }else{
         if ((ship.character == 2 && ship.ultimate > 0) || ship.controlFire && opponentShotCooldown > characterStats[ship.character].bulletRate) {
             image(spriteMuzzleFlash[floor(random()*spriteMuzzleFlash.length)], 0, -15, 40, 40);
-            soundManager.play('laser');
+
+            if (ship.character == 0) {
+                soundManager.sounds['laserStrong'].setVolume(slider2.value() * 0.7);
+                soundManager.play('laserStrong');
+            }
+
+            if (ship.character == 1) {
+                soundManager.sounds['laser'].setVolume(slider2.value() * 0.7);
+                soundManager.play('laser');
+            }
+
+            if (ship.character == 2) {
+                soundManager.sounds['laserDeep'].setVolume(slider2.value() * 0.7);
+                soundManager.play('laserDeep');
+            }
+
             opponentShotCooldown = 0;
         }
     }

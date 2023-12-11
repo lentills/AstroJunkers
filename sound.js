@@ -21,7 +21,7 @@ function initialiseSound() {
     // Load in the sounds
     soundMusic1 = loadSound('assets/sounds/gametal1_96kbps.mp3');
     soundMusic2 = loadSound('assets/sounds/gametal2_96kbps.mp3');
-    soundManager.addSound('laser', 'assets/sounds/laser_temp.mp3');
+    soundManager.addSound('laser', 'assets/sounds/laser5.mp3');
     // soundManager.addSound('backgroundMusic', 'music.mp3');
 }
 

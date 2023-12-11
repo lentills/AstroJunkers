@@ -203,6 +203,8 @@ function checkBulletCollisions() {
                 }
 
                 bullet.deactivate();
+
+                soundManager.play('impact');
             }
 
         }

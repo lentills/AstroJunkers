@@ -517,6 +517,9 @@ function mouseClicked() {
     if (appState == -1) {
         appState = 1;
         soundManager.play('music1');
+        //soundManager.play('engine');    // Begin playing engine sound on a loop, but muted
+        soundManager.sounds['engine'].player.start();
+        soundManager.sounds['engine'].mute();
 
         // Check if there is a peer id in the url, and if so go straight to multiplayer screen
         var peerID = getPeerIDFromURL();
