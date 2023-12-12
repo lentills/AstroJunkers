@@ -16,7 +16,8 @@ function moveCameraDamped() {
     //rect(targetPoint.x, targetPoint.y, 5, 5);     // Used to view the position of the target point. Comment this out for production
   
     let ease = (t) => t * t * (3 - 2 * t);  // Simple easeInOut function. You can replace with other easing functions.
-    let easedAgility = ease(cameraAgility * deltaTime * 0.01);
+    //let easedAgility = ease(cameraAgility * deltaTime * 0.01); // This is kinda stuttery when the frame rate fluctuates
+    let easedAgility = ease(cameraAgility * (deltaTime + 20)/2 * 0.01);
     cameraPos.lerp(targetPoint, easedAgility);
     //cameraPos = playerShip.pos.copy();
   
