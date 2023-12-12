@@ -3,19 +3,18 @@
 // Now using Tone.js, since the p5 sound library was causing a memory leak
 
 let soundManager;
-let soundMusic1, soundMusic2;   // Music is handles a little bit differently
 
 function initialiseSound() {
 
     soundManager = new SoundManager();
 
     // Create slider for music volume control
-    slider1 = createSlider(0, 1, 0.0, 0.01);    // Set to 0.4
+    slider1 = createSlider(0, 1, 0.5, 0.01);
     slider1.position(windowWidth - 200, 15);
     slider1.style('width', '150px');
 
     // Create slider for sfx volume control
-    slider2 = createSlider(0, 1, 0.6, 0.01);
+    slider2 = createSlider(0, 1.5, 1.0, 0.01);
     slider2.position(windowWidth - 200, 35);
     slider2.style('width', '150px');
 
