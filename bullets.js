@@ -274,6 +274,8 @@ function ultimateHopperSkipp(playerUlt){
         enemyMissileActive = true;
     }
 
+    soundManager.play('emp');
+
 }
 
 function doMissiles(){
@@ -295,6 +297,7 @@ function doMissiles(){
             if (friendlyMissilePos.dist(opponentShip.pos) < 60){
                 friendlyMissileActive = false;
                 addExplosion(friendlyMissilePos.x, friendlyMissilePos.y, 300, explosionFrames);
+                soundManager.play('explosionSmall');
             }
 
 
@@ -316,6 +319,7 @@ function doMissiles(){
                 enemyMissileActive = false;
                 addExplosion(enemyMissilePos.x, enemyMissilePos.y, 300, explosionFrames);
                 playerShip.health -= 200;
+                soundManager.play('explosionSmall');
             }
 
         }
@@ -352,6 +356,7 @@ function doMissiles(){
                 friendlyMissileActive = false;
                 addExplosion(friendlyMissilePos.x, friendlyMissilePos.y, 300, explosionFrames);
                 nearestObstacle.health -= 200;
+                soundManager.play('explosionSmall');
             }
         }
         
