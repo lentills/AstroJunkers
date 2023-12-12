@@ -144,6 +144,7 @@ function draw() {
 
   background(0);
 
+  push();
   if (WEBGL_MODE_ENABLED){
     // Translate to top-left corner (WEBGL origin is centre of screen)
     translate(-width / 2, -height / 2);
@@ -186,11 +187,12 @@ function draw() {
 
   // Adjust sound volume levels
   soundManager.setSFXVolumes(slider2.value());
-
   if (startGameCountdown < 10 && (gameInSession > 0 || appState != 0)){ // Don't adjust menu music volume in the fadeout stage
     soundManager.setMusicVolumes(slider1.value());
   }
 
+  pop();
+  image(spriteSoundControls, windowWidth-210, 36, 15, 40);
   
 }
 
@@ -508,6 +510,10 @@ function setupMultiplayerplayer(playerCharacter, opponentCharacter){
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   calculateScale();
+
+  slider1.position(windowWidth - 200, 15);
+  slider2.position(windowWidth - 200, 35);
+
 }
 
 function calculateScale() {

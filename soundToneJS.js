@@ -3,6 +3,8 @@
 // Now using Tone.js, since the p5 sound library was causing a memory leak
 
 let soundManager;
+let slider1, slider2;
+let spriteSoundControls;
 
 function initialiseSound() {
 
@@ -31,6 +33,8 @@ function initialiseSound() {
     soundManager.addSound('explosionSmall', 'assets/sounds/explosionSmall.mp3', false);
     soundManager.addSound('explosionBig', 'assets/sounds/explosionBig.mp3', false);
     soundManager.addSound('emp', 'assets/sounds/emp.mp3', false);
+
+    spriteSoundControls = loadImage('assets/soundControls.png');
 
 }
 
