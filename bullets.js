@@ -290,7 +290,7 @@ function doMissiles(){
             push();
             translate(friendlyMissilePos.x, friendlyMissilePos.y);
             rotate(vecToPlayer.heading() + 90);
-            image(spriteMissile, 0, 0, 100, 100);
+            image(spriteMissile, 0, 0, 50, 50);
             pop();
 
             // Opponent got hit!
@@ -311,7 +311,7 @@ function doMissiles(){
             push();
             translate(enemyMissilePos.x, enemyMissilePos.y);
             rotate(vecToPlayer.heading() + 90);
-            image(spriteMissile, 0, 0, 100, 100);
+            image(spriteMissile, 0, 0, 50, 50);
             pop();
 
             // We got hit!
@@ -348,7 +348,7 @@ function doMissiles(){
             push();
             translate(friendlyMissilePos.x, friendlyMissilePos.y);
             rotate(vecToObstacle.heading() + 90);
-            image(spriteMissile, 0, 0, 100, 100);
+            image(spriteMissile, 0, 0, 50, 50);
             pop();
     
             // Opponent got hit!

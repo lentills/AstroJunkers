@@ -401,6 +401,7 @@ function drawUltimateBar(){
 function drawScore(ship){
     fill(0, 250, 250, 250);
     textSize(40);
+    textFont(fontWhiteRabbit);
     textAlign(CENTER, CENTER);
     text(ship.score, 800, 850);
 }

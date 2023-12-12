@@ -34,11 +34,13 @@
 // + Music
 //    + Get working
 //    + Fade outs for menu changes
-//    - Sound icons
-// - Extra animations and sparkles
+//    + Sound icons
+// + Extra animations and sparkles
 //    - Particles when colliding with walls?
 //    + Particles ejected from ship - interact with opponent ship?
 //    + Explosions!
+//
+// - Final polish
 //
 // - Bugfixes
 //    + When tabbing out of the game, deta time becomes large and causes glitched location when logging back in
@@ -144,11 +146,13 @@ function draw() {
 
   background(0);
 
-  push();
+  
   if (WEBGL_MODE_ENABLED){
     // Translate to top-left corner (WEBGL origin is centre of screen)
     translate(-width / 2, -height / 2);
   }
+
+  push();
 
   // Do scaling to account for screen size
   translate(windowWidth / 2, 0);
