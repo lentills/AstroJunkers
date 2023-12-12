@@ -320,6 +320,42 @@ function doMissiles(){
 
         }
 
+    }else if (friendlyMissileActive){
+
+        // In singleplayer, the rocket chases the nearest obstacle
+        var nearestObstacle;
+        var nearestDistance = 10000000;
+
+        for (let obstacle of obstacles){
+            if (obstacle.active){
+                if (playerShip.pos.dist(obstacle.position) < nearestDistance){
+                    nearestDistance = playerShip.pos.dist(obstacle.position);
+                    nearestObstacle = obstacle;
+                }
+            }
+        }
+
+        if (nearestDistance < 10000000){ // Meaning we found an obstacle to shoot at
+
+            var vecToObstacle = p5.Vector.sub(nearestObstacle.position, friendlyMissilePos);
+            vecToObstacle.setMag(deltaTime*1.5);
+            friendlyMissilePos.add(vecToObstacle);
+    
+            push();
+            translate(friendlyMissilePos.x, friendlyMissilePos.y);
+            rotate(vecToObstacle.heading() + 90);
+            image(spriteMissile, 0, 0, 100, 100);
+            pop();
+    
+            // Opponent got hit!
+            if (friendlyMissilePos.dist(nearestObstacle.position) < 60 || !nearestObstacle.active){
+                friendlyMissileActive = false;
+                addExplosion(friendlyMissilePos.x, friendlyMissilePos.y, 300, explosionFrames);
+                nearestObstacle.health -= 200;
+            }
+        }
+        
+
     }
 
 }

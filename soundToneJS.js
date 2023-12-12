@@ -70,7 +70,6 @@ class SoundEffect {
     }
     
     unmute(volumeLevel) {
-        console.log("UNMUTE");
         this.player.volume.value = Tone.gainToDb(volumeLevel);
         this.isMuted = false;
     }
