@@ -212,7 +212,15 @@ function moveShip(ship) {
         soundManager.sounds['music2'].fadeOut(4);
     }
 
-    ultimateCharge = max(min(ultimateCharge + deltaTime*10, 100000), 0);
+    if (playerShip.character == 0){
+    ultimateCharge = max(min(ultimateCharge + deltaTime * 2.5, 100000), 0);   // Adjusting this determines how fast we gain ult charge
+    }
+    if (playerShip.character == 1){     // Nyx gains ult charge a bit faster cos she kinda weak without it
+        ultimateCharge = max(min(ultimateCharge + deltaTime * 3.5, 100000), 0);
+    }
+    if (playerShip.character == 2 && playerShip.ultimate < 10){ // Yasmin doesn't built alt charge while ulting
+        ultimateCharge = max(min(ultimateCharge + deltaTime * 2.0, 100000), 0);
+    }
 
 }
 

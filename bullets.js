@@ -120,7 +120,7 @@ function checkBulletCollisions() {
                         }
 
                         if (bullet.owner == playerID){
-                            ultimateCharge += 500;
+                            ultimateCharge += 700;
                         }
                         
                         obstacle.hit();
@@ -135,7 +135,11 @@ function checkBulletCollisions() {
             if (multiplayer){
                 if (bullet.position.dist(opponentShip.pos) < 20 && bullet.active) {
                     bullet.deactivate();
-                    ultimateCharge += 1000;
+
+                    if (bullet.owner == playerID){
+                        ultimateCharge += 1100;
+                    }
+                    
                 }
             }
 
@@ -151,8 +155,8 @@ function checkBulletCollisions() {
                             target.health -= 15;
                         }
 
-                        if (bullet.owner == playerID) {
-                            ultimateCharge += 300;
+                        if (bullet.owner == playerID && playerShip.character != 2) {
+                            ultimateCharge += 500;
                         }
                         bullet.deactivate();
                     }
@@ -199,7 +203,7 @@ function checkBulletCollisions() {
 
                 // Getting hit gives you alt charge, why not lmao
                 if (bullet.owner != playerID){
-                    ultimateCharge += 300;
+                    ultimateCharge += 600;
                 }
 
                 bullet.deactivate();
