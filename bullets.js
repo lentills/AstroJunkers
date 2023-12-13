@@ -139,7 +139,7 @@ function checkBulletCollisions() {
                     if (bullet.owner == playerID){
                         ultimateCharge += 1100;
                     }
-                    
+
                 }
             }
 
@@ -188,11 +188,11 @@ function checkBulletCollisions() {
                         }
     
                         if (opponentShip.character == 2){
-                            playerShip.health -= 20;
+                            playerShip.health -= 25;
                         }
     
-                        if (opponentShip.character == 2){
-                            playerShip.health -= 10;        // Yasmin does less bullet damage while ulting, cos that's a little nuts
+                        if (opponentShip.character == 2 && opponentShip.ultimate > 10){
+                            playerShip.health += 8;        // Yasmin does less bullet damage while ulting, cos that's a little nuts
                         }
 
                     }
