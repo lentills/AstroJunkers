@@ -9,9 +9,9 @@
 // + Add collisions
 // + Build map
 // + Menu and character select screens
-// - Build characters abilities
-//    - Hopper and Skipp
-//      - Make work in singleplayer
+// + Build characters abilities
+//    + Hopper and Skipp
+//      + Make work in singleplayer
 //    + Nyx
 //    + Yasmin
 // + Cooldowns and health bar
@@ -26,7 +26,7 @@
 //    + Character Splashes
 //    + Asteroids
 //    - Enemies
-//    - Hopper and Skipp Missile
+//    + Hopper and Skipp Missile
 //    - Debris
 //    - Character HUDS
 //    + Menu screens
