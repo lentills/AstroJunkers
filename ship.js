@@ -363,45 +363,4 @@ function drawPlayerShip(ship) {
 }
 
 
-// Draws the health bar for the given ship
-function drawHealthBar(ship){
-    // TODO: replace with graphics
-    fill(230);
-    rect (1600 - 400, 900 - 100, 300, 15);
 
-    if (ship.invincibility > 0){
-        fill (150, 10, 110);
-        rect (1600 - 400, 900 - 100, 300 * ((2000-ship.invincibility)/2000), 15);
-    }else{
-        fill (230, 30, 60);
-        rect (1600 - 400, 900 - 100, 300 * (max(ship.health, 0) / characterStats[ship.character].health), 15);
-    }
-
-}
-
-
-// Draws the cooldown bar under the health bar
-function drawCooldown(ship){
-    // TODO: replace with graphics
-    fill(230);
-    rect (1600 - 400, 900 - 60, 300, 15);
-    fill (50, 110, 155);
-    rect (1600 - 400, 900 - 60, 300 * (max(ship.fireCooldown, 0) / 3000), 15);
-}
-
-
-function drawUltimateBar(){
-    // TODO: replace with graphics
-    fill(230);
-    rect (100, 900 - 80, 300, 25);
-    fill (70, 160, 130);
-    rect (100, 900 - 80, 300 * (max(ultimateCharge, 0) / 100000), 25);
-}
-
-function drawScore(ship){
-    fill(0, 250, 250, 250);
-    textSize(40);
-    textFont(fontWhiteRabbit);
-    textAlign(CENTER, CENTER);
-    text(ship.score, 800, 850);
-}

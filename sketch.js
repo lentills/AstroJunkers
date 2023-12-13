@@ -25,7 +25,7 @@
 // - Final artworks
 //    + Character Splashes
 //    + Asteroids
-//    - Enemies
+//    + Enemies
 //    + Hopper and Skipp Missile
 //    - Debris
 //    - Character HUDS
@@ -110,6 +110,7 @@ function preload() {
   loadMenuAssets();
   loadBulletSprites();
   initialiseSound();
+  loadHUD();
 }
 
 
@@ -249,10 +250,7 @@ function drawGame(){
   pop();
 
   // Draw GUI elements
-  drawHealthBar(playerShip);
-  drawCooldown(playerShip);
-  drawUltimateBar();
-  drawScore(playerShip);
+  drawHUD(playerShip);
 
   if (startGameCountdown > 0){
     drawStartGameCountdown();

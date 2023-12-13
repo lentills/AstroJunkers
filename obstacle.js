@@ -184,7 +184,7 @@ function loadObstacleSprites() {
     obstacleSprites.push(loadImage('assets/asteroid_2.png'));
     obstacleSprites.push(loadImage('assets/asteroid_3.png'));
     obstacleSprites.push(loadImage('assets/asteroid_4.png'));
-    obstacleSprites.push(loadImage('assets/temp/ufoRed.png'));
+    obstacleSprites.push(loadImage('assets/ufo.png'));
 }
 
 
