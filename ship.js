@@ -307,9 +307,13 @@ function drawPlayerShip(ship) {
                 image(spriteFire[2], 0, 32, 40, 40);
                 break;
         }
-        soundManager.sounds['engine'].unmute(slider2.value());
+        if (ship.playerID == playerID){
+            soundManager.sounds['engine'].unmute(slider2.value());
+        }
     }else{
-        soundManager.sounds['engine'].mute();
+        if (ship.playerID == playerID){
+            soundManager.sounds['engine'].mute();
+        }
     }
 
     // Draw muzzle flash

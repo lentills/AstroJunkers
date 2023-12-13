@@ -391,7 +391,7 @@ function drawStartGameCountdown(){
     }
 
     textSize(30);
-    text("OBJECTIVE: Scavenge energy crystals from the Galactic Federation shipwreck", 800, 300 + 2*max(0, 500-startGameCountdown));
+    text("OBJECTIVE: Scavenge energy crystals from the Galactic Federation shipwreck", 800, 80 + 2*max(0, 500-startGameCountdown));
 
 
 }
@@ -409,9 +409,30 @@ function endGameScreen(){
         fill(60, 255, 120);
         textFont(fontWhiteRabbit);
         textAlign(CENTER, CENTER);
-        textSize(70);
+        textSize(90);
+
+        if (playerShip.character == 0){
+            image(spriteHopperSkippPortrait, 420, 550, 1032, 800);
+        }
+        if (playerShip.character == 1){
+            image(spriteNyxPortrait, 420, 550, 800, 800);
+        }
+        if (playerShip.character == 2){
+            image(spriteYasminPortrait, 420, 550, 800, 800);
+        }
 
         if (multiplayer){
+
+            if (opponentShip.character == 0){
+                image(spriteHopperSkippPortrait, 1180, 550, 1032, 800);
+            }
+            if (opponentShip.character == 1){
+                image(spriteNyxPortrait, 1180, 550, 800, 800);
+            }
+            if (opponentShip.character == 2){
+                image(spriteYasminPortrait, 1180, 550, 800, 800);
+            }
+
             if (playerShip.score > opponentShip.score){
                 text("YOU WIN", gameWidth/2, 200);
             }else if (playerShip.score < opponentShip.score){
@@ -424,10 +445,11 @@ function endGameScreen(){
         }
 
 
-        text("Score: " + playerShip.score, gameWidth/2-500, 800);
+        textSize(70);
+        text("Score: " + playerShip.score, gameWidth/2-500, 100);
 
         if (multiplayer){
-            text("Opponent: " + opponentShip.score, gameWidth/2+500, 800);
+            text("Opponent: " + opponentShip.score, gameWidth/2+500, 100);
         }
 
     }
