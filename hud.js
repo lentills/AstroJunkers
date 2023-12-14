@@ -1,14 +1,20 @@
 
 let spriteHudRight, spriteHudLeft;
 let spriteYasminNeutral, spriteYasminAngry, spriteYasminHappy;
+let spriteSkippNeutral, spriteSkippAngry, spriteSkippHappy;
 
 function loadHUD(){
 
     spriteHudLeft = loadImage('assets/hud_left.png');
     spriteHudRight = loadImage('assets/hud_right.png');
+
     spriteYasminNeutral = loadImage('assets/hud_yasmin_neutral.png');
     spriteYasminAngry = loadImage('assets/hud_yasmin_angry.png');
     spriteYasminHappy = loadImage('assets/hud_yasmin_happy.png');
+
+    spriteSkippNeutral = loadImage('assets/hud_skipp_neutral.png');
+    spriteSkippHappy = loadImage('assets/hud_skipp_happy.png');
+    spriteSkippAngry = loadImage('assets/hud_skipp_angry.png');
 
 }
 
@@ -25,13 +31,30 @@ function drawHUD(ship){
     circle(155, 900-144, 204);
 
     // Draw character camera
-    if (ship.isCrashing > 0){
-        image(spriteYasminAngry, 155, 900-144, 204, 204);
-    }else if (ship.ultimate > 1){
-        image(spriteYasminHappy, 155, 900-144, 204, 204);
-    }else{
-        image(spriteYasminNeutral, 155, 900-144, 204, 204);
+    if (ship.character == 0){
+        if (ship.isCrashing > 0){
+            image(spriteSkippAngry, 155, 900-144, 204, 204);
+        }else if (ship.ultimate > 1){
+            image(spriteSkippHappy, 155, 900-144, 204, 204);
+        }else{
+            image(spriteSkippNeutral, 155, 900-144, 204, 204);
+        }
+    }else if (ship.character == 1){
+    }else if (ship.character == 2){
+        if (ship.isCrashing > 0){
+            image(spriteYasminAngry, 155, 900-144, 204, 204);
+        }else if (ship.ultimate > 1){
+            image(spriteYasminHappy, 155, 900-144, 204, 204);
+            // Yasmin is lit up by ultimate effect
+            if (frameCount%5 == 0){
+                fill(180, 255, 255, 30);
+                circle(155, 900-144, 204);
+            }
+        }else{
+            image(spriteYasminNeutral, 155, 900-144, 204, 204);
+        }
     }
+    
     
 
     // Draw the HUD outlines
