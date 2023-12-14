@@ -25,6 +25,18 @@ function drawBackground(offset) {
 
     }
 
+    imageMode(CENTER);
+    image(spriteSideDeco, gameWidth/4, offset*BACKGROUND_LENGTH*1.5 - BACKGROUND_LENGTH/2 - gameHeight, gameWidth/1.5, BACKGROUND_LENGTH + gameHeight*4);
+
+    push();
+    translate(gameWidth/4 * 3, offset*BACKGROUND_LENGTH*1.5 - BACKGROUND_LENGTH/2 - gameHeight);
+    rotate(180);
+    image(spriteSideDeco, 0, 0, gameWidth/1.5, BACKGROUND_LENGTH + gameHeight*4);
+    pop();
+
+    fill(7, 4, 60, 50);
+    rect(0, 0, gameWidth, gameHeight, 40);
+
 }
 
 

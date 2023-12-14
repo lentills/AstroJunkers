@@ -27,7 +27,7 @@
 //    + Asteroids
 //    + Enemies
 //    + Hopper and Skipp Missile
-//    - Debris
+//    + Debris
 //    - Character HUDS
 //    + Menu screens
 // + Sound effects
@@ -39,6 +39,7 @@
 //    - Particles when colliding with walls?
 //    + Particles ejected from ship - interact with opponent ship?
 //    + Explosions!
+// - Populate map with obstacles
 //
 // - Final polish
 //
@@ -54,7 +55,7 @@ const WEBGL_MODE_ENABLED = false; // Set to true to use WEBGL (better colours, b
 
 
 // Assets
-let spriteStar1, spriteStar2, spriteCrystal;
+let spriteStar1, spriteStar2, spriteCrystal, spriteSideDeco;
 let spriteShip = [];
 let spriteFire = [];
 let spriteMuzzleFlash = [];
@@ -89,6 +90,7 @@ function preload() {
   spriteStar1 = loadImage('assets/star1.png');
   spriteStar2 = loadImage('assets/star2.png');
   spriteCrystal = loadImage('assets/Energy_Crystal.png');
+  spriteSideDeco = loadImage('assets/sideDeco.png');
 
   spriteShip.push (loadImage('assets/HopperSkippShip.png'));
   spriteShip.push (loadImage('assets/nyxShip.png'));
@@ -212,8 +214,6 @@ function drawGame(){
   rect(0, 0, gameWidth, gameHeight, 40);
   
   drawBackground((-playerShip.pos.y) / 30000);  // TODO: Update this number to length of map in pixels
-  fill(7, 4, 60, 100);
-  rect(0, 0, gameWidth, gameHeight, 40);
 
   // Move the camera
   push();
@@ -341,7 +341,7 @@ function setupSingleplayer(playerCharacter){
   // Setup player
   multiplayer = false;
   ultimateCharge = 0;
-  playerShip = { playerID: 1, character: playerCharacter, pos: createVector(2250, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[playerCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0, score:0 };
+  playerShip = { playerID: 1, character: playerCharacter, pos: createVector(2250, -19*tileSize*0), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[playerCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0, score:0 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;

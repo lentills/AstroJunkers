@@ -11,7 +11,7 @@ function initialiseSound() {
     soundManager = new SoundManager();
 
     // Create slider for music volume control
-    slider1 = createSlider(0, 1, 0.4, 0.01);
+    slider1 = createSlider(0, 1, 0.3, 0.01);
     slider1.position(windowWidth - 200, 15);
     slider1.style('width', '150px');
 
