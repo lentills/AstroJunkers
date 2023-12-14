@@ -1,10 +1,14 @@
 
 let spriteHudRight, spriteHudLeft;
+let spriteYasminNeutral, spriteYasminAngry, spriteYasminHappy;
 
 function loadHUD(){
 
     spriteHudLeft = loadImage('assets/hud_left.png');
     spriteHudRight = loadImage('assets/hud_right.png');
+    spriteYasminNeutral = loadImage('assets/hud_yasmin_neutral.png');
+    spriteYasminAngry = loadImage('assets/hud_yasmin_angry.png');
+    spriteYasminHappy = loadImage('assets/hud_yasmin_happy.png');
 
 }
 
@@ -19,6 +23,16 @@ function drawHUD(ship){
     // Black out back of character display
     fill(0, 0, 0);
     circle(155, 900-144, 204);
+
+    // Draw character camera
+    if (ship.isCrashing > 0){
+        image(spriteYasminAngry, 155, 900-144, 204, 204);
+    }else if (ship.ultimate > 1){
+        image(spriteYasminHappy, 155, 900-144, 204, 204);
+    }else{
+        image(spriteYasminNeutral, 155, 900-144, 204, 204);
+    }
+    
 
     // Draw the HUD outlines
     image(spriteHudLeft,  40+220, 900-30-115, 440, 230);
