@@ -451,8 +451,8 @@ function setupMultiplayerplayer(playerCharacter, opponentCharacter){
   multiplayer = true;
   ultimateCharge = 0;
   lastObstacleID = 0;
-  playerShip = { playerID: playerID, character: playerCharacter, pos: createVector(2200 + (playerID-1)*100, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[playerCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0, score:0};
-  opponentShip = { playerID: playerID%2+1, character: opponentCharacter, pos: createVector(2200 + (playerID%2)*100, -19*tileSize), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[opponentCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0, score:0 };
+  playerShip = { playerID: playerID, character: playerCharacter, pos: createVector(2200 + (playerID-1)*100, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[playerCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0, score:0};
+  opponentShip = { playerID: playerID%2+1, character: opponentCharacter, pos: createVector(2200 + (playerID%2)*100, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[opponentCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0, score:0 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
