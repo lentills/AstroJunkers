@@ -11,7 +11,7 @@ function initialiseSound() {
     soundManager = new SoundManager();
 
     // Create slider for music volume control
-    slider1 = createSlider(0, 1, 0.3, 0.01);
+    slider1 = createSlider(0, 1, 0.4, 0.01);
     slider1.position(windowWidth - 200, 15);
     slider1.style('width', '150px');
 
@@ -22,7 +22,7 @@ function initialiseSound() {
 
     // Load in the sounds with Tone.js
     soundManager.addSound('music1', 'assets/sounds/gametal1_96kbps.mp3', false);
-    soundManager.addSound('music2', 'assets/sounds/gametal2_96kbps.mp3', false);
+    soundManager.addSound('music2', 'assets/sounds/corneria_96kbps.mp3', false);
 
     soundManager.addSound('laser', 'assets/sounds/laser5.mp3', false);
     soundManager.addSound('laserDeep', 'assets/sounds/laser4.mp3', false);
