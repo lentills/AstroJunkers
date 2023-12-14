@@ -70,8 +70,8 @@ class Target{
             addExplosion(5*tileSize, -BOSS_POSITION*tileSize, 2000, explosionFrames);
             soundManager.play('explosionBig');
             if (playerID == 1){
-                createObstacle(-1, createVector(5*tileSize-150, -BOSS_POSITION*tileSize+120), createVector(0, -10), 150, 60, 150, 4, true, 100);
                 createObstacle(-1, createVector(5*tileSize+150, -BOSS_POSITION*tileSize+120), createVector(0, -10), 150, 60, 150, 4, true, 100);
+                createObstacle(-1, createVector(5*tileSize+350, -BOSS_POSITION*tileSize+120), createVector(0, -10), 150, 60, 150, 4, true, 100);
             }
         }
 

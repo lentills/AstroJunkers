@@ -340,7 +340,7 @@ function setupSingleplayer(playerCharacter){
   // Setup player
   multiplayer = false;
   ultimateCharge = 0;
-  playerShip = { playerID: 1, character: playerCharacter, pos: createVector(2250, -19*tileSize*0), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[playerCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0, score:0 };
+  playerShip = { playerID: 1, character: playerCharacter, pos: createVector(2250, 0), rot: 0, rotVel: 0, vel: createVector(0, 0), health: 70, sprite: spriteShip[playerCharacter], controlAccel: 0, controlRot: 0, controlFire: false, isCrashing: -1, invincibility: 0, fireCooldown: 3000, ultimate:0, score:0 };
   cameraPos = playerShip.pos.copy();
   cameraVel = playerShip.vel.copy();
   cameraZoom = 3;
@@ -381,10 +381,34 @@ function setupSingleplayer(playerCharacter){
   // Boss fight henchmen
   createObstacle(-1, createVector(5*tileSize-150, -BOSS_POSITION*tileSize+220), createVector(0, -10), 150, 60, 150, 4, true, 100);
   createObstacle(-1, createVector(5*tileSize+150, -BOSS_POSITION*tileSize+220), createVector(0, -10), 150, 60, 150, 4, true, 100);
+  createObstacle(-1, createVector(5*tileSize+50,  -BOSS_POSITION*tileSize+320), createVector(0, -10), 150, 60, 150, 4, true, 100);
 
-  // Random asteroids
+  // Random asteroids at beginning
   createObstacle(-1, createVector(4*tileSize+20, -4*tileSize-190), createVector(5, -4), 120, 120, 60, 0, false, 0);
-  createObstacle(-1, createVector(4*tileSize-40, -4*tileSize-200), createVector(3, 7), 100, 100, 50, 1, false, 0);
+  createObstacle(-1, createVector(4*tileSize-40, -4*tileSize-200), createVector(3, 2), 100, 100, 50, 1, false, 0);
+
+  // Enemy in vertical before wiggles
+  createObstacle(-1, createVector(2.8*tileSize, -15*tileSize+250), createVector(0, -10), 150, 60, 150, 4, true, 100);
+  createObstacle(-1, createVector(2.2*tileSize, -15*tileSize+250), createVector(20, 1), 100, 100, 50, 1, false, 0);
+
+  // Asteroids on vertical after boss
+  createObstacle(-1, createVector(4*tileSize-290, -29*tileSize-280), createVector(0, 0), 120, 120, 60, 0, false, 0);
+  createObstacle(-1, createVector(4*tileSize-210, -29*tileSize-110), createVector(0, 0), 100, 100, 50, 1, false, 0);
+  createObstacle(-1, createVector(4*tileSize-280, -29*tileSize-360), createVector(0, 0), 80, 70, 30, 2, false, 0);
+
+  // Enemies on sideways path a bit later
+  createObstacle(-1, createVector(5*tileSize-250, -39*tileSize+120), createVector(0, -10), 150, 60, 150, 4, true, 100);
+  createObstacle(-1, createVector(5*tileSize+50,  -39*tileSize+280), createVector(0, -10), 150, 60, 150, 4, true, 100);
+  createObstacle(-1, createVector(5*tileSize-50,  -39*tileSize+180), createVector(0, 0), 120, 120, 60, 2, false, 0);
+  createObstacle(-1, createVector(5*tileSize+20,  -39*tileSize+300), createVector(0, 0), 100, 80, 60, 1, false, 0);
+
+  // BIG ROKK
+  createObstacle(-1, createVector(5.5*tileSize+20, -43.5*tileSize+30), createVector(0, 0), 720, 490, 500, 0, false, 0);
+
+  // Enemies in the PIT
+  createObstacle(-1, createVector(5*tileSize+250,  -49*tileSize+280), createVector(0, -10), 150, 70, 150, 4, true, 100);
+  createObstacle(-1, createVector(5*tileSize-260,  -49*tileSize+240), createVector(0, 0), 80, 80, 70, 3, false, 0);
+  createObstacle(-1, createVector(5*tileSize+300,  -49*tileSize+300), createVector(0, 0), 100, 160, 60, 1, false, 0);
 
   // Asteroid blockage
   createObstacle(-1, createVector(4*tileSize+190, -19*tileSize-180), createVector(0, 0), 120, 80, 60, 0, false, 0);
@@ -463,10 +487,34 @@ function setupMultiplayerplayer(playerCharacter, opponentCharacter){
   // Boss fight henchmen
   createObstacle(-1, createVector(5*tileSize-150, -BOSS_POSITION*tileSize+220), createVector(0, -10), 150, 60, 150, 4, true, 100);
   createObstacle(-1, createVector(5*tileSize+150, -BOSS_POSITION*tileSize+220), createVector(0, -10), 150, 60, 150, 4, true, 100);
+  createObstacle(-1, createVector(5*tileSize+50,  -BOSS_POSITION*tileSize+320), createVector(0, -10), 150, 60, 150, 4, true, 100);
 
-  // Random asteroids
+  // Random asteroids at beginning
   createObstacle(-1, createVector(4*tileSize+20, -4*tileSize-190), createVector(5, -4), 120, 120, 60, 0, false, 0);
-  createObstacle(-1, createVector(4*tileSize-40, -4*tileSize-200), createVector(3, 7), 100, 100, 50, 1, false, 0);
+  createObstacle(-1, createVector(4*tileSize-40, -4*tileSize-200), createVector(3, 2), 100, 100, 50, 1, false, 0);
+
+  // Enemy in vertical before wiggles
+  createObstacle(-1, createVector(2.8*tileSize, -15*tileSize+250), createVector(0, -10), 150, 60, 150, 4, true, 100);
+  createObstacle(-1, createVector(2.2*tileSize, -15*tileSize+250), createVector(20, 1), 100, 100, 50, 1, false, 0);
+
+  // Asteroids on vertical after boss
+  createObstacle(-1, createVector(4*tileSize-290, -29*tileSize-280), createVector(0, 0), 120, 120, 60, 0, false, 0);
+  createObstacle(-1, createVector(4*tileSize-210, -29*tileSize-110), createVector(0, 0), 100, 100, 50, 1, false, 0);
+  createObstacle(-1, createVector(4*tileSize-280, -29*tileSize-360), createVector(0, 0), 80, 70, 30, 2, false, 0);
+
+  // Enemies on sideways path a bit later
+  createObstacle(-1, createVector(5*tileSize-250, -39*tileSize+120), createVector(0, -10), 150, 60, 150, 4, true, 100);
+  createObstacle(-1, createVector(5*tileSize+50,  -39*tileSize+280), createVector(0, -10), 150, 60, 150, 4, true, 100);
+  createObstacle(-1, createVector(5*tileSize-50,  -39*tileSize+180), createVector(0, 0), 120, 120, 60, 2, false, 0);
+  createObstacle(-1, createVector(5*tileSize+20,  -39*tileSize+300), createVector(0, 0), 100, 80, 60, 1, false, 0);
+
+  // BIG ROKK
+  createObstacle(-1, createVector(5.5*tileSize+20, -43.5*tileSize+30), createVector(0, 0), 720, 490, 500, 0, false, 0);
+
+  // Enemies in the PIT
+  createObstacle(-1, createVector(5*tileSize+250,  -49*tileSize+280), createVector(0, -10), 150, 70, 150, 4, true, 100);
+  createObstacle(-1, createVector(5*tileSize-260,  -49*tileSize+240), createVector(0, 0), 80, 80, 70, 3, false, 0);
+  createObstacle(-1, createVector(5*tileSize+300,  -49*tileSize+300), createVector(0, 0), 100, 160, 60, 1, false, 0);
 
   // Asteroid blockage
   createObstacle(-1, createVector(4*tileSize+190, -19*tileSize-180), createVector(0, 0), 120, 80, 60, 0, false, 0);

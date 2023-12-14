@@ -111,7 +111,7 @@ function checkBulletCollisions() {
                         // Now only the host controls obstacles
                         if (playerID == 1){
                             obstacle.health -= 15;
-                            obstacle.velocity.add(p5.Vector.mult(bullet.velocity, 1 / obstacle.weight));
+                            obstacle.velocity.add(p5.Vector.mult(bullet.velocity, 0.5 / obstacle.weight));
 
                             if (bullet.character == 0){
                                 obstacle.health -= 15;
