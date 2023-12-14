@@ -36,7 +36,6 @@
 //    + Fade outs for menu changes
 //    + Sound icons
 // + Extra animations and sparkles
-//    - Particles when colliding with walls?
 //    + Particles ejected from ship - interact with opponent ship?
 //    + Explosions!
 // - Populate map with obstacles

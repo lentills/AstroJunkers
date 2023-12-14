@@ -58,7 +58,7 @@ function drawHealthBar(ship){
 
 // Draws the cooldown bar under the health bar
 function drawCooldown(ship){
-    fill (50, 110, 155);
+    fill (50, 120, 185);
     rect (1600 - 327, 900 - 90, 273 * (max(ship.fireCooldown, 0) / 3000), 30);
 }
 
