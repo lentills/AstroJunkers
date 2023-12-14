@@ -302,6 +302,7 @@ function drawCharacterSelect(){
     }else{
         fill(252, 152, 45, 255);
         textSize(65);
+        textFont(fontWhiteRabbit);
         textAlign(CENTER, CENTER);
         text("WAITING FOR OPPONENT", 800, 860);
     }

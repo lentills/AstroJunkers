@@ -27,8 +27,9 @@ function syncGamestates() {
     // Send an obstacle update
     if (Date.now() > timestampObstacleUpdate + REPORT_OBSTACLE_UPDATE && playerID == 1) {
         for (var i = lastObstacleUpdated; i < MAX_OBSTACLES; i++) {
-            if (obstacles[i].active) {
+            if (obstacles[i].active && obstacles[i].needsUpdate < 2) {
                 reportObstacle(obstacles[i]);
+                obstacles[i].needsUpdate = 2000 + frameCount%200;
                 lastObstacleUpdated = i;
                 break;
             }

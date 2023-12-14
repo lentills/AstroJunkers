@@ -124,6 +124,7 @@ function checkBulletCollisions() {
                         }
                         
                         obstacle.hit();
+                        obstacle.needsUpdate = 0;
                         bullet.deactivate();
                         
 

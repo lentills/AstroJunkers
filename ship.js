@@ -246,6 +246,7 @@ function checkPlayerCollisions(ship){
                         obstacle.health -= 40;
                     }else{
                         obstacle.destroy();
+                        obstacle.needsUpdate = 0;
                         reportDestroyObstacle(obstacle.id, true);
                     }
                 }

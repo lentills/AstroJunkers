@@ -24,6 +24,8 @@ class Obstacle {
         this.radius = 100;      // Radius of hitbox
         this.sprite = null;
 
+        this.needsUpdate = 0;    // 0 if we need to send an update about this object, set to 1000 after update. set to 0 if state changed (eg hit by bullet)
+
         this.isEnemy = false;   // Activates the AI
         this.shotCooldown = 0;  // Cooldown on each burst
         this.shotCount = 0;
@@ -35,6 +37,7 @@ class Obstacle {
         if (this.active) {
             this.position.add(p5.Vector.mult(this.velocity, deltaTime * 0.001));
             this.age += deltaTime;
+            this.needsUpdate = max(this.needsUpdate-deltaTime, 0);
 
             if (this.health < 0) {
                 reportDestroyObstacle(this.id, true);
@@ -101,6 +104,7 @@ class Obstacle {
         this.fireRate = fireRate;
         this.shotCooldown = 0;  // Cooldown on each burst
         this.shotCount = 0;
+        this.needsUpdate = true;
     }
 
     hit(){
