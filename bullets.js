@@ -121,6 +121,7 @@ function checkBulletCollisions() {
 
                         if (bullet.owner == playerID){
                             ultimateCharge += 700;
+                            ultimateCharge = min(100000, ultimateCharge);
                         }
                         
                         obstacle.hit();
@@ -139,6 +140,7 @@ function checkBulletCollisions() {
 
                     if (bullet.owner == playerID){
                         ultimateCharge += 1100;
+                        ultimateCharge = min(100000, ultimateCharge);
                     }
 
                 }
@@ -205,6 +207,7 @@ function checkBulletCollisions() {
                 // Getting hit gives you alt charge, why not lmao
                 if (bullet.owner != playerID){
                     ultimateCharge += 600;
+                    ultimateCharge = min(100000, ultimateCharge);
                 }
 
                 bullet.deactivate();
