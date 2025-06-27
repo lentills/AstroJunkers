@@ -34,7 +34,7 @@ function drawBackground(offset) {
     image(spriteSideDeco, 0, 0, gameWidth/1.5, BACKGROUND_LENGTH + gameHeight*4);
     pop();
 
-    fill(7, 4, 60, 50);
+    fill(8, 0, 45, 50);
     rect(0, 0, gameWidth, gameHeight, 40);
 
 }

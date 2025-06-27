@@ -213,7 +213,7 @@ function draw() {
 function drawGame(){
   // Draw the background, will not move with the player
   strokeWeight(0);
-  fill(7, 4, 70);
+  fill(8, 0, 45);
   rect(0, 0, gameWidth, gameHeight, 40);
   
   drawBackground((-playerShip.pos.y) / 30000);  // TODO: Update this number to length of map in pixels

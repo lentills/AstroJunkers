@@ -83,7 +83,7 @@ function createStar() {
 // We need to do this to get the music to work, since modern browsers requier user interaction before any audio will play
 // Kinda annoying, maybe we get rid of this if we figure out a solution
 function drawInitialScreen(){
-    fill(7, 6, 56);
+    fill(8, 0, 45);
     rect(0, 0, gameWidth, gameHeight, 40);
 
     // Rotating galaxy in background
@@ -99,7 +99,7 @@ function drawInitialScreen(){
     // Draw the splash
     image(spriteMainMenuSplash, gameWidth/2, gameHeight/2-100, gameHeight*0.9, gameHeight*0.9);
 
-    fill(7, 6, 56, 150);
+    fill(8, 0, 45, 150);
     rect(0, 0, gameWidth, gameHeight, 40);
 
     // Draw blinking text
@@ -113,7 +113,7 @@ function drawInitialScreen(){
 
 function drawMainMenu(){
 
-    fill(7, 6, 56);
+    fill(8, 0, 45);
     rect(0, 0, gameWidth, gameHeight, 40);
 
     // Rotating galaxy in background
@@ -152,7 +152,7 @@ function drawMainMenu(){
 
 function drawMutliplayerLobby(){
 
-    fill(7, 6, 56);
+    fill(8, 0, 45);
     rect(0, 0, gameWidth, gameHeight, 40);
 
     // Rotating galaxy in background
@@ -186,7 +186,7 @@ function drawMutliplayerLobby(){
 function drawCharacterSelect(){
 
     printClock ++;
-    fill(7, 6, 56);
+    fill(8, 0, 45);
     rect(0, 0, gameWidth, gameHeight, 40);
 
 
@@ -230,7 +230,7 @@ function drawCharacterSelect(){
     textSize(25);
     textAlign(LEFT, CENTER);
     text("Antares 4b", 190, 230);
-    printText("An infamous space pirate from the Antares system, Nyx is known for her bold heists and ruthless demenour. Once a low-tier smuggler, she became known to the Federation after a series of high-profile raids against Federation supply lines.\nHer ship is equipped with a powerful EMP, which delivers a devistating pulse of energy into nearby ships.", printClock);
+    printText("An infamous space pirate from the Antares system, Nyx is known for her bold heists and ruthless demenour. Once a low-tier smuggler, she became known to the Federation after a series of high-profile raids against Federation supply lines.\nHer ship is equipped with a powerful EMP, which delivers a devastating pulse of energy into nearby ships.", printClock);
 
     image(spriteNyxWireframe, 325, 650, 440, 306);
     textSize(15);
@@ -350,7 +350,7 @@ function drawCharacterFrame(){
 
 function drawStartGameCountdown(){
 
-    fill(7, 4, 60, 150 - max(0, 150-startGameCountdown));
+    fill(8, 3, 60, 150 - max(0, 150-startGameCountdown));
     rect(0, 0, gameWidth, gameHeight, 40);
 
     noStroke();
@@ -402,7 +402,7 @@ function endGameScreen(){
 
     gameInSession -= deltaTime;    // This slowly fades in the game over screen
 
-    fill(7, 4, 60, min(max(0, abs(gameInSession/5)), 200));
+    fill(8, 0, 60, min(max(0, abs(gameInSession/5)), 200));
     rect(0, 0, gameWidth, gameHeight, 40);
 
     if (gameInSession < -800){
