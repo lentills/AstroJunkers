@@ -266,7 +266,6 @@ function moveShip(ship) {
         gameInSession = -1;
         addExplosion(ship.pos.x, ship.pos.y, 100, explosionFrames);
         soundManager.sounds['music2'].fadeOut(4);
-        soundManager.sounds['engine'].mute();
     }
 
     if (playerShip.character == 0) {

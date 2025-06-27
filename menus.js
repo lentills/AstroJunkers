@@ -466,6 +466,7 @@ function endGameScreen(){
         // Play the menu screen
         soundManager.stop('music2');
         soundManager.play('music1');
+        soundManager.sounds['engine'].mute();
     }
 
 }
