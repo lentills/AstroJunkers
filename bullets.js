@@ -242,7 +242,7 @@ function ultimateNyx(playerUlt) {
             if (target.active) {
                 if (playerShip.pos.dist(target.position) < 500) {
                     target.hit();
-                    target.health -= floor((500 - playerShip.pos.dist(target.position)) / 3);
+                    target.health -= floor((500 - playerShip.pos.dist(target.position)));
                 }
             }
         }
